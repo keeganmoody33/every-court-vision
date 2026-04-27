@@ -1,14 +1,17 @@
-"use client";
-
-import { useFilters } from "@/components/AppShell";
 import { HeatMapCourt } from "@/components/HeatMapCourt";
 import { InsightCard } from "@/components/InsightCard";
-import { filterPosts } from "@/lib/aggregations";
-import { posts } from "@/lib/mockData";
+import { filtersFromSearchParams, getPosts } from "@/lib/queries";
 
-export default function CourtHeatPage() {
-  const { filters } = useFilters();
-  const filtered = filterPosts(posts, filters);
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function CourtHeatPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const filters = filtersFromSearchParams(await searchParams);
+  const filtered = await getPosts(filters);
 
   return (
     <div className="space-y-6">

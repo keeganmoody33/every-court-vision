@@ -11,9 +11,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { employeeById, playById, rippleEvents } from "@/lib/mockData";
 import { shotOutcome } from "@/lib/scoring";
-import type { Post, ScoringMode } from "@/lib/types";
+import type { Employee, Play, Post, RippleEvent, ScoringMode } from "@/lib/types";
 import { formatCurrency, formatNumber, formatShortDate } from "@/lib/formatters";
 
 export function SidePanel({
@@ -21,14 +20,20 @@ export function SidePanel({
   open,
   onOpenChange,
   scoringMode,
+  employeeMap,
+  playMap,
+  rippleEvents,
 }: {
   post?: Post;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   scoringMode: ScoringMode;
+  employeeMap: Record<string, Employee>;
+  playMap: Record<string, Play>;
+  rippleEvents: RippleEvent[];
 }) {
-  const employee = post ? employeeById[post.employeeId] : undefined;
-  const play = post ? playById[post.recommendedPlayId] : undefined;
+  const employee = post ? employeeMap[post.employeeId] : undefined;
+  const play = post ? playMap[post.recommendedPlayId] : undefined;
   const events = post ? rippleEvents.filter((event) => event.rootPostId === post.id) : [];
 
   return (

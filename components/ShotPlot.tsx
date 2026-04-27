@@ -7,11 +7,22 @@ import { motion } from "framer-motion";
 import { CourtCanvas } from "@/components/CourtCanvas";
 import { SidePanel } from "@/components/SidePanel";
 import { Card, CardContent } from "@/components/ui/card";
-import { employeeById } from "@/lib/mockData";
 import { shotOutcome } from "@/lib/scoring";
-import type { Post, ScoringMode } from "@/lib/types";
+import type { Employee, Play, Post, RippleEvent, ScoringMode } from "@/lib/types";
 
-export function ShotPlot({ posts, scoringMode }: { posts: Post[]; scoringMode: ScoringMode }) {
+export function ShotPlot({
+  posts,
+  scoringMode,
+  employeeMap,
+  playMap,
+  rippleEvents,
+}: {
+  posts: Post[];
+  scoringMode: ScoringMode;
+  employeeMap: Record<string, Employee>;
+  playMap: Record<string, Play>;
+  rippleEvents: RippleEvent[];
+}) {
   const [selectedPost, setSelectedPost] = useState<Post | undefined>();
   const size = scaleSqrt()
     .domain([0, Math.max(1, ...posts.map((post) => post.metrics.reach))])
@@ -27,7 +38,7 @@ export function ShotPlot({ posts, scoringMode }: { posts: Post[]; scoringMode: S
                 const outcome = shotOutcome(post, scoringMode);
                 const radius = size(post.metrics.reach);
                 const glow = post.metrics.assistedConversions > 100;
-                const employee = employeeById[post.employeeId];
+                const employee = employeeMap[post.employeeId];
 
                 return (
                   <motion.g
@@ -64,7 +75,7 @@ export function ShotPlot({ posts, scoringMode }: { posts: Post[]; scoringMode: S
               })}
             </CourtCanvas>
             {posts.map((post) => {
-              const employee = employeeById[post.employeeId];
+              const employee = employeeMap[post.employeeId];
               return (
                 <button
                   key={`${post.id}-hit`}
@@ -82,7 +93,15 @@ export function ShotPlot({ posts, scoringMode }: { posts: Post[]; scoringMode: S
           </div>
         </CardContent>
       </Card>
-      <SidePanel post={selectedPost} open={Boolean(selectedPost)} onOpenChange={(open) => !open && setSelectedPost(undefined)} scoringMode={scoringMode} />
+      <SidePanel
+        post={selectedPost}
+        open={Boolean(selectedPost)}
+        onOpenChange={(open) => !open && setSelectedPost(undefined)}
+        scoringMode={scoringMode}
+        employeeMap={employeeMap}
+        playMap={playMap}
+        rippleEvents={rippleEvents}
+      />
     </>
   );
 }

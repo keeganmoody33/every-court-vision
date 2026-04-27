@@ -6,8 +6,8 @@ import { CircleDot, Filter } from "lucide-react";
 import { AttributionBadge } from "@/components/AttributionBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { rippleEvents } from "@/lib/mockData";
 import { formatDateTime, formatNumber } from "@/lib/formatters";
+import type { RippleEvent } from "@/lib/types";
 
 const filters = [
   "All events",
@@ -19,7 +19,7 @@ const filters = [
   "Revenue events",
 ];
 
-export function StreamTimeline() {
+export function StreamTimeline({ rippleEvents }: { rippleEvents: RippleEvent[] }) {
   const [active, setActive] = useState("All events");
   const events = useMemo(() => {
     if (active === "All events") return rippleEvents;
@@ -29,7 +29,7 @@ export function StreamTimeline() {
     if (active === "High-intent replies") return rippleEvents.filter((event) => event.eventType.includes("Replies"));
     if (active === "Known prospects") return rippleEvents.filter((event) => event.actor.includes("prospects"));
     return rippleEvents.filter((event) => /Consulting|Paid/.test(event.eventType));
-  }, [active]);
+  }, [active, rippleEvents]);
 
   return (
     <div className="space-y-4">

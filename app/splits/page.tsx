@@ -1,25 +1,17 @@
-"use client";
+import { SplitsView } from "@/components/SplitsView";
+import { employeeMapFromRoster, filtersFromSearchParams, getPosts, getRoster } from "@/lib/queries";
 
-import { useState } from "react";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-import { useFilters } from "@/components/AppShell";
-import { Button } from "@/components/ui/button";
-import { SplitsTable } from "@/components/SplitsTable";
-import { filterPosts, splitRows } from "@/lib/aggregations";
-import { employeeById, posts } from "@/lib/mockData";
-
-type Dimension = "platform" | "employee" | "archetype" | "contentType" | "campaign";
-
-const dimensions: Dimension[] = ["platform", "employee", "archetype", "contentType", "campaign"];
-
-export default function SplitsPage() {
-  const { filters } = useFilters();
-  const [dimension, setDimension] = useState<Dimension>("platform");
-  const filtered = filterPosts(posts, filters);
-  const rows = splitRows(filtered, dimension).map((row) => ({
-    ...row,
-    segment: dimension === "employee" ? employeeById[row.segment]?.name ?? row.segment : row.segment,
-  }));
+export default async function SplitsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const filters = filtersFromSearchParams(await searchParams);
+  const [filtered, roster] = await Promise.all([getPosts(filters), getRoster()]);
+  const employeeMap = employeeMapFromRoster(roster);
 
   return (
     <div className="space-y-6">
@@ -31,15 +23,8 @@ export default function SplitsPage() {
             Split by platform, employee, archetype, content type, campaign, launch window, and time in future connector mode.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {dimensions.map((item) => (
-            <Button key={item} size="sm" variant={dimension === item ? "secondary" : "outline"} onClick={() => setDimension(item)}>
-              {item}
-            </Button>
-          ))}
-        </div>
       </div>
-      <SplitsTable rows={rows} />
+      <SplitsView posts={filtered} employeeMap={employeeMap} />
     </div>
   );
 }

@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 enum Platform {
@@ -18,6 +17,14 @@ enum Platform {
   LAUNCHES
   TEAMMATE_AMPLIFICATION
   EXTERNAL_AMPLIFICATION
+  PRODUCT_HUNT
+  PERSONAL_SITE
+  TIKTOK
+  WEBSITE
+  SUBSTACK
+  APP_STORE
+  REFERRAL
+  CONSULTING
 }
 
 enum MetricConfidence {
@@ -29,23 +36,76 @@ enum MetricConfidence {
 }
 
 enum DataReadiness {
+  PUBLIC_ONLY
+  MANUAL_IMPORT
+  LIVE
+}
+
+enum SourceReadiness {
   READY
   MANUAL_IMPORT
   NEEDS_OAUTH
   FUTURE
 }
 
+enum AcquisitionProvider {
+  X_API
+  LINKEDIN_API
+  GITHUB_API
+  YOUTUBE_API
+  RSS
+  SPIDER
+  PARALLEL
+  MANUAL
+  INSTAGRAM_GRAPH
+}
+
+enum AcquisitionJobStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  PARTIAL
+  FAILED
+  DISABLED
+}
+
+model Company {
+  id        String     @id @default(cuid())
+  name      String
+  domain    String
+  website   String
+  employees Employee[]
+  surfaces  Surface[]
+  reports   Report[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
 model Employee {
   id                String          @id @default(cuid())
+  companyId         String
+  company           Company         @relation(fields: [companyId], references: [id])
   name              String
   role              String
-  archetype         String
+  archetype         String?
+  dataReadiness     DataReadiness   @default(PUBLIC_ONLY)
   primarySurface    Platform
   secondarySurface  Platform
   signatureMove     String
   opportunity       String
+  bestShot          String
+  bestAssist        String
+  surfacePresence   Float           @default(0)
+  surfaceIQ         Float           @default(0)
+  trustGravity      Float           @default(0)
+  socialTS          Float           @default(0)
+  shotDistribution  Json            @default("{}")
+  recommendedPlayId String?
   accounts          SocialAccount[]
+  surfaces          Surface[]
+  metrics           Metric[]
   posts             Post[]
+  rippleEvents      RippleEvent[]
   experiments       Experiment[]
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
@@ -63,10 +123,39 @@ model SocialAccount {
   updatedAt    DateTime         @updatedAt
 }
 
+model Surface {
+  id               String           @id @default(cuid())
+  companyId        String
+  company          Company          @relation(fields: [companyId], references: [id])
+  employeeId       String?
+  employee         Employee?        @relation(fields: [employeeId], references: [id])
+  platform         Platform
+  handle           String
+  url              String?
+  present          Boolean          @default(true)
+  status           String           @default("VERIFIED")
+  followers        Int              @default(0)
+  confidence       MetricConfidence @default(ESTIMATED)
+  lastScrapedAt    DateTime?
+  attributionValue String?
+  opportunity      String?
+  posts            Post[]
+  metrics          Metric[]
+  acquisitionJobs  AcquisitionJob[]
+  rawActivities    RawActivity[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([companyId, platform])
+  @@index([employeeId, platform])
+}
+
 model Post {
   id                 String          @id @default(cuid())
   employeeId         String
   employee           Employee        @relation(fields: [employeeId], references: [id])
+  surfaceId          String?
+  surface            Surface?        @relation(fields: [surfaceId], references: [id])
   text               String
   platform           Platform
   contentType        String
@@ -77,9 +166,17 @@ model Post {
   product            String
   launchWindow       Boolean         @default(false)
   publishedAt        DateTime
+  x                  Float           @default(50)
+  y                  Float           @default(47)
   zone               String
   advancedZone       String
   confidence         MetricConfidence
+  externalId         String?
+  permalink          String?
+  rawActivityId      String?         @unique
+  rawActivity        RawActivity?    @relation(fields: [rawActivityId], references: [id])
+  acquiredVia        AcquisitionProvider?
+  acquiredAt         DateTime?
   metrics            PostMetrics?
   scores             PostScores?
   rippleEvents       RippleEvent[]
@@ -90,6 +187,8 @@ model Post {
 
   @@index([platform, publishedAt])
   @@index([employeeId, publishedAt])
+  @@index([surfaceId, publishedAt])
+  @@index([surfaceId, externalId])
   @@index([campaign])
 }
 
@@ -139,12 +238,51 @@ model RippleEvent {
   rootPostId String
   rootPost   Post             @relation(fields: [rootPostId], references: [id])
   parentId   String?
+  employeeId String?
+  employee   Employee?        @relation(fields: [employeeId], references: [id])
   actor      String
   platform   Platform
   eventType  String
   occurredAt DateTime
   value      Int
   confidence MetricConfidence
+}
+
+model Metric {
+  id                    String   @id @default(cuid())
+  employeeId            String
+  employee              Employee @relation(fields: [employeeId], references: [id])
+  surfaceId             String
+  surface               Surface  @relation(fields: [surfaceId], references: [id])
+  platform              Platform
+  timeWindow            String
+  windowStart           DateTime
+  windowEnd             DateTime?
+  posts                 Int      @default(0)
+  views                 Int      @default(0)
+  reach                 Int      @default(0)
+  likes                 Int      @default(0)
+  comments              Int      @default(0)
+  replies               Int      @default(0)
+  reposts               Int      @default(0)
+  quotes                Int      @default(0)
+  shares                Int      @default(0)
+  clicks                Int      @default(0)
+  profileVisits         Int      @default(0)
+  signups               Int      @default(0)
+  paidSubscriptions     Int      @default(0)
+  consultingLeads       Int      @default(0)
+  revenue               Int      @default(0)
+  assistedConversions   Int      @default(0)
+  surfaceIQ             Float    @default(0)
+  socialTS              Float    @default(0)
+  assistRate            Float    @default(0)
+  trustGravity          Float    @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([employeeId, timeWindow, windowStart])
+  @@index([surfaceId, timeWindow, windowStart])
 }
 
 model Play {
@@ -174,13 +312,91 @@ model Experiment {
   updatedAt       DateTime @updatedAt
 }
 
+model Report {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  title     String
+  period    String
+  status    String
+  summary   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model DataSource {
   id          String           @id @default(cuid())
   name        String
   category    String
-  readiness   DataReadiness
+  readiness   SourceReadiness
   confidence  MetricConfidence
   description String
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+}
+
+model AcquisitionRoute {
+  id             String              @id @default(cuid())
+  platform       Platform
+  provider       AcquisitionProvider
+  routeOrder     Int
+  capability     String
+  requiredEnv    String?
+  confidence     MetricConfidence    @default(ESTIMATED)
+  complianceNote String
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@unique([platform, provider, routeOrder])
+  @@index([platform, routeOrder])
+}
+
+model AcquisitionJob {
+  id            String               @id @default(cuid())
+  surfaceId     String
+  surface       Surface              @relation(fields: [surfaceId], references: [id])
+  provider      AcquisitionProvider
+  status        AcquisitionJobStatus @default(QUEUED)
+  windowStart   DateTime
+  windowEnd     DateTime
+  attempts      Int                  @default(0)
+  rawCount      Int                  @default(0)
+  inserted      Int                  @default(0)
+  updated       Int                  @default(0)
+  skipped       Int                  @default(0)
+  failureCode   String?
+  failureReason String?
+  rawActivities RawActivity[]
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@index([surfaceId, createdAt])
+  @@index([provider, status])
+}
+
+model RawActivity {
+  id          String              @id @default(cuid())
+  surfaceId   String
+  surface     Surface             @relation(fields: [surfaceId], references: [id])
+  jobId       String?
+  job         AcquisitionJob?     @relation(fields: [jobId], references: [id])
+  provider    AcquisitionProvider
+  externalId  String
+  permalink   String?
+  publishedAt DateTime
+  text        String
+  rawMetrics  Json                @default("{}")
+  rawPayload  Json                @default("{}")
+  citations   Json                @default("[]")
+  basis       Json?
+  confidence  MetricConfidence    @default(ESTIMATED)
+  post        Post?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([surfaceId, externalId])
+  @@index([surfaceId, publishedAt])
+  @@index([provider, publishedAt])
 }

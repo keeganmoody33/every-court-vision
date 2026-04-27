@@ -8,7 +8,15 @@ export type Platform =
   | "Podcast"
   | "Launches"
   | "Teammate Amplification"
-  | "External Amplification";
+  | "External Amplification"
+  | "Product Hunt"
+  | "Personal Site"
+  | "TikTok"
+  | "Website"
+  | "Substack"
+  | "App Store"
+  | "Referral"
+  | "Consulting";
 
 export type SurfaceFilter = "All" | Platform;
 
@@ -89,6 +97,36 @@ export interface SocialAccount {
   followers: number;
   confidence: MetricConfidence;
 }
+
+export type EmployeeDataReadiness = "PUBLIC_ONLY" | "MANUAL_IMPORT" | "LIVE";
+
+export interface Surface {
+  id: string;
+  employeeId?: string;
+  platform: Platform;
+  handle: string;
+  url?: string;
+  followers: number;
+  confidence: MetricConfidence;
+  dataReadiness?: EmployeeDataReadiness;
+  attributionValue?: string;
+  opportunity?: string;
+}
+
+export type EmployeeWithSurfaces = Employee & {
+  accounts: SocialAccount[];
+  surfaces: Surface[];
+  postCount: number;
+  dataReadiness: EmployeeDataReadiness;
+};
+
+export type EmployeeWithSurfacesAndMetrics = EmployeeWithSurfaces & {
+  metrics: SplitRow[];
+};
+
+export type PostWithEmployee = Post & {
+  employee?: Employee;
+};
 
 export interface PostMetrics {
   views: number;
@@ -189,6 +227,48 @@ export interface DataSource {
   readiness: "Ready" | "Manual Import" | "Needs OAuth" | "Future";
   confidence: MetricConfidence;
   description: string;
+}
+
+export type AcquisitionProvider =
+  | "X API"
+  | "LinkedIn API"
+  | "GitHub API"
+  | "YouTube API"
+  | "RSS"
+  | "Spider"
+  | "Parallel"
+  | "Manual Import"
+  | "Instagram Graph";
+
+export type AcquisitionStatus = "Queued" | "Running" | "Succeeded" | "Partial" | "Failed" | "Disabled";
+
+export interface AcquisitionRouteSummary {
+  provider: AcquisitionProvider;
+  routeOrder: number;
+  capability: string;
+  requiredEnv?: string;
+  confidence: MetricConfidence;
+  complianceNote: string;
+}
+
+export interface AcquisitionSurfaceRow {
+  surfaceId: string;
+  employeeId?: string;
+  employeeName: string;
+  platform: Platform;
+  handle: string;
+  url?: string;
+  confidence: MetricConfidence;
+  postCount: number;
+  rawActivityCount: number;
+  lastRunAt?: string;
+  lastProvider?: AcquisitionProvider;
+  lastStatus?: AcquisitionStatus;
+  failureReason?: string;
+  routeCount: number;
+  primaryRoute?: AcquisitionRouteSummary;
+  nextFallback?: AcquisitionRouteSummary;
+  coverageStatus: "Live coverage" | "Needs acquisition" | "Manual import required" | "Awaiting acquisition";
 }
 
 export interface SplitRow {
