@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
   BarChart3,
+  DatabaseZap,
   Flame,
   Layers3,
   LineChart,
@@ -34,6 +35,7 @@ const navItems = [
   { href: "/players", label: "Players", icon: Users },
   { href: "/plays", label: "Plays", icon: PlaySquare },
   { href: "/attribution", label: "Attribution", icon: ShieldCheck },
+  { href: "/acquisition", label: "Acquisition", icon: DatabaseZap },
 ];
 
 interface FilterContextValue {

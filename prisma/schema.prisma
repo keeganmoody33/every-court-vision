@@ -173,7 +173,7 @@ model Post {
   confidence         MetricConfidence
   externalId         String?
   permalink          String?
-  rawActivityId      String?         @unique
+  rawActivityId      String?
   rawActivity        RawActivity?    @relation(fields: [rawActivityId], references: [id])
   acquiredVia        AcquisitionProvider?
   acquiredAt         DateTime?
@@ -188,6 +188,7 @@ model Post {
   @@index([platform, publishedAt])
   @@index([employeeId, publishedAt])
   @@index([surfaceId, publishedAt])
+  @@index([rawActivityId])
   @@index([surfaceId, externalId])
   @@index([campaign])
 }
@@ -392,7 +393,7 @@ model RawActivity {
   citations   Json                @default("[]")
   basis       Json?
   confidence  MetricConfidence    @default(ESTIMATED)
-  post        Post?
+  posts       Post[]
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
 
