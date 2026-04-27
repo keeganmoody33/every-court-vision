@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+dist
+coverage
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+.DS_Store
+.playwright-mcp
+desktop-overview.png

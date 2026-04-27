@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Platform {
+  X
+  LINKEDIN
+  GITHUB
+  INSTAGRAM
+  NEWSLETTER
+  YOUTUBE
+  PODCAST
+  LAUNCHES
+  TEAMMATE_AMPLIFICATION
+  EXTERNAL_AMPLIFICATION
+}
+
+enum MetricConfidence {
+  DIRECT
+  ESTIMATED
+  MODELED
+  HYPOTHESIS
+  NEEDS_INTERNAL_ANALYTICS
+}
+
+enum DataReadiness {
+  READY
+  MANUAL_IMPORT
+  NEEDS_OAUTH
+  FUTURE
+}
+
+model Employee {
+  id                String          @id @default(cuid())
+  name              String
+  role              String
+  archetype         String
+  primarySurface    Platform
+  secondarySurface  Platform
+  signatureMove     String
+  opportunity       String
+  accounts          SocialAccount[]
+  posts             Post[]
+  experiments       Experiment[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model SocialAccount {
+  id           String           @id @default(cuid())
+  employeeId   String
+  employee     Employee         @relation(fields: [employeeId], references: [id])
+  platform     Platform
+  handle       String
+  followers    Int
+  confidence   MetricConfidence
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model Post {
+  id                 String          @id @default(cuid())
+  employeeId         String
+  employee           Employee        @relation(fields: [employeeId], references: [id])
+  text               String
+  platform           Platform
+  contentType        String
+  archetype          String
+  campaign           String
+  ctaType            String
+  brandTouch         String
+  product            String
+  launchWindow       Boolean         @default(false)
+  publishedAt        DateTime
+  zone               String
+  advancedZone       String
+  confidence         MetricConfidence
+  metrics            PostMetrics?
+  scores             PostScores?
+  rippleEvents       RippleEvent[]
+  recommendedPlayId  String?
+  recommendedPlay    Play?           @relation(fields: [recommendedPlayId], references: [id])
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@index([platform, publishedAt])
+  @@index([employeeId, publishedAt])
+  @@index([campaign])
+}
+
+model PostMetrics {
+  id                    String @id @default(cuid())
+  postId                String @unique
+  post                  Post   @relation(fields: [postId], references: [id])
+  views                 Int
+  reach                 Int
+  likes                 Int
+  comments              Int
+  replies               Int
+  reposts               Int
+  quotes                Int
+  shares                Int
+  clicks                Int
+  profileVisits         Int
+  signups               Int
+  paidSubscriptions     Int
+  consultingLeads       Int
+  revenue               Int
+  assistedConversions   Int
+}
+
+model PostScores {
+  id           String @id @default(cuid())
+  postId       String @unique
+  post         Post   @relation(fields: [postId], references: [id])
+  awareness    Float
+  engagement   Float
+  trust        Float
+  clicks       Float
+  signups      Float
+  paid         Float
+  consulting   Float
+  revenue      Float
+  assists      Float
+  surfaceIQ    Float
+  socialTS     Float
+  assistRate   Float
+  trustGravity Float
+  humanHalo    Float
+}
+
+model RippleEvent {
+  id         String           @id @default(cuid())
+  rootPostId String
+  rootPost   Post             @relation(fields: [rootPostId], references: [id])
+  parentId   String?
+  actor      String
+  platform   Platform
+  eventType  String
+  occurredAt DateTime
+  value      Int
+  confidence MetricConfidence
+}
+
+model Play {
+  id                        String       @id
+  name                      String
+  bestFor                   String
+  bestPlatforms             Platform[]
+  structure                 String
+  whyItWorks                String
+  historicalSignal          String
+  recommendedNextExperiment String
+  posts                     Post[]
+  experiments               Experiment[]
+}
+
+model Experiment {
+  id              String   @id @default(cuid())
+  playId          String
+  play            Play     @relation(fields: [playId], references: [id])
+  ownerEmployeeId String
+  owner           Employee @relation(fields: [ownerEmployeeId], references: [id])
+  name            String
+  hypothesis      String
+  status          String
+  metric          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model DataSource {
+  id          String           @id @default(cuid())
+  name        String
+  category    String
+  readiness   DataReadiness
+  confidence  MetricConfidence
+  description String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
