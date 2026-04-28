@@ -177,6 +177,7 @@ model Post {
   rawActivity        RawActivity?    @relation(fields: [rawActivityId], references: [id])
   acquiredVia        AcquisitionProvider?
   acquiredAt         DateTime?
+  sourceId           String?
   metrics            PostMetrics?
   scores             PostScores?
   rippleEvents       RippleEvent[]
@@ -190,6 +191,7 @@ model Post {
   @@index([surfaceId, publishedAt])
   @@index([rawActivityId])
   @@index([surfaceId, externalId])
+  @@index([sourceId])
   @@index([campaign])
 }
 

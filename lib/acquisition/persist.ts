@@ -97,7 +97,7 @@ function zoneFor(platform: Platform) {
   return platform;
 }
 
-function coordFor(platform: Platform, externalId: string) {
+function coordFor(platform: Platform, externalId: string, publishedAt: Date) {
   const zoneCenters: Partial<Record<Platform, { x: number; y: number }>> = {
     X: { x: 30, y: 45 },
     LINKEDIN: { x: 70, y: 45 },
@@ -111,8 +111,9 @@ function coordFor(platform: Platform, externalId: string) {
     PERSONAL_SITE: { x: 54, y: 54 },
   };
   const center = zoneCenters[platform] ?? { x: 50, y: 50 };
+  const seed = `${externalId}:${platform}:${publishedAt.toISOString().slice(0, 10)}`;
   let hash = 0;
-  for (let i = 0; i < externalId.length; i++) hash = (hash * 33 + externalId.charCodeAt(i)) >>> 0;
+  for (let i = 0; i < seed.length; i++) hash = (hash * 33 + seed.charCodeAt(i)) >>> 0;
   return {
     x: Math.max(6, Math.min(94, center.x + ((hash % 17) - 8))),
     y: Math.max(8, Math.min(92, center.y + (((hash >> 8) % 13) - 6))),
@@ -190,26 +191,30 @@ export async function persistActivities({
 
     const metrics = metricsFromActivity(activity);
     const scores = scoresFromMetrics(metrics);
-    const { x, y } = coordFor(surface.platform, externalId);
-    const existing = await db.post.findFirst({
+    const { x, y } = coordFor(surface.platform, externalId, publishedAt);
+    const sourceId = `acquired:${provider.toLowerCase()}`;
+    const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
       select: { id: true },
     });
 
-    if (existing) {
-      await db.post.update({
-        where: { id: existing.id },
-        data: {
-          text,
-          permalink: activity.permalink,
-          acquiredVia: provider,
-          acquiredAt: new Date(),
-          rawActivityId: raw.id,
-          metrics: { upsert: { create: metrics, update: metrics } },
-          scores: { upsert: { create: scores, update: scores } },
-        },
-      });
-      updated += 1;
+    if (existing.length > 0) {
+      for (const post of existing) {
+        await db.post.update({
+          where: { id: post.id },
+          data: {
+            text,
+            permalink: activity.permalink,
+            acquiredVia: provider,
+            acquiredAt: new Date(),
+            rawActivityId: raw.id,
+            sourceId,
+            metrics: { upsert: { create: metrics, update: metrics } },
+            scores: { upsert: { create: scores, update: scores } },
+          },
+        });
+      }
+      updated += existing.length;
     } else {
       await db.post.create({
         data: {
@@ -220,6 +225,7 @@ export async function persistActivities({
           rawActivityId: raw.id,
           acquiredVia: provider,
           acquiredAt: new Date(),
+          sourceId,
           text,
           platform: surface.platform,
           contentType: contentTypeFor(surface.platform, text),

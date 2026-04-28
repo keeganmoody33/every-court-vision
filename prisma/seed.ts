@@ -640,6 +640,7 @@ async function main() {
             advancedZone: advancedZoneFor(platform, shotType),
             confidence: shotType === "three_pointer_promo" ? "NEEDS_INTERNAL_ANALYTICS" : "MODELED",
             recommendedPlayId: playFor(platform, shotType, analytics.employeeId),
+            sourceId: "seeded:roster-fixture",
             metrics: { create: metrics },
             scores: { create: scores },
           },
