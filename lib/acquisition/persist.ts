@@ -193,28 +193,31 @@ export async function persistActivities({
     const scores = scoresFromMetrics(metrics);
     const { x, y } = coordFor(surface.platform, externalId, publishedAt);
     const sourceId = `acquired:${provider.toLowerCase()}`;
+    const acquiredAt = new Date();
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
       select: { id: true },
     });
 
     if (existing.length > 0) {
-      for (const post of existing) {
-        await db.post.update({
-          where: { id: post.id },
-          data: {
-            text,
-            permalink: activity.permalink,
-            acquiredVia: provider,
-            acquiredAt: new Date(),
-            rawActivityId: raw.id,
-            sourceId,
-            metrics: { upsert: { create: metrics, update: metrics } },
-            scores: { upsert: { create: scores, update: scores } },
-          },
-        });
-      }
-      updated += existing.length;
+      await Promise.all(
+        existing.map((post) =>
+          db.post.update({
+            where: { id: post.id },
+            data: {
+              text,
+              permalink: activity.permalink,
+              acquiredVia: provider,
+              acquiredAt,
+              rawActivityId: raw.id,
+              sourceId,
+              metrics: { upsert: { create: metrics, update: metrics } },
+              scores: { upsert: { create: scores, update: scores } },
+            },
+          }),
+        ),
+      );
+      updated += 1;
     } else {
       await db.post.create({
         data: {
@@ -224,7 +227,7 @@ export async function persistActivities({
           permalink: activity.permalink,
           rawActivityId: raw.id,
           acquiredVia: provider,
-          acquiredAt: new Date(),
+          acquiredAt,
           sourceId,
           text,
           platform: surface.platform,
