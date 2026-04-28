@@ -208,28 +208,37 @@ export async function persistActivities({
         await db.$transaction(async (tx) => {
           await tx.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
           await tx.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
-          await tx.rippleEvent.updateMany({
-            where: { parentId: { in: duplicateIds } },
-            data: { parentId: null },
-          });
           await tx.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
           await tx.post.deleteMany({ where: { id: { in: duplicateIds } } });
+          await tx.post.update({
+            where: { id: canonical.id },
+            data: {
+              text,
+              permalink: activity.permalink,
+              acquiredVia: provider,
+              acquiredAt,
+              rawActivityId: raw.id,
+              sourceId,
+              metrics: { upsert: { create: metrics, update: metrics } },
+              scores: { upsert: { create: scores, update: scores } },
+            },
+          });
+        });
+      } else {
+        await db.post.update({
+          where: { id: canonical.id },
+          data: {
+            text,
+            permalink: activity.permalink,
+            acquiredVia: provider,
+            acquiredAt,
+            rawActivityId: raw.id,
+            sourceId,
+            metrics: { upsert: { create: metrics, update: metrics } },
+            scores: { upsert: { create: scores, update: scores } },
+          },
         });
       }
-
-      await db.post.update({
-        where: { id: canonical.id },
-        data: {
-          text,
-          permalink: activity.permalink,
-          acquiredVia: provider,
-          acquiredAt,
-          rawActivityId: raw.id,
-          sourceId,
-          metrics: { upsert: { create: metrics, update: metrics } },
-          scores: { upsert: { create: scores, update: scores } },
-        },
-      });
       updated += 1;
     } else {
       await db.post.create({
