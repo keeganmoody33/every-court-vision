@@ -20,16 +20,18 @@ import { formatCurrency, formatNumber, formatPercent } from "@/lib/formatters";
 import {
   employeeMapFromRoster,
   filtersFromSearchParams,
+  getAllRippleEvents,
   getPosts,
-  getRippleEvents,
   getRoster,
+  scopeRippleEventsToPosts,
 } from "@/lib/queries";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const today = () =>
-  new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(new Date());
+function formatBriefingDate(d: Date) {
+  return new Intl.DateTimeFormat("en", { month: "long", day: "numeric", year: "numeric" }).format(d);
+}
 
 export default async function OverviewPage({
   searchParams,
@@ -37,9 +39,17 @@ export default async function OverviewPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = filtersFromSearchParams(await searchParams);
-  // Posts feed both the chart figures and the ripple-event scoping; load once, share.
-  const [roster, filtered] = await Promise.all([getRoster(), getPosts(filters)]);
-  const ripples = await getRippleEvents(filters, filtered);
+  // Pin "now" once so Cover and Byline can never disagree across a midnight render.
+  const briefingDate = formatBriefingDate(new Date());
+  // Run all DB round-trips in parallel; scope ripple events to the filtered post
+  // set in memory once everything resolves. Keeps the ripple query concurrent
+  // with the post query instead of serializing behind it.
+  const [roster, filtered, allRippleEvents] = await Promise.all([
+    getRoster(),
+    getPosts(filters),
+    getAllRippleEvents(),
+  ]);
+  const ripples = scopeRippleEventsToPosts(allRippleEvents, filtered);
   const metrics = sumMetrics(filtered);
   const cards = platformCards(filtered);
   const employeeMap = employeeMapFromRoster(roster);
@@ -102,7 +112,7 @@ export default async function OverviewPage({
               <p className="font-mono text-eyebrow uppercase tracking-ticker text-court-line/70 tabular">
                 Filed
               </p>
-              <p className="mt-1 font-serif italic text-caption text-court-line/85">{today()}</p>
+              <p className="mt-1 font-serif italic text-caption text-court-line/85">{briefingDate}</p>
               <p className="mt-3 font-mono text-eyebrow uppercase tracking-ticker text-court-line/70 tabular">
                 Issue
               </p>
@@ -115,7 +125,7 @@ export default async function OverviewPage({
       <Byline
         author="The Court Vision desk"
         agent="Bobbito"
-        date={today()}
+        date={briefingDate}
         issue="#007"
         filedUnder="Every Court Vision · Briefing"
       />

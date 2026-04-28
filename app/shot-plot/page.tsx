@@ -1,6 +1,15 @@
 import { Badge } from "@/components/ui/badge";
 import { ShotPlot } from "@/components/ShotPlot";
-import { employeeMapFromRoster, filtersFromSearchParams, getPlays, getPosts, getRippleEvents, getRoster, playMapFromPlays } from "@/lib/queries";
+import {
+  employeeMapFromRoster,
+  filtersFromSearchParams,
+  getAllRippleEvents,
+  getPlays,
+  getPosts,
+  getRoster,
+  playMapFromPlays,
+  scopeRippleEventsToPosts,
+} from "@/lib/queries";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,9 +20,15 @@ export default async function ShotPlotPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = filtersFromSearchParams(await searchParams);
-  // Posts feed both the chart and the ripple-event scoping; load once, share.
-  const [filtered, roster, plays] = await Promise.all([getPosts(filters), getRoster(), getPlays()]);
-  const rippleEvents = await getRippleEvents(filters, filtered);
+  // Run all four DB round-trips in parallel; scope ripple events to the
+  // filtered post set in memory once everything resolves.
+  const [filtered, roster, plays, allRippleEvents] = await Promise.all([
+    getPosts(filters),
+    getRoster(),
+    getPlays(),
+    getAllRippleEvents(),
+  ]);
+  const rippleEvents = scopeRippleEventsToPosts(allRippleEvents, filtered);
   const employeeMap = employeeMapFromRoster(roster);
   const playMap = playMapFromPlays(plays);
 
