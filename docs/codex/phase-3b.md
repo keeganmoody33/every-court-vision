@@ -155,6 +155,14 @@ Per-post visual rules:
 
 ### 5.3 New `components/AssistArc.tsx`
 
+> **Pairing is heuristic.** The schema does not carry an explicit assister→assisted-shot edge. `RippleEvent` tracks engagement activity (likes/replies/RTs of a `rootPostId`), not assist linkage. To derive the pair, follow this rule **and only this rule**:
+>
+> For each post where `isAssist === true`, find the next post — by the same employee OR by another employee in the same `companyId` — within a 72-hour window where `outcome === "made"`. That's the "assisted shot." If no qualifying post exists, **render nothing** for that assist. Never invent a target.
+>
+> All assist arcs are rendered DASHED (`strokeDasharray="2 1.5"`). They are inference, not measurement. Converted pairings (target outcome === "made") get the `strongGlow` filter on the **end cap circle only**, never on the path itself, so the eye can tell "this connection is real" from "this connection landed."
+>
+> At the top of `AssistArc.tsx`, add a `// HEURISTIC:` comment block stating the pairing rule above so the next reader doesn't mistake inference for data.
+
 ```tsx
 "use client";
 import { motion } from "framer-motion";
@@ -177,8 +185,8 @@ export function AssistArc(props: AssistArcProps): JSX.Element { /* ... */ }
 
 Rendering:
 - Quadratic Bezier `<path>` from `(fromX, fromY)` to `(toX, toY)`. Control point = midpoint, offset perpendicular by `0.25 * distance`, biased toward `y=0` (curve bows away from the basket — visually reads as a pass arcing through air).
-- `stroke = PLATFORM_COLORS[fromPlatform]`. `strokeWidth = converted ? 1.4 : 1`. `strokeOpacity = converted ? 1 : 0.6`. `strokeDasharray = converted ? "" : "2 1.5"` (dashed when not converted).
-- `converted` adds `<filter url="#strongGlow">` (you add this filter to `CourtCanvas.tsx` defs — see §5.7).
+- `stroke = PLATFORM_COLORS[fromPlatform]`. `strokeWidth = converted ? 1.4 : 1`. `strokeOpacity = converted ? 0.85 : 0.55`. `strokeDasharray = "2 1.5"` (always dashed — see HEURISTIC note above).
+- `converted` adds `<filter url="#strongGlow">` to the **end cap circle at `(toX, toY)` only** — never on the path. (You add this filter to `CourtCanvas.tsx` defs — see §5.7.)
 - Wrap in `motion.path` with `initial={{ pathLength: 0, opacity: 0 }}`, `animate={{ pathLength: 1, opacity: stroke-opacity }}`, `transition={{ duration: 0.6, delay: props.delay ?? 0 }}`.
 - Two end caps: `<circle cx={fromX} cy={fromY} r={0.8}>` filled with `fromPlatform` color; same for `(toX, toY)` with `toPlatform` color.
 - `pointer-events-none` — arcs don't intercept clicks.
