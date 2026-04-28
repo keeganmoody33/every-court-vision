@@ -27,8 +27,8 @@ export const PASS_LANES = {
 } as const;
 
 export const OUT_OF_BOUNDS = {
-  topRim: { xMin: 2, xMax: 98, yMin: 0, yMax: 4 },
-  bottomRim: { xMin: 2, xMax: 98, yMin: 92, yMax: 94 },
-  leftRim: { xMin: 0, xMax: 4, yMin: 4, yMax: 92 },
-  rightRim: { xMin: 96, xMax: 100, yMin: 4, yMax: 92 },
+  topRim: { xMin: 0, xMax: 100, yMin: 0, yMax: 4 },
+  bottomRim: { xMin: 0, xMax: 100, yMin: 92, yMax: 94 },
+  leftRim: { xMin: 0, xMax: 4, yMin: 0, yMax: 94 },
+  rightRim: { xMin: 96, xMax: 100, yMin: 0, yMax: 94 },
 } as const;

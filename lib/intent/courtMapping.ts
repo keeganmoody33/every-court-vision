@@ -27,6 +27,9 @@ function mulberry32(seed: number) {
 
 function chooseRegion<T extends Record<string, Rect>>(seed: number, regions: T): [keyof T & string, Rect] {
   const entries = Object.entries(regions) as [keyof T & string, Rect][];
+  if (entries.length === 0) {
+    throw new Error("chooseRegion: regions is empty");
+  }
   return entries[(seed >>> 16) % entries.length];
 }
 
@@ -72,5 +75,8 @@ export function postToCoord(
   }
 
   const rect = SHOT_ZONES[intentClass];
+  if (!rect) {
+    throw new Error(`postToCoord: unknown intentClass "${intentClass}"`);
+  }
   return { ...jitter(rect, seed), zone: intentClass };
 }

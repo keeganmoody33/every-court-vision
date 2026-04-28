@@ -308,6 +308,7 @@ model Metric {
   midAttempts           Int      @default(0)
   paintAttempts         Int      @default(0)
   ftAttempts            Int      @default(0)
+  ftMade                Int      @default(0)
   passes                Int      @default(0)
   turnovers             Int      @default(0)
   threePtMade           Int      @default(0)

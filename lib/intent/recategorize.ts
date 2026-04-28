@@ -206,11 +206,18 @@ export async function recategorizeForEmployee(employeeId: string): Promise<Recat
       continue;
     }
     const platform = platformFromDb[post.platform];
-    const llm = await classifyIntentWithLLM(post.text, {
-      name: post.employee.name,
-      role: post.employee.role,
-      platform,
-    });
+    let llm: Awaited<ReturnType<typeof classifyIntentWithLLM>> = null;
+    try {
+      llm = await classifyIntentWithLLM(post.text, {
+        name: post.employee.name,
+        role: post.employee.role,
+        platform,
+      });
+    } catch (error) {
+      errors += 1;
+      console.error("recategorizeForEmployee: LLM classify threw", { postId: post.id, employeeId, error });
+      continue;
+    }
     if (!llm) {
       errors += 1;
       continue;
@@ -236,9 +243,26 @@ export async function recategorizeForEmployee(employeeId: string): Promise<Recat
   }
 
   if (updates.length) {
-    await db.$transaction(
-      updates.map((update) =>
-        db.post.updateMany({
+    // #region agent log
+    fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
+      body: JSON.stringify({
+        sessionId: "133ab1",
+        runId: "pre-fix",
+        hypothesisId: "H_recategorize_atomic_tx_and_catch",
+        location: "lib/intent/recategorize.ts:recategorizeForEmployee",
+        message: "Recategorize applying updates",
+        data: { employeeId, candidates: candidates.length, updates: updates.length, errors },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // #endregion
+
+    const metricsRecomputed = await db.$transaction(async (tx) => {
+      const now = new Date();
+      const postOps = updates.map((update) =>
+        tx.post.updateMany({
           where: { id: update.id, classifiedBy: { not: "manual" } },
           data: {
             intentClass: intentClassToDb[update.intentClass],
@@ -249,21 +273,84 @@ export async function recategorizeForEmployee(employeeId: string): Promise<Recat
             x: update.x,
             y: update.y,
             zone: update.zone,
-            classifiedAt: new Date(),
+            classifiedAt: now,
             classifiedBy: "llm",
           },
         }),
-      ),
-    );
-    const metricOperations = await metricUpsertsForEmployee(employeeId);
-    if (metricOperations.length) {
-      await db.$transaction(metricOperations);
-    }
+      );
+      await Promise.all(postOps);
+
+      const posts = await tx.post.findMany({
+        where: { employeeId, surfaceId: { not: null } },
+        include: { metrics: true, scores: true },
+      });
+      const operations: Prisma.PrismaPromise<unknown>[] = [];
+
+      for (const { label, days } of WINDOWS) {
+        const windowStart = new Date(now.getTime() - days * 86_400_000);
+        const windowPosts = posts.filter((post) => post.publishedAt >= windowStart && post.surfaceId);
+        const bySurface = new Map<string, typeof windowPosts>();
+
+        for (const post of windowPosts) {
+          const rows = bySurface.get(post.surfaceId!) ?? [];
+          rows.push(post);
+          bySurface.set(post.surfaceId!, rows);
+        }
+
+        for (const rows of bySurface.values()) {
+          const data = metricData(rows, days);
+          operations.push(
+            tx.metric.upsert({
+              where: {
+                employeeId_surfaceId_timeWindow_windowStart: {
+                  employeeId,
+                  surfaceId: rows[0].surfaceId!,
+                  timeWindow: label,
+                  windowStart,
+                },
+              },
+              create: {
+                employeeId,
+                surfaceId: rows[0].surfaceId!,
+                platform: rows[0].platform,
+                timeWindow: label,
+                windowStart,
+                windowEnd: now,
+                ...data,
+              },
+              update: {
+                windowEnd: now,
+                ...data,
+              },
+            }),
+          );
+        }
+      }
+
+      await Promise.all(operations);
+      return operations.length;
+    });
+
+    // #region agent log
+    fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
+      body: JSON.stringify({
+        sessionId: "133ab1",
+        runId: "pre-fix",
+        hypothesisId: "H_recategorize_atomic_tx_and_catch",
+        location: "lib/intent/recategorize.ts:recategorizeForEmployee",
+        message: "Recategorize transaction complete",
+        data: { employeeId, metricsRecomputed },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // #endregion
 
     return {
       posts: candidates.length,
       llmEscalations: updates.length,
-      metricsRecomputed: metricOperations.length,
+      metricsRecomputed,
       refined: updates.length,
       skipped: candidates.length - updates.length - errors,
       errors,

@@ -374,6 +374,7 @@ export async function getEmployee(id: string): Promise<EmployeeWithSurfacesAndMe
       midAttempts: metric.midAttempts,
       paintAttempts: metric.paintAttempts,
       ftAttempts: metric.ftAttempts,
+      ftMade: metric.ftMade,
       passes: metric.passes,
       turnovers: metric.turnovers,
       threePtMade: metric.threePtMade,

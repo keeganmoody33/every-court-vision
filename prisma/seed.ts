@@ -663,6 +663,7 @@ async function main() {
   for (const post of postsForClassification) {
     if (!post.metrics || !post.scores || post.classifiedBy === "manual") continue;
     const platform = platformFromDb[post.platform];
+    if (!post.employee) continue;
     const intent = classifyIntent(post.text, {
       name: post.employee.name,
       role: post.employee.role,

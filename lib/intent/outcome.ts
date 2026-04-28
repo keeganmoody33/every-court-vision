@@ -15,6 +15,9 @@ export interface OutcomePost {
 }
 
 function dominantMode(post: Pick<OutcomePost, "metrics" | "scores">, modes: ScoringMode[]): ScoringMode {
+  if (modes.length === 0) {
+    throw new Error("dominantMode: no scoring modes provided");
+  }
   return modes
     .map((mode) => ({
       mode,

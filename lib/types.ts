@@ -320,6 +320,7 @@ export interface SplitRow {
   midAttempts: number;
   paintAttempts: number;
   ftAttempts: number;
+  ftMade: number;
   passes: number;
   turnovers: number;
   threePtMade: number;

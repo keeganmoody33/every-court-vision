@@ -55,6 +55,10 @@ assert.equal(threePointZones.size, 3);
 for (const count of threePointZones.values()) assert.ok(count >= 20 && count <= 45, `3P distribution ${count}`);
 
 const leftWingPoints = threePointPoints.filter((point) => point.zone === "threePoint.leftWing");
+assert.ok(
+  leftWingPoints.length > 0,
+  `Expected at least one leftWing point; got 0. threePointPoints=${threePointPoints.length}`,
+);
 const leftWing = SHOT_ZONES.threePoint.leftWing;
 const widthCoverage =
   (Math.max(...leftWingPoints.map((point) => point.x)) - Math.min(...leftWingPoints.map((point) => point.x))) /

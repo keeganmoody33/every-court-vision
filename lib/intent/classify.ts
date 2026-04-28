@@ -80,7 +80,7 @@ export function classifyIntent(text: string, _ctx: IntentContext): IntentResult 
   if (passSignals.length || isAssist) {
     return {
       intentClass: "pass",
-      intentConfidence: passSignals.length ? 0.7 : 0.7,
+      intentConfidence: 0.7,
       signals: [...passSignals, ...assistSignals],
       isAssist,
       source: "keyword",
@@ -93,7 +93,7 @@ export function classifyIntent(text: string, _ctx: IntentContext): IntentResult 
     return {
       intentClass: "freeThrow",
       intentConfidence: 0.75,
-      signals: freeThrowSignals,
+      signals: [...freeThrowSignals, ...assistSignals],
       isAssist,
       source: "keyword",
     };

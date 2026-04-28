@@ -6,6 +6,7 @@ export interface IntentEfficiencyMetrics {
   midAttempts: number;
   paintAttempts: number;
   ftAttempts: number;
+  ftMade: number;
   passes: number;
   turnovers: number;
   threePtMade: number;
@@ -45,7 +46,7 @@ export function computeIntentMetrics(posts: IntentPost[], windowDays: number): I
   const ftMade = posts.filter((post) => post.intentClass === "freeThrow" && post.outcome === "made").length;
   const fga = threePtAttempts + midAttempts + paintAttempts;
   const made = threePtMade + midMade + paintMade;
-  const totalAttempts = fga + ftAttempts + turnovers;
+  const totalAttempts = fga + ftAttempts;
   const points = threePtMade * 3 + midMade * 2 + paintMade * 2 + ftMade;
   const trueShootingDenominator = 2 * (fga + 0.44 * ftAttempts);
 
@@ -55,6 +56,7 @@ export function computeIntentMetrics(posts: IntentPost[], windowDays: number): I
     midAttempts,
     paintAttempts,
     ftAttempts,
+    ftMade,
     passes,
     turnovers,
     threePtMade,
@@ -66,7 +68,7 @@ export function computeIntentMetrics(posts: IntentPost[], windowDays: number): I
     fgPct: pct(made, fga),
     effectiveFgPct: fga ? Number((((threePtMade * 1.5 + midMade + paintMade) / fga) * 100).toFixed(2)) : 0,
     trueShootingPct: trueShootingDenominator ? Number(((points / trueShootingDenominator) * 100).toFixed(2)) : 0,
-    pacePerWeek: windowDays ? Number(((totalAttempts / windowDays) * 7).toFixed(2)) : 0,
+    pacePerWeek: windowDays > 0 ? Number(((totalAttempts / windowDays) * 7).toFixed(2)) : 0,
     brandTouchEvery: pct(posts.filter((post) => post.brandTouch === "Every").length, posts.length),
     brandTouchPersonal: pct(posts.filter((post) => post.brandTouch === "Personal").length, posts.length),
     assistsCreated: posts.filter((post) => post.isAssist).length,
