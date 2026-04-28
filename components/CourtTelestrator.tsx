@@ -174,10 +174,11 @@ export function CourtTelestrator({
         </div>
       </div>
 
-      {/* The court canvas */}
+      {/* The court canvas — aspect-ratio locked to the viewBox so the HTML
+         click-overlay coordinates (CSS %) stay aligned with SVG content. */}
       <div
         className="relative overflow-hidden rounded-sm border border-court-line/15 bg-[radial-gradient(circle_at_30%_-10%,rgba(255,157,66,0.06),transparent_55%),radial-gradient(circle_at_75%_120%,rgba(85,167,255,0.05),transparent_60%),hsl(var(--court-paint))]"
-        style={{ minHeight: compact ? 320 : height }}
+        style={{ aspectRatio: `${VW}/${VH}`, minHeight: compact ? 320 : height }}
       >
         <svg
           viewBox={`0 0 ${VW} ${VH}`}
