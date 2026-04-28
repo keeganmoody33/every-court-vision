@@ -66,22 +66,6 @@ export async function classifyIntentWithLLM(text: string, ctx: IntentContext): P
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10_000);
 
-  // #region agent log
-  fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
-    body: JSON.stringify({
-      sessionId: "133ab1",
-      runId: "pre-fix",
-      hypothesisId: "H_llm_timeout_and_validation",
-      location: "lib/intent/llm.ts:classifyIntentWithLLM",
-      message: "LLM classify start",
-      data: { platform: ctx.platform, nameLen: ctx.name.length, roleLen: ctx.role.length, textLen: text.length },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
-
   const response = await client.chat.completions
     .create(
       {
@@ -123,22 +107,6 @@ ${safeUserData(text, ctx)}
   try {
     const payload = validateIntentPayload(JSON.parse(content));
     if (!payload) return null;
-
-    // #region agent log
-    fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
-      body: JSON.stringify({
-        sessionId: "133ab1",
-        runId: "pre-fix",
-        hypothesisId: "H_llm_timeout_and_validation",
-        location: "lib/intent/llm.ts:classifyIntentWithLLM",
-        message: "LLM classify parsed",
-        data: { intentClass: payload.intentClass, signalsCount: payload.signals.length, isAssist: payload.isAssist },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
 
     return {
       intentClass: payload.intentClass,

@@ -243,22 +243,6 @@ export async function recategorizeForEmployee(employeeId: string): Promise<Recat
   }
 
   if (updates.length) {
-    // #region agent log
-    fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
-      body: JSON.stringify({
-        sessionId: "133ab1",
-        runId: "pre-fix",
-        hypothesisId: "H_recategorize_atomic_tx_and_catch",
-        location: "lib/intent/recategorize.ts:recategorizeForEmployee",
-        message: "Recategorize applying updates",
-        data: { employeeId, candidates: candidates.length, updates: updates.length, errors },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
-
     const metricsRecomputed = await db.$transaction(async (tx) => {
       const now = new Date();
       const postOps = updates.map((update) =>
@@ -330,22 +314,6 @@ export async function recategorizeForEmployee(employeeId: string): Promise<Recat
       await Promise.all(operations);
       return operations.length;
     });
-
-    // #region agent log
-    fetch("http://127.0.0.1:7457/ingest/1dc25b6d-21cc-4b10-9c3f-2d80883640df", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "133ab1" },
-      body: JSON.stringify({
-        sessionId: "133ab1",
-        runId: "pre-fix",
-        hypothesisId: "H_recategorize_atomic_tx_and_catch",
-        location: "lib/intent/recategorize.ts:recategorizeForEmployee",
-        message: "Recategorize transaction complete",
-        data: { employeeId, metricsRecomputed },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // #endregion
 
     return {
       posts: candidates.length,
