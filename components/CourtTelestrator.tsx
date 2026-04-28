@@ -174,8 +174,15 @@ export function CourtTelestrator({
         </div>
       </div>
 
-      {/* The court canvas — aspect-ratio locked to the viewBox so the HTML
-         click-overlay coordinates (CSS %) stay aligned with SVG content. */}
+      {/* The court canvas. The HTML click-overlay below positions buttons in CSS
+         percentages relative to this container; for that to line up with the SVG
+         content at every viewport size we tell the SVG to stretch to fill the
+         container exactly (`preserveAspectRatio="none"`). The container still
+         carries an `aspectRatio` hint so the default rendering matches the
+         viewBox, but `minHeight` can override it on narrow widths — and with
+         `none` the SVG follows whatever shape the container takes, so the
+         overlay never desyncs. The court diagram is symmetric enough that minor
+         non-uniform scaling reads fine. */}
       <div
         className="relative overflow-hidden rounded-sm border border-court-line/15 bg-[radial-gradient(circle_at_30%_-10%,rgba(255,157,66,0.06),transparent_55%),radial-gradient(circle_at_75%_120%,rgba(85,167,255,0.05),transparent_60%),hsl(var(--court-paint))]"
         style={{ aspectRatio: `${VW}/${VH}`, minHeight: compact ? 320 : height }}
@@ -183,7 +190,7 @@ export function CourtTelestrator({
         <svg
           viewBox={`0 0 ${VW} ${VH}`}
           className="h-full min-h-[inherit] w-full"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="none"
         >
           <defs>
             <filter id={ids.softGlow}>
