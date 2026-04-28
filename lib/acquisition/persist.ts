@@ -200,23 +200,29 @@ export async function persistActivities({
     });
 
     if (existing.length > 0) {
-      await Promise.all(
-        existing.map((post) =>
-          db.post.update({
-            where: { id: post.id },
-            data: {
-              text,
-              permalink: activity.permalink,
-              acquiredVia: provider,
-              acquiredAt,
-              rawActivityId: raw.id,
-              sourceId,
-              metrics: { upsert: { create: metrics, update: metrics } },
-              scores: { upsert: { create: scores, update: scores } },
-            },
-          }),
-        ),
-      );
+      const [canonical, ...duplicates] = existing;
+
+      if (duplicates.length > 0) {
+        const duplicateIds = duplicates.map((p) => p.id);
+        await db.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
+        await db.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
+        await db.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
+        await db.post.deleteMany({ where: { id: { in: duplicateIds } } });
+      }
+
+      await db.post.update({
+        where: { id: canonical.id },
+        data: {
+          text,
+          permalink: activity.permalink,
+          acquiredVia: provider,
+          acquiredAt,
+          rawActivityId: raw.id,
+          sourceId,
+          metrics: { upsert: { create: metrics, update: metrics } },
+          scores: { upsert: { create: scores, update: scores } },
+        },
+      });
       updated += 1;
     } else {
       await db.post.create({
