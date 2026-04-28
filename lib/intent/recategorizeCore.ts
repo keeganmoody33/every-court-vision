@@ -1,4 +1,6 @@
 import type { IntentClass, Platform, PostMetrics, PostScores, ShotOutcome } from "@/lib/types";
+import { classifyOutcome } from "@/lib/intent/outcome";
+import { postToCoord } from "@/lib/intent/courtMapping";
 
 type Candidate = {
   id: string;
@@ -55,8 +57,16 @@ export function createRecategorizer(deps: {
       let errors = 0;
       const planned: {
         id: string;
+        employeeId: string;
+        platform: Platform;
         intentClass: IntentClass;
         intentConfidence: number;
+        outcome: ShotOutcome;
+        recovered: boolean;
+        isAssist: boolean;
+        x: number;
+        y: number;
+        zone: string;
       }[] = [];
 
       for (const post of candidates) {
@@ -74,7 +84,19 @@ export function createRecategorizer(deps: {
           errors += 1;
           continue;
         }
-        planned.push({ id: post.id, intentClass: llm.intentClass, intentConfidence: llm.intentConfidence });
+        const outcome = classifyOutcome({ text: post.text, metrics: post.metrics, scores: post.scores }, llm.intentClass);
+        const coord = postToCoord(post.id, post.employeeId, llm.intentClass, outcome.outcome, post.platform);
+        planned.push({
+          id: post.id,
+          employeeId: post.employeeId,
+          platform: post.platform,
+          intentClass: llm.intentClass,
+          intentConfidence: llm.intentConfidence,
+          outcome: outcome.outcome,
+          recovered: outcome.recovered,
+          isAssist: llm.isAssist,
+          ...coord,
+        });
       }
 
       let updatedRows = 0;
@@ -85,12 +107,12 @@ export function createRecategorizer(deps: {
             id: update.id,
             intentClass: update.intentClass,
             intentConfidence: update.intentConfidence,
-            outcome: "missed",
-            recovered: false,
-            isAssist: false,
-            x: 50,
-            y: 47,
-            zone: "freeThrow",
+            outcome: update.outcome,
+            recovered: update.recovered,
+            isAssist: update.isAssist,
+            x: update.x,
+            y: update.y,
+            zone: update.zone,
           });
           updatedRows += res.count;
         }

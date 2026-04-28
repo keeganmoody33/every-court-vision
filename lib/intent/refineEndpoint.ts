@@ -3,8 +3,8 @@ type RefineRequest = {
 };
 
 type RefineResponse =
-  | { ok: true; refined: 0; skipped: number; errors: number; reason: "llm_disabled" }
-  | { ok: true; refined: number; skipped: number; errors: number }
+  | { ok: true; refined: 0; skipped: number; errors: number; posts: number; reason: "llm_disabled" }
+  | { ok: true; refined: number; skipped: number; errors: number; posts: number }
   | { ok: false; error: string };
 
 type RecategorizeForEmployeeResult = {
@@ -22,16 +22,16 @@ export function createRefineEndpoint(deps: {
 }): (req: RefineRequest) => Promise<RefineResponse> {
   return async (req) => {
     if (!process.env.OPENAI_API_KEY) {
-      return { ok: true, refined: 0, skipped: 0, errors: 0, reason: "llm_disabled" };
+      return { ok: true, refined: 0, skipped: 0, errors: 0, posts: 0, reason: "llm_disabled" };
     }
 
     if (req.employeeId) {
       const result = await deps.recategorizeForEmployee(req.employeeId);
-      return { ok: true, refined: result.refined, skipped: result.skipped, errors: result.errors };
+      return { ok: true, refined: result.refined, skipped: result.skipped, errors: result.errors, posts: result.posts };
     }
 
     const result = await deps.recategorizeAllLowConfidence();
-    return { ok: true, refined: result.refined, skipped: result.skipped, errors: result.errors };
+    return { ok: true, refined: result.refined, skipped: result.skipped, errors: result.errors, posts: 0 };
   };
 }
 
