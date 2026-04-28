@@ -74,6 +74,22 @@ export function CourtTelestrator({
   }, [defaultPostId, posts, ripplesByRoot]);
 
   const [internalSelected, setInternalSelected] = useState<string | undefined>(autoFocusId);
+
+  // Resync uncontrolled focus when filters change. If the upstream auto-focus has
+  // moved (because posts/ripples shifted) AND the current selection isn't in the
+  // new visible post set, fall back to the new auto-focus. If the user's pick is
+  // still valid in the new set, keep it — filter shouldn't blow away a click.
+  // Inline state-update-from-prop pattern (no useEffect) per React docs.
+  const [prevAutoFocusId, setPrevAutoFocusId] = useState<string | undefined>(autoFocusId);
+  if (autoFocusId !== prevAutoFocusId) {
+    setPrevAutoFocusId(autoFocusId);
+    if (selectedPostId === undefined) {
+      const stillValid =
+        internalSelected !== undefined && posts.some((p) => p.id === internalSelected);
+      if (!stillValid) setInternalSelected(autoFocusId);
+    }
+  }
+
   const focusId = selectedPostId ?? internalSelected;
   const focusPost = useMemo(() => posts.find((p) => p.id === focusId), [posts, focusId]);
   const focusRipples = useMemo(
