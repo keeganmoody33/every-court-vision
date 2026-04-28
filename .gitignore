@@ -11,3 +11,6 @@ coverage
 .playwright-mcp
 desktop-overview.png
 .claude/
+
+# Editor state
+.cursor/
