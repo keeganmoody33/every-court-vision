@@ -1,16 +1,16 @@
 {
 	"scripts": {
-		"dev": "pnpm dlx next@16.2.4 dev",
-		"build": "pnpm dlx next@16.2.4 build",
-		"start": "pnpm dlx next@16.2.4 start",
-		"lint": "pnpm dlx eslint@9.39.4 .",
-		"typecheck": "pnpm --package=typescript@5.9.3 dlx tsc --noEmit",
-		"postinstall": "pnpm dlx prisma@7.8.0 generate --schema prisma/schema.prisma --generator client",
-		"prisma:validate": "pnpm dlx prisma@7.8.0 validate --schema prisma/schema.prisma",
-		"prisma:generate": "pnpm dlx prisma@7.8.0 generate --schema prisma/schema.prisma --generator client",
-		"db:push": "pnpm dlx prisma@7.8.0 db push",
-		"db:seed": "pnpm dlx tsx@4.19.2 prisma/seed.ts",
-		"db:studio": "pnpm dlx prisma@7.8.0 studio"
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "eslint .",
+		"typecheck": "tsc --noEmit",
+		"postinstall": "prisma generate",
+		"prisma:validate": "prisma validate",
+		"prisma:generate": "prisma generate",
+		"db:push": "prisma db push",
+		"db:seed": "tsx prisma/seed.ts",
+		"db:studio": "prisma studio"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.8.0",
