@@ -10,3 +10,4 @@ coverage
 .DS_Store
 .playwright-mcp
 desktop-overview.png
+.claude/

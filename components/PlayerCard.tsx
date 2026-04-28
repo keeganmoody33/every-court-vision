@@ -1,12 +1,18 @@
 import { ArrowUpRight } from "lucide-react";
 
 import { ProgressLine } from "@/components/ProgressLine";
+import { SyntheticPill } from "@/components/SyntheticPill";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Employee, EmployeeWithSurfaces } from "@/lib/types";
 
 export function PlayerCard({ employee }: { employee: Employee | EmployeeWithSurfaces }) {
   const postCount = "postCount" in employee ? employee.postCount : undefined;
   const pendingPosts = postCount === 0;
+  // While Phase 4 acquisition is unwired, every seeded post has no sourceId.
+  // Show the pill on any card with seeded data so viewers know the metrics are
+  // preview-grade. Cards with `pendingPosts` already render a "Data Readiness"
+  // panel and don't need an additional pill.
+  const showSyntheticPill = postCount !== undefined && postCount > 0;
 
   return (
     <Card className="border-white/10 bg-white/[0.045]">
@@ -16,6 +22,11 @@ export function PlayerCard({ employee }: { employee: Employee | EmployeeWithSurf
             <p className="stat-label">{employee.role}</p>
             <CardTitle className="mt-1 text-2xl">{employee.name}</CardTitle>
             <p className="mt-1 text-sm text-primary">{employee.archetype}</p>
+            {showSyntheticPill ? (
+              <div className="mt-2">
+                <SyntheticPill compact />
+              </div>
+            ) : null}
           </div>
           <ArrowUpRight className="size-5 text-primary" />
         </div>

@@ -6,6 +6,20 @@ import type { ProviderAdapter } from "@/lib/acquisition/types";
 export const spiderProvider: ProviderAdapter = {
   provider: AcquisitionProvider.SPIDER,
   async collect({ surface }) {
+    // D12 runtime fence: Spider must never touch LinkedIn. The policy table omits
+    // SPIDER from the LinkedIn route chain, but a future bug or a misconfigured
+    // surface could route here. Refuse declaratively.
+    if (
+      surface.platform === "LINKEDIN" ||
+      surface.url?.toLowerCase().includes("linkedin.com")
+    ) {
+      return {
+        status: "failed",
+        activities: [],
+        failureCode: "compliance_violation",
+        failureReason: "Spider is not permitted for LinkedIn surfaces (D12).",
+      };
+    }
     if (!env.SPIDER_API_KEY) {
       return {
         status: "disabled",

@@ -91,10 +91,18 @@ function contentTypeFor(platform: Platform, text: string) {
 }
 
 function zoneFor(platform: Platform) {
+  // Display-format zone names. Must stay in sync with prisma/seed.ts:zoneFor and the
+  // basicZones table in lib/constants.ts. Returning the raw Prisma enum here (e.g.,
+  // "LINKEDIN") would break zone grouping on Shot Zones, Court Heat, and Players.
+  if (platform === "LINKEDIN") return "LinkedIn";
+  if (platform === "GITHUB") return "GitHub";
+  if (platform === "INSTAGRAM") return "Instagram";
+  if (platform === "NEWSLETTER" || platform === "SUBSTACK") return "Newsletter";
   if (platform === "YOUTUBE" || platform === "PODCAST") return "YouTube/Podcast";
   if (platform === "TEAMMATE_AMPLIFICATION") return "Teammate Amplification";
   if (platform === "EXTERNAL_AMPLIFICATION") return "External Amplification";
-  return platform;
+  if (platform === "LAUNCHES" || platform === "PRODUCT_HUNT") return "Launches";
+  return "X";
 }
 
 function coordFor(platform: Platform, externalId: string, publishedAt: Date) {
@@ -142,6 +150,13 @@ export async function persistActivities({
   let skipped = 0;
 
   for (const [index, activity] of activities.entries()) {
+    // Manual imports accept untyped JSON, so defend against malformed rows here.
+    // Without this guard, `null.trim()` aborts the entire job and leaves it stuck
+    // in RUNNING because the post-loop status update never runs.
+    if (typeof activity?.text !== "string") {
+      skipped += 1;
+      continue;
+    }
     const text = activity.text.trim();
     if (!text) {
       skipped += 1;
@@ -197,13 +212,24 @@ export async function persistActivities({
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
       select: { id: true },
+      orderBy: { createdAt: "asc" },
     });
 
     if (existing.length > 0) {
-      await Promise.all(
-        existing.map((post) =>
-          db.post.update({
-            where: { id: post.id },
+      const [canonical, ...duplicates] = existing;
+
+      if (duplicates.length > 0) {
+        const duplicateIds = duplicates.map((p) => p.id);
+        await db.$transaction(async (tx) => {
+          await tx.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.rippleEvent.updateMany({
+            where: { rootPostId: { in: duplicateIds } },
+            data: { rootPostId: canonical.id },
+          });
+          await tx.post.deleteMany({ where: { id: { in: duplicateIds } } });
+          await tx.post.update({
+            where: { id: canonical.id },
             data: {
               text,
               permalink: activity.permalink,
@@ -214,9 +240,23 @@ export async function persistActivities({
               metrics: { upsert: { create: metrics, update: metrics } },
               scores: { upsert: { create: scores, update: scores } },
             },
-          }),
-        ),
-      );
+          });
+        });
+      } else {
+        await db.post.update({
+          where: { id: canonical.id },
+          data: {
+            text,
+            permalink: activity.permalink,
+            acquiredVia: provider,
+            acquiredAt,
+            rawActivityId: raw.id,
+            sourceId,
+            metrics: { upsert: { create: metrics, update: metrics } },
+            scores: { upsert: { create: scores, update: scores } },
+          },
+        });
+      }
       updated += 1;
     } else {
       await db.post.create({

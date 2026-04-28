@@ -72,7 +72,9 @@ const sourceReadinessFromDb: Record<string, DataSource["readiness"]> = {
   FUTURE: "Future",
 };
 
-const emptyMetrics: PostMetrics = {
+// Frozen so accidental mutation by a downstream consumer can't poison the fallback
+// for all subsequent posts.
+const emptyMetrics: PostMetrics = Object.freeze({
   views: 0,
   reach: 0,
   likes: 0,
@@ -88,9 +90,9 @@ const emptyMetrics: PostMetrics = {
   consultingLeads: 0,
   revenue: 0,
   assistedConversions: 0,
-};
+}) as PostMetrics;
 
-const emptyScores: PostScores = {
+const emptyScores: PostScores = Object.freeze({
   awareness: 0,
   engagement: 0,
   trust: 0,
@@ -105,7 +107,7 @@ const emptyScores: PostScores = {
   assistRate: 0,
   trustGravity: 0,
   humanHalo: 0,
-};
+}) as PostScores;
 
 function getParam(searchParams: SearchParamsLike, key: keyof FilterState) {
   if (!searchParams) return undefined;
@@ -241,6 +243,7 @@ function mapPost(post: {
   zone: string;
   advancedZone: string;
   confidence: string;
+  sourceId?: string | null;
   recommendedPlayId: string | null;
   metrics: (PostMetrics & { id?: string; postId?: string }) | null;
   scores: (PostScores & { id?: string; postId?: string }) | null;
@@ -264,6 +267,7 @@ function mapPost(post: {
     zone: post.zone,
     advancedZone: post.advancedZone,
     confidence: confidenceFromDb[post.confidence] ?? "Estimated",
+    sourceId: post.sourceId ?? null,
     metrics: post.metrics ?? emptyMetrics,
     scores: post.scores ?? emptyScores,
     recommendedPlayId: post.recommendedPlayId ?? "play-soft-cta",
