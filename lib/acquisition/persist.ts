@@ -197,6 +197,7 @@ export async function persistActivities({
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
       select: { id: true },
+      orderBy: { createdAt: "asc" },
     });
 
     if (existing.length > 0) {
@@ -204,10 +205,16 @@ export async function persistActivities({
 
       if (duplicates.length > 0) {
         const duplicateIds = duplicates.map((p) => p.id);
-        await db.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
-        await db.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
-        await db.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
-        await db.post.deleteMany({ where: { id: { in: duplicateIds } } });
+        await db.$transaction(async (tx) => {
+          await tx.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.rippleEvent.updateMany({
+            where: { parentId: { in: duplicateIds } },
+            data: { parentId: null },
+          });
+          await tx.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
+          await tx.post.deleteMany({ where: { id: { in: duplicateIds } } });
+        });
       }
 
       await db.post.update({
