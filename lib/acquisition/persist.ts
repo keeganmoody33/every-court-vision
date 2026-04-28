@@ -208,7 +208,10 @@ export async function persistActivities({
         await db.$transaction(async (tx) => {
           await tx.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
           await tx.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
-          await tx.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
+          await tx.rippleEvent.updateMany({
+            where: { rootPostId: { in: duplicateIds } },
+            data: { rootPostId: canonical.id },
+          });
           await tx.post.deleteMany({ where: { id: { in: duplicateIds } } });
           await tx.post.update({
             where: { id: canonical.id },
