@@ -4,6 +4,7 @@ import { ArrowRight, CircleDot, ExternalLink } from "lucide-react";
 
 import { AttributionBadge } from "@/components/AttributionBadge";
 import { RippleGraph } from "@/components/RippleGraph";
+import { SyntheticPill, isSyntheticPost } from "@/components/SyntheticPill";
 import {
   Sheet,
   SheetContent,
@@ -47,9 +48,15 @@ export function SidePanel({
                 <span className="rounded-full border border-white/10 px-2.5 py-0.5 text-xs text-muted-foreground">
                   {shotOutcome(post, scoringMode)}
                 </span>
+                {isSyntheticPost(post) ? <SyntheticPill compact /> : null}
               </div>
               <SheetTitle>{post.platform} Film Clip</SheetTitle>
               <SheetDescription>{employee?.name} - {formatShortDate(post.timestamp)}</SheetDescription>
+              {isSyntheticPost(post) ? (
+                <div className="mt-3">
+                  <SyntheticPill />
+                </div>
+              ) : null}
             </SheetHeader>
 
             <div className="mt-6 space-y-5">

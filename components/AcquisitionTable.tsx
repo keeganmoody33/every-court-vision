@@ -86,7 +86,8 @@ export function AcquisitionTable({ rows }: { rows: AcquisitionSurfaceRow[] }) {
                 <TableCell className="text-right font-semibold text-white">{row.postCount}</TableCell>
                 <TableCell className="text-right font-semibold text-white">{row.rawActivityCount}</TableCell>
                 <TableCell className="min-w-[150px] text-xs text-muted-foreground">
-                  {row.lastRunAt ? new Date(row.lastRunAt).toLocaleString() : "Not run"}
+                  {/* ISO format avoids server/client locale hydration mismatch in Next 16. */}
+                  {row.lastRunAt ? new Date(row.lastRunAt).toISOString().replace("T", " ").slice(0, 19) : "Not run"}
                   {row.lastProvider ? <div className="mt-1 text-white">{row.lastProvider}</div> : null}
                 </TableCell>
                 <TableCell>

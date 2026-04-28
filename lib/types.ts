@@ -181,6 +181,12 @@ export interface Post {
   zone: string;
   advancedZone: string;
   confidence: MetricConfidence;
+  /**
+   * Provenance tag. `null` or `seed:*` = preview/fixture data (synthetic engagement).
+   * `acquired:<provider>` = real scrape (e.g., `acquired:x_api`). The SyntheticPill
+   * UI surfaces this so the viewer doesn't mistake fixture metrics for real ones.
+   */
+  sourceId?: string | null;
   metrics: PostMetrics;
   scores: PostScores;
   recommendedPlayId: string;
