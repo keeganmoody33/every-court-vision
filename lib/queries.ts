@@ -382,10 +382,21 @@ export async function getPosts(filters: FilterState): Promise<PostWithEmployee[]
   return filterPosts(posts.map(mapPost), filters);
 }
 
-export async function getRippleEvents(filters: FilterState): Promise<RippleEvent[]> {
+/**
+ * Fetch ripple events scoped to the post set produced by `filters`.
+ *
+ * When the caller has already loaded the filtered posts (e.g. on /overview or
+ * /shot-plot which need both posts and ripples), pass them in via `prefetchedPosts`
+ * to skip a second `getPosts(filters)` round-trip. Callers that only need ripples
+ * (e.g. /stream) can omit it and the function falls back to fetching internally.
+ */
+export async function getRippleEvents(
+  filters: FilterState,
+  prefetchedPosts?: PostWithEmployee[],
+): Promise<RippleEvent[]> {
   const [events, posts] = await Promise.all([
     db.rippleEvent.findMany({ orderBy: { occurredAt: "asc" } }),
-    getPosts(filters),
+    prefetchedPosts ? Promise.resolve(prefetchedPosts) : getPosts(filters),
   ]);
   const postIds = new Set(posts.map((post) => post.id));
   return events.filter((event) => postIds.has(event.rootPostId)).map(mapRippleEvent);

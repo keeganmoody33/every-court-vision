@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -100,6 +100,19 @@ export function CourtTelestrator({
   // Time scrubber — controls how many ripples have "happened" yet.
   // Reset progress to total whenever the focus changes (canonical "reset on prop change"
   // pattern: track previous prop in render, reset state inline — no useEffect needed).
+  // Scope SVG defs to this instance so multiple telestrators on the same page
+  // (e.g. on a player profile) don't fight over global filter/gradient ids.
+  const idBase = useId();
+  const ids = useMemo(
+    () => ({
+      softGlow: `${idBase}-soft-glow`,
+      chalk: `${idBase}-chalk`,
+      paint: `${idBase}-paint`,
+      grid: `${idBase}-grid`,
+    }),
+    [idBase],
+  );
+
   const total = focusRipples.length;
   const [progress, setProgress] = useState(total);
   const [prevTotal, setPrevTotal] = useState(total);
@@ -172,29 +185,29 @@ export function CourtTelestrator({
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            <filter id="cv-soft-glow">
+            <filter id={ids.softGlow}>
               <feGaussianBlur stdDeviation="0.7" />
               <feMerge>
                 <feMergeNode />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <filter id="cv-chalk" x="-10%" y="-10%" width="120%" height="120%">
+            <filter id={ids.chalk} x="-10%" y="-10%" width="120%" height="120%">
               <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" />
               <feDisplacementMap in="SourceGraphic" scale="0.35" />
             </filter>
-            <linearGradient id="cv-paint" x1="0" x2="0" y1="0" y2="1">
+            <linearGradient id={ids.paint} x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor="hsl(var(--court-paint))" stopOpacity="0.85" />
               <stop offset="100%" stopColor="hsl(var(--court-wood))" stopOpacity="0.95" />
             </linearGradient>
-            <pattern id="cv-grid" width="6" height="6" patternUnits="userSpaceOnUse">
+            <pattern id={ids.grid} width="6" height="6" patternUnits="userSpaceOnUse">
               <path d="M6 0H0V6" fill="none" stroke="hsl(var(--court-line) / 0.06)" strokeWidth="0.15" />
             </pattern>
           </defs>
 
           {/* Court substrate */}
-          <rect x="0" y="0" width={VW} height={VH} fill="url(#cv-paint)" />
-          <rect x="0" y="0" width={VW} height={VH} fill="url(#cv-grid)" />
+          <rect x="0" y="0" width={VW} height={VH} fill={`url(#${ids.paint})`} />
+          <rect x="0" y="0" width={VW} height={VH} fill={`url(#${ids.grid})`} />
           <rect
             x="1.5"
             y="1.5"
@@ -293,7 +306,7 @@ export function CourtTelestrator({
                 fill="hsl(var(--court-orange))"
                 stroke="white"
                 strokeWidth="0.45"
-                filter="url(#cv-soft-glow)"
+                filter={`url(#${ids.softGlow})`}
               />
               <circle cx={focusPost.x} cy={focusPost.y} r="6.5" fill="none" stroke="hsl(var(--court-orange) / 0.45)" strokeWidth="0.35" />
               <text

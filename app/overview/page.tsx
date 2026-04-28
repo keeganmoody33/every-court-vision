@@ -37,11 +37,9 @@ export default async function OverviewPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = filtersFromSearchParams(await searchParams);
-  const [roster, filtered, ripples] = await Promise.all([
-    getRoster(),
-    getPosts(filters),
-    getRippleEvents(filters),
-  ]);
+  // Posts feed both the chart figures and the ripple-event scoping; load once, share.
+  const [roster, filtered] = await Promise.all([getRoster(), getPosts(filters)]);
+  const ripples = await getRippleEvents(filters, filtered);
   const metrics = sumMetrics(filtered);
   const cards = platformCards(filtered);
   const employeeMap = employeeMapFromRoster(roster);

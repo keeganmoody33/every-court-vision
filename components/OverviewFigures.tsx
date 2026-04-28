@@ -35,7 +35,10 @@ export function OverviewFigures({
   );
 
   // Single pass per employee — accumulate trust, TS, and assists in one loop instead
-  // of running sumMetrics + two separate reduces.
+  // of running sumMetrics + two separate reduces. Trust and Social TS are 0–100
+  // scores; Assists are raw conversion counts on a different magnitude. Recharts
+  // auto-scales the y-axis to fit; the legend tells the truth without an ad-hoc
+  // ÷ 10 normalization that would confuse tooltip values.
   const employeeData = Object.entries(groupPosts(posts, (post) => post.employeeId))
     .map(([employeeId, group]) => {
       let totalTrust = 0;
@@ -51,7 +54,7 @@ export function OverviewFigures({
         name: employeeMap[employeeId]?.name.split(" ")[0] ?? employeeId,
         Trust: totalTrust / count,
         "Social TS": totalSocialTS / count,
-        Assists: assistedConversions / 10,
+        Assists: assistedConversions,
       };
     })
     .sort((a, b) => b.Trust - a.Trust)
@@ -78,7 +81,7 @@ export function OverviewFigures({
         number="02b"
         eyebrow="Roster intelligence"
         title="Trust, TS%, and assist profile by player."
-        caption="Top eight by Trust Gravity. Tall purple bar = the player&rsquo;s audience treats their posts as signal; tall teal = they convert efficiently per attempt; tall orange = they make their teammates&rsquo; next shots easier."
+        caption="Top eight by Trust Gravity. Trust and Social TS are 0–100 scores; Assists are raw downstream conversions credited — different magnitudes share one axis on purpose, so the assist engines stand out where they should."
         ledeRight={`${employeeData.length}/${Object.keys(employeeMap).length} shown`}
         source="Per-author scoring corpus"
         agent="Bobbito"

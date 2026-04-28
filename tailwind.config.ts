@@ -49,17 +49,22 @@ const config: Config = {
           rule: "hsl(var(--paper-rule))",
         },
 
-        // Court canvas (sacred — basketball metaphor preserved)
+        // Court canvas (sacred — basketball metaphor preserved). The saturated values
+        // are defined ONCE in globals.css as `--court-{line,wood,paint,teal,…}`; we
+        // reference them here through `hsl(var(--…) / <alpha-value>)` so Tailwind
+        // utilities (`fill-court-line`, `bg-court-orange/40`) and SVG inline styles
+        // (`hsl(var(--court-line) / 0.4)`) agree on a single source of truth.
         court: {
-          line: "#f2d2a5",
-          wood: "#281b15",
-          paint: "#172136",
-          teal: "#3ee7d3",
-          orange: "#ff9d42",
-          purple: "#b78cff",
-          red: "#ff5a66",
-          blue: "#55a7ff",
-          // Chrome-safe muted variants — desat 40%, lighten 15% — for use outside the canvas.
+          line: "hsl(var(--court-line) / <alpha-value>)",
+          wood: "hsl(var(--court-wood) / <alpha-value>)",
+          paint: "hsl(var(--court-paint) / <alpha-value>)",
+          teal: "hsl(var(--court-teal) / <alpha-value>)",
+          orange: "hsl(var(--court-orange) / <alpha-value>)",
+          purple: "hsl(var(--court-purple) / <alpha-value>)",
+          red: "hsl(var(--court-red) / <alpha-value>)",
+          blue: "hsl(var(--court-blue) / <alpha-value>)",
+          // Chrome-safe muted variants — desat 40%, lighten 15% — for use outside the
+          // SVG canvas. Hex-only because they don't need to mix with inline SVG styles.
           "muted-teal": "#7ec8bd",
           "muted-orange": "#c98c5a",
           "muted-purple": "#9784b8",

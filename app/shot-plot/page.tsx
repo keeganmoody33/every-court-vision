@@ -11,12 +11,9 @@ export default async function ShotPlotPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = filtersFromSearchParams(await searchParams);
-  const [filtered, roster, plays, rippleEvents] = await Promise.all([
-    getPosts(filters),
-    getRoster(),
-    getPlays(),
-    getRippleEvents(filters),
-  ]);
+  // Posts feed both the chart and the ripple-event scoping; load once, share.
+  const [filtered, roster, plays] = await Promise.all([getPosts(filters), getRoster(), getPlays()]);
+  const rippleEvents = await getRippleEvents(filters, filtered);
   const employeeMap = employeeMapFromRoster(roster);
   const playMap = playMapFromPlays(plays);
 

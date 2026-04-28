@@ -115,7 +115,9 @@ export function Figure({
         {children}
       </div>
 
-      {/* Footer: source + agent CTA */}
+      {/* Footer: source line and/or agent CTA. The agent CTA only renders when the
+          caller explicitly opts in via `agent` or `agentPrompt` — so a source-only
+          figure stays source-only and doesn't auto-pick up a Bobbito link. */}
       {(source || agent !== undefined || agentPrompt) ? (
         <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-3 px-4 sm:px-6 lg:px-8">
           {source ? (
@@ -125,9 +127,11 @@ export function Figure({
           ) : (
             <span />
           )}
-          <ReadWith agent={agent} prompt={agentPrompt}>
-            Read this figure with
-          </ReadWith>
+          {agent !== undefined || agentPrompt ? (
+            <ReadWith agent={agent} prompt={agentPrompt}>
+              Read this figure with
+            </ReadWith>
+          ) : null}
         </figcaption>
       ) : null}
     </figure>

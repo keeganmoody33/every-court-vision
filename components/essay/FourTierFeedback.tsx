@@ -17,8 +17,16 @@ const tiers = [
  * Quote from graph/themes/every-design-system.md:62:
  *   "Four-tier feedback rating system: Amazing, Good, Meh, Bad"
  *
- * Lives at the bottom of every Court Vision essay. Stateless on the wire (we just
- * post a rating); local state shows a confirmed checkmark.
+ * Lives at the bottom of every Court Vision essay. Currently stateless — clicking
+ * a tier stores the choice in local React state and fires the optional `onRate`
+ * callback, but no server persistence is wired up yet. Phase 4 of the brand-wrap
+ * plan adds the rating endpoint and per-essay aggregation. Until then, callers
+ * that want to capture ratings can pass `onRate` and forward to their own
+ * analytics sink.
+ *
+ * TODO(brand-wrap-plan-phase-4): persist ratings to /api/feedback once the
+ *   feedback collection endpoint ships, and surface period-level aggregates back
+ *   in the next briefing essay.
  */
 export function FourTierFeedback({
   prompt = "What did you think?",

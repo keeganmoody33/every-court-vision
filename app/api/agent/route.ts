@@ -23,7 +23,13 @@ export async function GET(request: Request) {
   const agent = url.searchParams.get("agent")?.trim() || "Bobbito";
   const figure = url.searchParams.get("figure")?.trim() ?? null;
   const referer = request.headers.get("referer");
-  const back = referer && referer.startsWith(url.origin) ? referer : "/overview";
+  // Strict origin equality: prefix-matching is open-redirect-vulnerable
+  // (`origin.startsWith("https://example.com")` matches `https://example.com.evil.com/...`).
+  // The referer is only honored if it's exactly the origin or a path on the origin.
+  const back =
+    referer && (referer === url.origin || referer.startsWith(url.origin + "/"))
+      ? referer
+      : "/overview";
 
   const wantsJson =
     request.headers.get("accept")?.toLowerCase().includes("application/json") ?? false;

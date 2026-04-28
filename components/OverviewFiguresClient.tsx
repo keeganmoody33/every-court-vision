@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import {
   Area,
   AreaChart,
@@ -32,15 +33,21 @@ export function OverviewSurfaceChart({
 }: {
   data: { platform: string; reach: number; signups: number; paid: number; consulting: number; assists: number }[];
 }) {
+  // Scope SVG gradient ids per-instance — global ids would collide if two of these
+  // chart components mounted on the same page.
+  const idBase = useId();
+  const signupsGradient = `${idBase}-signups`;
+  const reachGradient = `${idBase}-reach`;
+
   return (
     <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1} initialDimension={{ width: 640, height: 320 }}>
       <AreaChart data={data} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
         <defs>
-          <linearGradient id="cv-signups" x1="0" x2="0" y1="0" y2="1">
+          <linearGradient id={signupsGradient} x1="0" x2="0" y1="0" y2="1">
             <stop offset="5%" stopColor="#ff9d42" stopOpacity={0.45} />
             <stop offset="95%" stopColor="#ff9d42" stopOpacity={0.02} />
           </linearGradient>
-          <linearGradient id="cv-reach" x1="0" x2="0" y1="0" y2="1">
+          <linearGradient id={reachGradient} x1="0" x2="0" y1="0" y2="1">
             <stop offset="5%" stopColor="#55a7ff" stopOpacity={0.18} />
             <stop offset="95%" stopColor="#55a7ff" stopOpacity={0.02} />
           </linearGradient>
@@ -68,7 +75,7 @@ export function OverviewSurfaceChart({
           type="monotone"
           dataKey="reach"
           stroke="#55a7ff"
-          fill="url(#cv-reach)"
+          fill={`url(#${reachGradient})`}
           strokeWidth={1.6}
           isAnimationActive
           animationDuration={1200}
@@ -78,7 +85,7 @@ export function OverviewSurfaceChart({
           type="monotone"
           dataKey="signups"
           stroke="#ff9d42"
-          fill="url(#cv-signups)"
+          fill={`url(#${signupsGradient})`}
           strokeWidth={2.2}
           isAnimationActive
           animationDuration={1400}
