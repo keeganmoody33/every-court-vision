@@ -66,13 +66,15 @@ export default async function OverviewPage({
     .sort((a, b) => b.assists - a.assists)[0];
   const topAssisterName = topAssister ? (employeeMap[topAssister.employeeId]?.name ?? "the roster") : "the roster";
 
+  // Pre-aggregate ripple value by root in a single pass, then index posts in O(N).
+  const rippleSumByRoot = ripples.reduce<Map<string, number>>((acc, event) => {
+    if (!event.rootPostId) return acc;
+    acc.set(event.rootPostId, (acc.get(event.rootPostId) ?? 0) + (event.value || 0));
+    return acc;
+  }, new Map());
+
   const highestRoot = filtered
-    .map((post) => ({
-      post,
-      ripple: ripples
-        .filter((event) => event.rootPostId === post.id)
-        .reduce((sum, event) => sum + (event.value || 0), 0),
-    }))
+    .map((post) => ({ post, ripple: rippleSumByRoot.get(post.id) ?? 0 }))
     .sort((a, b) => b.ripple - a.ripple)[0];
 
   const totalSurfaces = Object.keys(byPlatform).length;

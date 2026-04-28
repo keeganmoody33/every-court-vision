@@ -34,14 +34,24 @@ export function OverviewFigures({
     },
   );
 
+  // Single pass per employee — accumulate trust, TS, and assists in one loop instead
+  // of running sumMetrics + two separate reduces.
   const employeeData = Object.entries(groupPosts(posts, (post) => post.employeeId))
     .map(([employeeId, group]) => {
-      const m = sumMetrics(group);
+      let totalTrust = 0;
+      let totalSocialTS = 0;
+      let assistedConversions = 0;
+      for (const post of group) {
+        totalTrust += post.scores.trustGravity;
+        totalSocialTS += post.scores.socialTS;
+        assistedConversions += post.metrics.assistedConversions;
+      }
+      const count = Math.max(1, group.length);
       return {
         name: employeeMap[employeeId]?.name.split(" ")[0] ?? employeeId,
-        Trust: group.reduce((s, p) => s + p.scores.trustGravity, 0) / Math.max(1, group.length),
-        "Social TS": group.reduce((s, p) => s + p.scores.socialTS, 0) / Math.max(1, group.length),
-        Assists: m.assistedConversions / 10,
+        Trust: totalTrust / count,
+        "Social TS": totalSocialTS / count,
+        Assists: assistedConversions / 10,
       };
     })
     .sort((a, b) => b.Trust - a.Trust)
