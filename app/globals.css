@@ -2,26 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Every Court Vision — design tokens.
+ *
+ * Aesthetic spine: every.to is the editorial spine; ESPN broadcast grammar is the
+ * operating mode; NBA Street Vol. 2 GameBreakers are the celebration layer; hex.tech
+ * informs the data-figure rhythm. Default mode is dark — Court Vision is a film room.
+ *
+ * Cited verbatim from /Users/keeganmoody/every-lab/graph/themes/every-design-system.md:
+ *   "Generous whitespace with modular sections, horizontal rules for separation" (line 54)
+ *   "High-contrast black-on-white and white-on-black themes" (line 47)
+ *   "Provenance Rail: Left-side UI component using color (green/purple) to track text origin" (line 254)
+ */
+
 @layer base {
   :root {
-    --background: 222 28% 6%;
-    --foreground: 210 30% 96%;
-    --card: 222 25% 9%;
-    --card-foreground: 210 30% 96%;
-    --popover: 222 25% 9%;
-    --popover-foreground: 210 30% 96%;
-    --primary: 176 76% 58%;
-    --primary-foreground: 220 32% 6%;
-    --secondary: 224 20% 16%;
-    --secondary-foreground: 210 30% 96%;
-    --muted: 224 18% 15%;
-    --muted-foreground: 215 14% 66%;
-    --accent: 221 22% 18%;
-    --accent-foreground: 210 30% 96%;
-    --destructive: 354 94% 67%;
-    --border: 222 18% 22%;
-    --input: 222 18% 22%;
-    --ring: 176 76% 58%;
+    /* Editorial dark — the film room at midnight. */
+    --background: 28 14% 5%;          /* #0d0a07 — warm ink */
+    --foreground: 38 38% 93%;         /* #f4efe6 — warm cream */
+
+    --card: 28 14% 7%;                /* slightly lifted */
+    --card-foreground: 38 38% 93%;
+
+    --popover: 28 16% 9%;
+    --popover-foreground: 38 38% 93%;
+
+    /* Primary: Spiral-leaning editorial green-teal. Used as link / action accent. */
+    --primary: 169 65% 48%;           /* ~#2bcaa6 */
+    --primary-foreground: 28 22% 6%;
+
+    --secondary: 30 10% 14%;
+    --secondary-foreground: 38 38% 93%;
+
+    --muted: 30 8% 12%;
+    --muted-foreground: 36 12% 62%;
+
+    --accent: 30 12% 18%;
+    --accent-foreground: 38 38% 93%;
+
+    --destructive: 354 78% 60%;       /* #ff5a66 — Court Vision miss red */
+    --border: 30 14% 16%;
+    --input: 30 14% 16%;
+    --ring: 169 65% 48%;
+
+    /* Editorial paper — warm off-white surface used for "essay" panels inside the dark room */
+    --paper: 38 36% 96%;              /* #f7f3ea */
+    --paper-foreground: 28 22% 8%;
+    --paper-rule: 28 12% 78%;
+
+    /* Proof-style provenance rails. Quote: "Provenance Rail: Left-side UI component using color
+       (green/purple) to track text origin" — every-design-system.md:254 */
+    --confidence-direct: 142 64% 34%;     /* #1f8a4f */
+    --confidence-strong: 148 49% 47%;     /* #3fae6f */
+    --confidence-inferred: 261 47% 57%;   /* #7b5bc9 */
+    --confidence-needs: 36 70% 51%;       /* #d89a2c */
+    --confidence-neutral: 0 0% 42%;
+
+    /* Court palette — basketball canvas. Sacred. Do not use in chrome. */
+    --court-line: 36 79% 80%;
+    --court-wood: 18 36% 13%;
+    --court-paint: 220 41% 16%;
+    --court-teal: 169 78% 58%;
+    --court-orange: 27 100% 63%;
+    --court-purple: 263 100% 78%;
+    --court-red: 354 100% 68%;
+    --court-blue: 213 100% 67%;
+
+    /* Halftime lights — atmospheric glows. */
+    --halftime-warm: 36 100% 60%;
+    --halftime-cool: 196 90% 60%;
+  }
+
+  .light,
+  [data-theme="paper"] {
+    /* Every-publication paper mode — used for essay surfaces nested inside the room. */
+    --background: 38 36% 96%;
+    --foreground: 28 22% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 28 22% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 28 22% 8%;
+    --primary: 169 78% 22%;
+    --primary-foreground: 38 36% 96%;
+    --secondary: 38 24% 90%;
+    --secondary-foreground: 28 22% 8%;
+    --muted: 38 24% 92%;
+    --muted-foreground: 28 12% 38%;
+    --accent: 38 28% 86%;
+    --accent-foreground: 28 22% 8%;
+    --destructive: 354 78% 46%;
+    --border: 28 12% 78%;
+    --input: 28 12% 82%;
+    --ring: 169 78% 22%;
   }
 
   * {
@@ -29,25 +101,177 @@
   }
 
   html {
-    background: #05070d;
+    background: hsl(var(--background));
     color-scheme: dark;
+    font-feature-settings: "ss01", "cv11", "ss03";
   }
 
   body {
     @apply bg-background text-foreground antialiased;
+    /* Atmospheric halftime lights. Very low opacity — never compete with content. */
     background:
-      radial-gradient(circle at top left, rgba(62, 231, 211, 0.08), transparent 34rem),
-      radial-gradient(circle at 70% 10%, rgba(255, 157, 66, 0.07), transparent 30rem),
-      linear-gradient(135deg, #05070d 0%, #080b12 42%, #0d1018 100%);
+      radial-gradient(ellipse 80rem 40rem at 18% -10%, hsl(var(--halftime-warm) / 0.045), transparent 60%),
+      radial-gradient(ellipse 60rem 36rem at 88% 12%, hsl(var(--halftime-cool) / 0.04), transparent 65%),
+      radial-gradient(circle at 50% 110%, hsl(var(--court-purple) / 0.05), transparent 55%),
+      hsl(var(--background));
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Editorial body — Fraunces with the SOFT axis pushed up for warmth, opsz auto.
+     The serif lives where prose lives: essay containers, figure captions, pull quotes. */
+  .prose-essay {
+    font-family: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+    font-feature-settings: "liga", "kern", "ss01";
+    font-variation-settings: "SOFT" 60, "WONK" 0, "opsz" 144;
+  }
+
+  /* Tabular numerals everywhere stats live. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 }
 
 @layer components {
   .stat-label {
-    @apply text-xs font-medium uppercase tracking-normal text-muted-foreground;
+    @apply font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground tabular;
   }
 
   .glass-panel {
-    @apply rounded-lg border border-white/10 bg-white/[0.045] shadow-[0_20px_70px_rgba(0,0,0,0.25)] backdrop-blur;
+    @apply rounded-md border border-white/10 bg-white/[0.02] shadow-[0_30px_120px_-40px_rgba(0,0,0,0.6)] backdrop-blur-sm;
+  }
+
+  /* Editorial paper surface — Every essay container nested inside the film-room canvas. */
+  .paper {
+    background: hsl(var(--paper));
+    color: hsl(var(--paper-foreground));
+    border: 1px solid hsl(var(--paper-rule) / 0.4);
+    box-shadow:
+      0 1px 0 hsl(var(--paper-rule) / 0.5),
+      0 40px 120px -30px rgba(0, 0, 0, 0.55),
+      0 8px 30px -10px rgba(0, 0, 0, 0.4);
+  }
+
+  .paper a {
+    color: hsl(169 78% 22%);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  /* Horizontal rule treatment — a single fine line, the way an Every essay separates sections.
+     Quote: "Generous whitespace with modular sections, horizontal rules for separation" — line 54. */
+  .rule {
+    @apply h-px w-full bg-foreground/15;
+  }
+  .paper .rule {
+    background: hsl(var(--paper-rule) / 0.55);
+  }
+
+  /* ESPN ticker — the scoreboard strip used in CompanyHeader and Figure tickers. */
+  .ticker {
+    @apply font-mono text-xs uppercase tracking-[0.22em] tabular;
+  }
+
+  /* Chalk — the telestrator annotation type and stroke style. */
+  .chalk {
+    font-family: var(--font-chalk), "Marker Felt", cursive;
+    color: hsl(var(--court-line));
+  }
+
+  .chalk-stroke {
+    stroke: hsl(var(--court-line) / 0.85);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 3 6;
+    filter: drop-shadow(0 0 0.6px rgba(255, 255, 255, 0.35));
+  }
+
+  /* GameBreaker — NBA Street display. ONLY used in celebration overlays. */
+  .gamebreaker {
+    font-family: var(--font-gamebreaker), Impact, sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
+  /* Drop cap — first letter of an essay's lede paragraph (Every essay convention). */
+  .drop-cap::first-letter {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 600;
+    font-size: 4.6em;
+    line-height: 0.85;
+    float: left;
+    padding: 0.18em 0.12em 0 0;
+    color: hsl(var(--primary));
+    font-variation-settings: "SOFT" 100, "opsz" 144;
+  }
+  .paper .drop-cap::first-letter {
+    color: hsl(169 78% 22%);
+  }
+
+  /* Underline reveal for CTAs ("Read with Bobbito"). */
+  .reveal-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 280ms cubic-bezier(0.2, 0.7, 0.1, 1);
+  }
+  .reveal-underline:hover,
+  .reveal-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@layer utilities {
+  /* Draw-in animation for chalk strokes. Used by telestrator paths via inline style. */
+  @keyframes draw-in {
+    from { stroke-dashoffset: var(--length, 200); }
+    to   { stroke-dashoffset: 0; }
+  }
+  .animate-draw-in {
+    stroke-dasharray: var(--length, 200);
+    stroke-dashoffset: var(--length, 200);
+    animation: draw-in 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  /* Slow drift used for halftime lights / ambient surfaces. */
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50%      { transform: translate3d(0, -6px, 0); }
+  }
+  .animate-drift {
+    animation: drift 9s ease-in-out infinite;
+  }
+
+  /* Holographic shimmer — GameBreaker accent. */
+  @keyframes hologram {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .holographic {
+    background: linear-gradient(
+      120deg,
+      hsl(var(--court-teal)) 0%,
+      hsl(var(--court-purple)) 25%,
+      hsl(var(--court-orange)) 50%,
+      hsl(var(--court-purple)) 75%,
+      hsl(var(--court-teal)) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: hologram 3.4s linear infinite;
+  }
+
+  /* Count-up reveal for stats — used by Figure on tile mount. */
+  @keyframes count-rise {
+    from { opacity: 0; transform: translateY(8%); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-count {
+    animation: count-rise 700ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
   }
 }
