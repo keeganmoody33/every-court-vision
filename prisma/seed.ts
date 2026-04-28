@@ -10,6 +10,12 @@ import {
   type SurfaceAnalyticsFixture,
 } from "@/prisma/fixtures/roster-analytics";
 import { acquisitionPolicies } from "@/lib/acquisition/policies";
+import { platformFromDb } from "@/lib/acquisition/platform";
+import { classifyIntent } from "@/lib/intent/classify";
+import { postToCoord } from "@/lib/intent/courtMapping";
+import { intentClassFromDb, intentClassToDb, shotOutcomeFromDb, shotOutcomeToDb } from "@/lib/intent/dbMapping";
+import { computeIntentMetrics } from "@/lib/intent/metrics";
+import { classifyOutcome } from "@/lib/intent/outcome";
 import type { Platform as AppPlatform, PostMetrics, PostScores } from "@/lib/types";
 
 config({ path: ".env" });
@@ -651,7 +657,51 @@ async function main() {
     }
   }
 
-  const postsBySurface = new Map<string, { employeeId: string; surfaceId: string; platform: Platform; metrics: PostMetrics; scores: PostScores }[]>();
+  const postsForClassification = await prisma.post.findMany({
+    include: { employee: true, metrics: true, scores: true },
+  });
+  for (const post of postsForClassification) {
+    if (!post.metrics || !post.scores || post.classifiedBy === "manual") continue;
+    const platform = platformFromDb[post.platform];
+    const intent = classifyIntent(post.text, {
+      name: post.employee.name,
+      role: post.employee.role,
+      platform,
+    });
+    const outcome = classifyOutcome({ text: post.text, metrics: post.metrics, scores: post.scores }, intent.intentClass);
+    const coord = postToCoord(post.id, post.employeeId, intent.intentClass, outcome.outcome, platform);
+    await prisma.post.update({
+      where: { id: post.id },
+      data: {
+        intentClass: intentClassToDb[intent.intentClass],
+        intentConfidence: intent.intentConfidence,
+        outcome: shotOutcomeToDb[outcome.outcome],
+        recovered: outcome.recovered,
+        isAssist: intent.isAssist,
+        classifiedAt: new Date(),
+        classifiedBy: intent.source,
+        x: coord.x,
+        y: coord.y,
+        zone: coord.zone,
+      },
+    });
+  }
+
+  const postsBySurface = new Map<
+    string,
+    {
+      employeeId: string;
+      surfaceId: string;
+      platform: Platform;
+      brandTouch: string;
+      publishedAt: Date;
+      intentClass: keyof typeof intentClassFromDb;
+      outcome: keyof typeof shotOutcomeFromDb;
+      isAssist: boolean;
+      metrics: PostMetrics;
+      scores: PostScores;
+    }[]
+  >();
   const postsWithRelations = await prisma.post.findMany({ include: { metrics: true, scores: true } });
   for (const post of postsWithRelations) {
     if (!post.surfaceId || !post.metrics || !post.scores) continue;
@@ -661,32 +711,59 @@ async function main() {
       employeeId: post.employeeId,
       surfaceId: post.surfaceId,
       platform: post.platform,
+      brandTouch: post.brandTouch,
+      publishedAt: post.publishedAt,
+      intentClass: post.intentClass,
+      outcome: post.outcome,
+      isAssist: post.isAssist,
       metrics: post.metrics,
       scores: post.scores,
     });
     postsBySurface.set(key, rows);
   }
 
+  const seedNow = new Date("2026-04-27T00:00:00.000Z");
+  const windows = [
+    { label: "7D", days: 7 },
+    { label: "30D", days: 30 },
+    { label: "90D", days: 90 },
+  ];
   for (const rows of postsBySurface.values()) {
-    const aggregate = sumMetrics(rows.map((row) => row.metrics));
-    const avg = (selector: (scores: PostScores) => number) =>
-      rows.reduce((sum, row) => sum + selector(row.scores), 0) / Math.max(1, rows.length);
-    await prisma.metric.create({
-      data: {
-        employeeId: rows[0].employeeId,
-        surfaceId: rows[0].surfaceId,
-        platform: rows[0].platform,
-        timeWindow: "90D",
-        windowStart: new Date("2026-01-27T00:00:00.000Z"),
-        windowEnd: new Date("2026-04-27T00:00:00.000Z"),
-        posts: rows.length,
-        ...aggregate,
-        surfaceIQ: avg((score) => score.surfaceIQ),
-        socialTS: avg((score) => score.socialTS),
-        assistRate: avg((score) => score.assistRate),
-        trustGravity: avg((score) => score.trustGravity),
-      },
-    });
+    for (const window of windows) {
+      const windowStart = new Date(seedNow.getTime() - window.days * 86_400_000);
+      const windowRows = rows.filter((row) => row.publishedAt >= windowStart);
+      if (!windowRows.length) continue;
+      const aggregate = sumMetrics(windowRows.map((row) => row.metrics));
+      const avg = (selector: (scores: PostScores) => number) =>
+        windowRows.reduce((sum, row) => sum + selector(row.scores), 0) / Math.max(1, windowRows.length);
+      const intentMetrics = computeIntentMetrics(
+        windowRows.map((row) => ({
+          brandTouch: row.brandTouch as "Every" | "Personal" | "Product" | "Partner",
+          intentClass: intentClassFromDb[row.intentClass],
+          outcome: shotOutcomeFromDb[row.outcome],
+          isAssist: row.isAssist,
+          metrics: row.metrics,
+        })),
+        window.days,
+      );
+      await prisma.metric.create({
+        data: {
+          employeeId: windowRows[0].employeeId,
+          surfaceId: windowRows[0].surfaceId,
+          platform: windowRows[0].platform,
+          timeWindow: window.label,
+          windowStart,
+          windowEnd: seedNow,
+          posts: windowRows.length,
+          ...aggregate,
+          surfaceIQ: avg((score) => score.surfaceIQ),
+          socialTS: avg((score) => score.socialTS),
+          assistRate: avg((score) => score.assistRate),
+          trustGravity: avg((score) => score.trustGravity),
+          ...intentMetrics,
+        },
+      });
+    }
   }
 
   const rippleRoots = createdPosts.slice(0, 10);

@@ -52,6 +52,10 @@ export type ContentType =
   | "Podcast Clip"
   | "Human Halo";
 
+export type IntentClass = "threePoint" | "midRange" | "paint" | "freeThrow" | "pass";
+export type ShotOutcome = "made" | "missed" | "turnover";
+export type ClassifiedBy = "keyword" | "llm" | "manual";
+
 export type TimeWindow = "7D" | "30D" | "90D" | "Launch Window" | "Custom";
 export type EntityFilter = "Company" | "Platform" | "Archetype" | "Employee" | "Campaign" | "Post";
 export type ViewMode = "Totals" | "Per Post" | "Per 1K Views" | "Per Employee" | "Per Campaign" | "Assisted";
@@ -180,6 +184,13 @@ export interface Post {
   y: number;
   zone: string;
   advancedZone: string;
+  intentClass: IntentClass;
+  intentConfidence: number;
+  outcome: ShotOutcome;
+  recovered: boolean;
+  isAssist: boolean;
+  classifiedAt?: string;
+  classifiedBy?: ClassifiedBy;
   confidence: MetricConfidence;
   /**
    * Provenance tag. `null` or `seed:*` = preview/fixture data (synthetic engagement).
@@ -304,4 +315,24 @@ export interface SplitRow {
   revenuePerPost: number;
   conversionPer1KViews: number;
   diffusionDepth: number;
+  totalAttempts: number;
+  threePtAttempts: number;
+  midAttempts: number;
+  paintAttempts: number;
+  ftAttempts: number;
+  passes: number;
+  turnovers: number;
+  threePtMade: number;
+  midMade: number;
+  paintMade: number;
+  threePtPct: number;
+  midPct: number;
+  paintPct: number;
+  fgPct: number;
+  effectiveFgPct: number;
+  trueShootingPct: number;
+  pacePerWeek: number;
+  brandTouchEvery: number;
+  brandTouchPersonal: number;
+  assistsCreated: number;
 }
