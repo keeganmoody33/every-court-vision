@@ -15,6 +15,14 @@ export function CourtCanvas({ children }: { children?: ReactNode }) {
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="2.4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
       <rect x="2" y="2" width="96" height="90" rx="2" fill="url(#courtFill)" stroke="rgba(242,210,165,0.45)" />
       <line x1="50" x2="50" y1="2" y2="92" stroke="rgba(242,210,165,0.24)" strokeWidth="0.4" />

@@ -22,6 +22,7 @@ async function run() {
   const res = await endpoint({ employeeId: "emp-1" });
   assert.equal(res.ok, true);
   assert.equal(res.refined, 0);
+  if (!("reason" in res)) assert.fail("expected disabled response reason");
   assert.equal(res.reason, "llm_disabled");
   assert.equal(calledEmployee, 0);
   assert.equal(calledAll, 0);
@@ -33,4 +34,3 @@ run().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-

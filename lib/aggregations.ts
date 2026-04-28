@@ -22,9 +22,20 @@ export const emptyMetrics: PostMetrics = {
 };
 
 export function filterPosts(posts: Post[], filters: FilterState) {
+  const windowDays =
+    filters.timeWindow === "7D" ? 7 : filters.timeWindow === "30D" ? 30 : filters.timeWindow === "90D" ? 90 : undefined;
+  const windowStart = windowDays ? Date.now() - windowDays * 86_400_000 : undefined;
+
   return posts.filter((post) => {
     if (filters.surface !== "All" && post.platform !== filters.surface) return false;
     if (filters.timeWindow === "Launch Window" && !post.launchWindow) return false;
+    if (windowStart !== undefined) {
+      const timestamp = Date.parse(post.timestamp);
+      if (!Number.isNaN(timestamp) && timestamp < windowStart) return false;
+    }
+    if (filters.intentClass?.length && !filters.intentClass.includes(post.intentClass)) return false;
+    if (filters.outcome?.length && !filters.outcome.includes(post.outcome)) return false;
+    if (filters.platforms?.length && !filters.platforms.includes(post.platform)) return false;
     return true;
   });
 }

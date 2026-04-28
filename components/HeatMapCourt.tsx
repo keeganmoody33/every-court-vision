@@ -1,15 +1,51 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { scaleLinear } from "d3";
 import { motion } from "framer-motion";
 
 import { CourtCanvas } from "@/components/CourtCanvas";
+import { StatTile } from "@/components/essay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { basicZones, modeAccent } from "@/lib/constants";
-import { modeValue, zoneSummaries } from "@/lib/aggregations";
-import { formatCurrency, formatNumber } from "@/lib/formatters";
-import type { ColorScale, Post, ScoringMode, ZoneMode } from "@/lib/types";
+import { modeValue, sumMetrics } from "@/lib/aggregations";
+import { formatCurrency, formatNumber, formatPercent } from "@/lib/formatters";
+import { computeIntentMetrics } from "@/lib/intent/metrics";
+import { OUT_OF_BOUNDS, PASS_LANES, SHOT_ZONES, type Rect } from "@/lib/intent/zones";
+import type { ColorScale, IntentClass, Post, ScoringMode, ZoneMode } from "@/lib/types";
+
+type RegionId = IntentClass | "turnover";
+
+interface RegionSummary {
+  id: RegionId;
+  label: string;
+  posts: Post[];
+}
+
+const REGION_LABELS: Record<RegionId, string> = {
+  threePoint: "3P arc",
+  midRange: "Mid elbows",
+  paint: "Paint",
+  freeThrow: "FT line",
+  pass: "Pass lanes",
+  turnover: "OOB rim",
+};
+
+function rectAttrs(rect: Rect) {
+  return {
+    x: rect.xMin,
+    y: rect.yMin,
+    width: rect.xMax - rect.xMin,
+    height: rect.yMax - rect.yMin,
+  };
+}
+
+function heatFill(scoringMode: ScoringMode, colorScale: ColorScale) {
+  if (scoringMode === "Trust") return "hsl(var(--confidence-direct))";
+  if (scoringMode === "Revenue") return "hsl(var(--court-red))";
+  if (colorScale === "Traditional") return "hsl(var(--court-orange))";
+  return "hsl(var(--court-orange))";
+}
 
 export function HeatMapCourt({
   posts,
@@ -22,78 +58,111 @@ export function HeatMapCourt({
   colorScale: ColorScale;
   scoringMode: ScoringMode;
 }) {
-  const zones = useMemo(() => zoneSummaries(posts, zoneMode), [posts, zoneMode]);
-  const [selectedZone, setSelectedZone] = useState(zones[0]?.zone ?? "X");
-  const max = Math.max(1, ...zones.map((zone) => modeValue(zone.metrics, scoringMode)));
-  const opacityScale = scaleLinear().domain([0, max]).range([0.22, 0.92]);
-
-  const layouts =
-    zoneMode === "Basic"
-      ? basicZones
-      : zones.map((zone, index) => ({
-          id: zone.zone,
-          label: zone.zone,
-          x: 12 + (index % 4) * 22,
-          y: 14 + Math.floor(index / 4) * 23,
-          width: 18,
-          height: 15,
-        }));
-
-  const selected = zones.find((zone) => zone.zone === selectedZone) ?? zones[0];
+  const regions = useMemo<RegionSummary[]>(
+    () =>
+      ([
+        "threePoint",
+        "midRange",
+        "paint",
+        "freeThrow",
+        "pass",
+        "turnover",
+      ] as RegionId[]).map((id) => ({
+        id,
+        label: REGION_LABELS[id],
+        posts: posts.filter((post) => (id === "turnover" ? post.outcome === "turnover" : post.intentClass === id)),
+      })),
+    [posts],
+  );
+  const [selectedRegion, setSelectedRegion] = useState<RegionId>("threePoint");
+  const maxPosts = Math.max(1, ...regions.map((region) => region.posts.length));
+  const opacityScale = scaleLinear().domain([0, maxPosts]).range([0.18, 0.92]);
+  const selected = regions.find((region) => region.id === selectedRegion) ?? regions[0];
+  const selectedMetrics = selected ? sumMetrics(selected.posts) : undefined;
+  const selectedIntentMetrics = selected ? computeIntentMetrics(selected.posts, zoneMode === "Basic" ? 90 : 30) : undefined;
+  const fill = heatFill(scoringMode, colorScale);
 
   return (
     <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
       <Card className="border-white/10 bg-black/25">
         <CardContent className="p-4">
           <CourtCanvas>
-            {layouts.map((layout) => {
-              const summary = zones.find((zone) => zone.zone === layout.id || zone.zone === layout.label);
-              const metricValue = summary ? modeValue(summary.metrics, scoringMode) : 0;
-              const fill = heatColor(scoringMode, colorScale, metricValue);
-              const active = selectedZone === (summary?.zone ?? layout.id);
+            <IntentRegionButton
+              id="threePoint"
+              label={REGION_LABELS.threePoint}
+              selected={selectedRegion === "threePoint"}
+              fill={fill}
+              opacity={opacityScale(regions.find((region) => region.id === "threePoint")?.posts.length ?? 0)}
+              onSelect={setSelectedRegion}
+            >
+              <path
+                d="M 5 90 L 5 64 Q 50 52 95 64 L 95 90 L 77 90 Q 50 74 23 90 Z"
+                fill={fill}
+              />
+            </IntentRegionButton>
+
+            {Object.entries(SHOT_ZONES.midRange).map(([key, rect]) => (
+              <IntentRegionButton
+                key={key}
+                id="midRange"
+                label={REGION_LABELS.midRange}
+                selected={selectedRegion === "midRange"}
+                fill={fill}
+                opacity={opacityScale(regions.find((region) => region.id === "midRange")?.posts.length ?? 0)}
+                onSelect={setSelectedRegion}
+              >
+                <rect {...rectAttrs(rect)} rx="2" fill={fill} />
+              </IntentRegionButton>
+            ))}
+
+            <IntentRegionButton
+              id="paint"
+              label={REGION_LABELS.paint}
+              selected={selectedRegion === "paint"}
+              fill={fill}
+              opacity={opacityScale(regions.find((region) => region.id === "paint")?.posts.length ?? 0)}
+              onSelect={setSelectedRegion}
+            >
+              <rect {...rectAttrs(SHOT_ZONES.paint)} rx="2" fill={fill} />
+            </IntentRegionButton>
+
+            <IntentRegionButton
+              id="freeThrow"
+              label={REGION_LABELS.freeThrow}
+              selected={selectedRegion === "freeThrow"}
+              fill={fill}
+              opacity={opacityScale(regions.find((region) => region.id === "freeThrow")?.posts.length ?? 0)}
+              onSelect={setSelectedRegion}
+            >
+              <rect {...rectAttrs(SHOT_ZONES.freeThrow)} rx="1" fill={fill} />
+            </IntentRegionButton>
+
+            {Object.entries(PASS_LANES).map(([lane, rect]) => (
+              <rect
+                key={lane}
+                {...rectAttrs(rect)}
+                rx="2"
+                fill="none"
+                stroke="rgba(255,255,255,0.26)"
+                strokeWidth="0.35"
+                strokeDasharray="1.4 1.2"
+              />
+            ))}
+
+            {Object.entries(OUT_OF_BOUNDS).map(([rim, rect]) => {
+              const turnoverCount = regions.find((region) => region.id === "turnover")?.posts.length ?? 0;
               return (
-                <motion.g
-                  key={layout.id}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.25 }}
+                <IntentRegionButton
+                  key={rim}
+                  id="turnover"
+                  label={REGION_LABELS.turnover}
+                  selected={selectedRegion === "turnover"}
+                  fill="hsl(var(--muted-foreground))"
+                  opacity={turnoverCount ? opacityScale(turnoverCount) : 0}
+                  onSelect={setSelectedRegion}
                 >
-                  <rect
-                    role="button"
-                    tabIndex={0}
-                    x={layout.x}
-                    y={layout.y}
-                    width={layout.width}
-                    height={layout.height}
-                    rx="2"
-                    fill={fill}
-                    fillOpacity={summary ? opacityScale(metricValue) : 0.18}
-                    stroke={active ? modeAccent[scoringMode] : "rgba(255,255,255,0.22)"}
-                    strokeWidth={active ? 0.9 : 0.35}
-                    filter={active ? "url(#softGlow)" : undefined}
-                    onClick={() => setSelectedZone(summary?.zone ?? layout.id)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") setSelectedZone(summary?.zone ?? layout.id);
-                    }}
-                    className="cursor-pointer outline-none transition-opacity hover:opacity-90"
-                  />
-                  <text
-                    x={layout.x + layout.width / 2}
-                    y={layout.y + layout.height / 2 - 1}
-                    textAnchor="middle"
-                    className="pointer-events-none fill-white text-[2.4px] font-semibold"
-                  >
-                    {layout.label.length > 18 ? `${layout.label.slice(0, 17)}...` : layout.label}
-                  </text>
-                  <text
-                    x={layout.x + layout.width / 2}
-                    y={layout.y + layout.height / 2 + 3.5}
-                    textAnchor="middle"
-                    className="pointer-events-none fill-white/70 text-[2.2px] font-mono"
-                  >
-                    {scoringMode === "Revenue" ? formatCurrency(metricValue) : formatNumber(metricValue)}
-                  </text>
-                </motion.g>
+                  <rect {...rectAttrs(rect)} fill="hsl(var(--muted-foreground))" />
+                </IntentRegionButton>
               );
             })}
           </CourtCanvas>
@@ -102,26 +171,29 @@ export function HeatMapCourt({
 
       <Card className="border-white/10 bg-white/[0.045]">
         <CardHeader>
-          <p className="stat-label">Selected Zone</p>
-          <CardTitle>{selected?.zone ?? "No zone"}</CardTitle>
+          <p className="stat-label">Selected Region</p>
+          <CardTitle>{selected?.label ?? "No region"}</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-sm">
-          {selected ? (
+        <CardContent className="space-y-4">
+          {selected && selectedMetrics && selectedIntentMetrics ? (
             <>
-              <div className="grid grid-cols-2 gap-2">
-                <Mini label="Posts" value={String(selected.posts)} />
-                <Mini label={scoringMode} value={scoringMode === "Revenue" ? formatCurrency(modeValue(selected.metrics, scoringMode)) : formatNumber(modeValue(selected.metrics, scoringMode))} />
-                <Mini label="Social TS%" value={selected.socialTS.toFixed(1)} />
-                <Mini label="Assist Rate" value={`${selected.assistRate.toFixed(1)}%`} />
+              <div className="grid gap-2">
+                <StatTile label="Posts" value={formatNumber(selected.posts.length)} detail={`${zoneMode} read`} />
+                <StatTile
+                  label={scoringMode}
+                  value={scoringMode === "Revenue" ? formatCurrency(modeValue(selectedMetrics, scoringMode)) : formatNumber(modeValue(selectedMetrics, scoringMode))}
+                  detail={`${colorScale.toLowerCase()} heat scale`}
+                />
+                <StatTile label="FG%" value={formatPercent(selectedIntentMetrics.fgPct, 1)} detail="Made shots over attempts" />
+                <StatTile label="Assists" value={formatNumber(selectedIntentMetrics.assistsCreated)} detail="Posts tagged as setup" />
               </div>
               <div className="rounded-md border border-white/10 bg-black/20 p-3">
-                <p className="stat-label">Best Use</p>
-                <p className="mt-1 text-white">{selected.bestUse}</p>
+                <p className="stat-label">Read</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Heat is volume first. The selected scoring mode changes the readout; position stays anchored to
+                  Phase 3a&apos;s intent mapping.
+                </p>
               </div>
-              <p className="text-muted-foreground">
-                Color can mean different things by mode: blue leans awareness, purple trust and assists, orange
-                conversion, red revenue and consulting, gray insufficient data.
-              </p>
             </>
           ) : null}
         </CardContent>
@@ -130,21 +202,47 @@ export function HeatMapCourt({
   );
 }
 
-function heatColor(mode: ScoringMode, scale: ColorScale, value: number) {
-  if (value === 0) return "#6b7280";
-  if (scale === "Traditional") return value > 1000 ? "#ff5a66" : value > 100 ? "#ff9d42" : "#3ee7d3";
-  if (mode === "Awareness") return "#55a7ff";
-  if (mode === "Trust" || mode === "Assists") return "#b78cff";
-  if (mode === "Revenue" || mode === "Consulting Leads") return "#ff5a66";
-  if (mode === "Signups" || mode === "Paid Subs") return "#ff9d42";
-  return "#3ee7d3";
-}
-
-function Mini({ label, value }: { label: string; value: string }) {
+function IntentRegionButton({
+  id,
+  label,
+  selected,
+  fill,
+  opacity,
+  onSelect,
+  children,
+}: {
+  id: RegionId;
+  label: string;
+  selected: boolean;
+  fill: string;
+  opacity: number;
+  onSelect: (id: RegionId) => void;
+  children: ReactNode;
+}) {
   return (
-    <div className="rounded-md border border-white/10 bg-black/20 p-3">
-      <p className="stat-label">{label}</p>
-      <p className="mt-1 font-semibold text-white">{value}</p>
-    </div>
+    <motion.g
+      role="button"
+      tabIndex={0}
+      aria-label={`Select ${label}`}
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.25 }}
+      onClick={() => onSelect(id)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") onSelect(id);
+      }}
+      className="cursor-pointer outline-none transition-opacity hover:opacity-90"
+      style={{ opacity }}
+    >
+      <g
+        fill={fill}
+        fillOpacity={opacity}
+        stroke={selected ? "white" : "rgba(255,255,255,0.24)"}
+        strokeWidth={selected ? 0.8 : 0.35}
+        filter={selected ? "url(#softGlow)" : undefined}
+      >
+        {children}
+      </g>
+    </motion.g>
   );
 }

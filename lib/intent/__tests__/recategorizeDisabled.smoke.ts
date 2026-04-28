@@ -8,19 +8,24 @@ async function run() {
   let calledLlm = 0;
   let calledTransaction = 0;
   let calledMetricUpserts = 0;
+  let calledUpdatePost = 0;
 
   const recategorize = createRecategorizer({
     classifyIntentWithLLM: async () => {
       calledLlm += 1;
       return null;
     },
-    transaction: async () => {
+    transaction: async <T>(ops: () => Promise<T>) => {
       calledTransaction += 1;
-      return [];
+      return ops();
     },
     metricUpsertsForEmployee: async () => {
       calledMetricUpserts += 1;
       return [];
+    },
+    updatePost: async () => {
+      calledUpdatePost += 1;
+      return { count: 0 };
     },
     findCandidates: async () => [
       {
@@ -42,6 +47,7 @@ async function run() {
   assert.equal(calledLlm, 0);
   assert.equal(calledTransaction, 0);
   assert.equal(calledMetricUpserts, 0);
+  assert.equal(calledUpdatePost, 0);
 
   console.log("recategorizeDisabled.smoke.ts passed");
 }
@@ -50,4 +56,3 @@ run().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-

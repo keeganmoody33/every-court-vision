@@ -19,7 +19,6 @@ import type {
   Experiment,
   FilterState,
   MetricConfidence,
-  Platform,
   Play,
   Post,
   PostMetrics,
@@ -102,11 +101,21 @@ const emptyScores: PostScores = Object.freeze({
   humanHalo: 0,
 }) as PostScores;
 
-function getParam(searchParams: SearchParamsLike, key: keyof FilterState) {
+function getParam(searchParams: SearchParamsLike, key: keyof FilterState | string) {
   if (!searchParams) return undefined;
   if (searchParams instanceof URLSearchParams) return searchParams.get(key) ?? undefined;
   const value = searchParams[key];
   return Array.isArray(value) ? value[0] : value;
+}
+
+function getCsvParam(searchParams: SearchParamsLike, key: keyof FilterState | string) {
+  const value = getParam(searchParams, key);
+  if (!value) return undefined;
+  const values = value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return values.length ? values : undefined;
 }
 
 export function filtersFromSearchParams(searchParams: SearchParamsLike): FilterState {
@@ -120,6 +129,9 @@ export function filtersFromSearchParams(searchParams: SearchParamsLike): FilterS
     attribution: (getParam(searchParams, "attribution") as FilterState["attribution"]) ?? defaultFilters.attribution,
     zoneMode: (getParam(searchParams, "zoneMode") as FilterState["zoneMode"]) ?? defaultFilters.zoneMode,
     colorScale: (getParam(searchParams, "colorScale") as FilterState["colorScale"]) ?? defaultFilters.colorScale,
+    intentClass: (getCsvParam(searchParams, "intent") ?? getCsvParam(searchParams, "intentClass")) as FilterState["intentClass"],
+    outcome: getCsvParam(searchParams, "outcome") as FilterState["outcome"],
+    platforms: getCsvParam(searchParams, "platforms") as FilterState["platforms"],
   };
 }
 

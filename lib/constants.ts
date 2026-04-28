@@ -94,12 +94,6 @@ export const scoringThresholds: Record<ScoringMode, number> = {
   Assists: 12,
 };
 
-/** @deprecated Removed in Phase 3a. Components consuming this will be rewritten in Phase 3b. */
-export const basicZones: never[] = [];
-
-/** @deprecated Removed in Phase 3a. Components consuming this will be rewritten in Phase 3b. */
-export const advancedZones: never[] = [];
-
 export const companyStats = {
   reach: 8700000,
   engagements: 214000,

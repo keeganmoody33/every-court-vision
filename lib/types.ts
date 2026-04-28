@@ -72,6 +72,9 @@ export interface FilterState {
   attribution: AttributionMode;
   zoneMode: ZoneMode;
   colorScale: ColorScale;
+  intentClass?: IntentClass[];
+  outcome?: ShotOutcome[];
+  platforms?: Platform[];
 }
 
 export interface Employee {
