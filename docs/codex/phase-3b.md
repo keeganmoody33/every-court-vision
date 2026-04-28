@@ -64,7 +64,7 @@ outcome: "made" | "missed" | "turnover"
 recovered: boolean
 isAssist: boolean
 platform: Platform
-publishedAt: string  // ISO
+timestamp: string  // ISO. (UI alias for Prisma's publishedAt column — see lib/types.ts:182. The mapping happens in lib/queries.ts; do NOT rename.)
 x, y: number  // 0..100, deterministic, stable
 zone: string  // e.g. "threePoint.leftWing", "pass.top"
 classifiedAt: string | null
@@ -134,7 +134,7 @@ Region geometry — pull straight from `SHOT_ZONES`:
 
 **Today** (delete): renders dots colored by `shotOutcome(post, scoringMode)` (red miss / teal make), sized by `scaleSqrt(metrics.reach)`. Uses `confidence-modeled` glow.
 
-**After**: dots colored by `PLATFORM_COLORS[post.platform]`, sized + faded by `recencyVisual(post.publishedAt)`.
+**After**: dots colored by `PLATFORM_COLORS[post.platform]`, sized + faded by `recencyVisual(post.timestamp)`.
 
 Render order (matters for visual stacking):
 1. `PassingLane` (3 of them, lanes `left`/`right`/`top`) — drawn first, behind everything.
@@ -144,7 +144,7 @@ Render order (matters for visual stacking):
 5. Click overlays — invisible buttons over each post for `setSelectedPost(post)`.
 
 Per-post visual rules:
-- **Made shot** (`outcome === "made"`): solid filled circle. `r = recencyVisual(post.publishedAt).size * (post.intentClass === "threePoint" ? 1.3 : 1)`. `fill = PLATFORM_COLORS[post.platform]`. `fillOpacity = recencyVisual(post.publishedAt).opacity`. Inner stroke `stroke="white" strokeOpacity={0.5}`.
+- **Made shot** (`outcome === "made"`): solid filled circle. `r = recencyVisual(post.timestamp).size * (post.intentClass === "threePoint" ? 1.3 : 1)`. `fill = PLATFORM_COLORS[post.platform]`. `fillOpacity = recencyVisual(post.timestamp).opacity`. Inner stroke `stroke="white" strokeOpacity={0.5}`.
 - **Missed shot** (`outcome === "missed"`): X-mark in platform color, `strokeWidth=1.4`, no fill, `opacity` from recency.
 - **Turnover** (`outcome === "turnover"`): X-mark at the post's `(x, y)` (already mapped to OOB by 3a) at fixed `opacity={0.4}`, color `text-paper-muted`.
 - **Pass post** (`intentClass === "pass"`): not rendered as a dot — picked up by `PassingLane` instead.
@@ -196,7 +196,7 @@ export interface PassingLanePost {
   x: number;          // 0..100
   y: number;          // 0..94
   platform: Platform;
-  publishedAt: string; // ISO
+  timestamp: string; // ISO. (Same UI field name as Post.timestamp.)
 }
 
 export interface PassingLaneProps {
@@ -208,7 +208,7 @@ export function PassingLane(props: PassingLaneProps): JSX.Element { /* ... */ }
 ```
 
 Rendering:
-- Sort `posts` by `publishedAt` ascending.
+- Sort `posts` by `timestamp` ascending.
 - If `posts.length < 2`: render only individual node circles, no path.
 - Else: cubic Bezier path connecting the points in order. Smooth (Catmull-Rom-ish) — use `d3-shape.line().curve(d3.curveBasis)` if it's already a dep, else hand-roll.
 - Path: `stroke="rgba(255,255,255,0.35)"`, `strokeWidth=0.6`, `strokeDasharray="1.5 1"`, `fill="none"`. Lower contrast than shot dots — passes are setup, not drama.
