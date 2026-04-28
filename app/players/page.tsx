@@ -1,12 +1,16 @@
-"use client";
-
 import { PlayerCard } from "@/components/PlayerCard";
 import { PlayerProfile } from "@/components/PlayerProfile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { accounts, employees } from "@/lib/mockData";
 import { formatNumber } from "@/lib/formatters";
+import { getRoster } from "@/lib/queries";
 
-export default function PlayersPage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function PlayersPage() {
+  const employees = await getRoster();
+  const accounts = employees.flatMap((employee) => employee.accounts);
+
   return (
     <div className="space-y-6">
       <div>

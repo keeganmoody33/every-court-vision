@@ -1,10 +1,8 @@
-"use client";
-
 import { Database, KeyRound, Network, Sparkles } from "lucide-react";
 
 import { AttributionBadge } from "@/components/AttributionBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { dataSources } from "@/lib/mockData";
+import { getDataSources } from "@/lib/queries";
 
 const columns = [
   { name: "Public Surface Data", icon: Network },
@@ -13,7 +11,12 @@ const columns = [
   { name: "Modeled Intelligence", icon: Sparkles },
 ] as const;
 
-export default function AttributionPage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function AttributionPage() {
+  const dataSources = await getDataSources();
+
   return (
     <div className="space-y-6">
       <div>

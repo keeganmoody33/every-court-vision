@@ -4,17 +4,16 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { zoneSummaries } from "@/lib/aggregations";
-import { playById } from "@/lib/mockData";
-import type { Post, ZoneMode } from "@/lib/types";
+import type { Play, Post, ZoneMode } from "@/lib/types";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 
-export function ShotZones({ posts, zoneMode }: { posts: Post[]; zoneMode: ZoneMode }) {
+export function ShotZones({ posts, zoneMode, playMap }: { posts: Post[]; zoneMode: ZoneMode; playMap: Record<string, Play> }) {
   const zones = zoneSummaries(posts, zoneMode).sort((a, b) => b.socialTS - a.socialTS);
 
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {zones.map((zone) => {
-        const play = playById[zone.recommendedPlay];
+        const play = playMap[zone.recommendedPlay];
         return (
           <Card key={zone.zone} className="border-white/10 bg-white/[0.045]">
             <CardHeader className="pb-3">

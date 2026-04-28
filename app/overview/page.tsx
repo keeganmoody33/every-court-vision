@@ -1,21 +1,26 @@
-"use client";
-
 import { MousePointerClick, Radio, Sparkles, Target, Users, WalletCards } from "lucide-react";
 
-import { useFilters } from "@/components/AppShell";
 import { InsightCard } from "@/components/InsightCard";
 import { MetricCard } from "@/components/MetricCard";
 import { OverviewCharts } from "@/components/OverviewCharts";
 import { PlatformCard } from "@/components/PlatformCard";
-import { filterPosts, platformCards, sumMetrics } from "@/lib/aggregations";
+import { platformCards, sumMetrics } from "@/lib/aggregations";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
-import { posts } from "@/lib/mockData";
+import { employeeMapFromRoster, filtersFromSearchParams, getPosts, getRoster } from "@/lib/queries";
 
-export default function OverviewPage() {
-  const { filters } = useFilters();
-  const filtered = filterPosts(posts, filters);
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function OverviewPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const filters = filtersFromSearchParams(await searchParams);
+  const [roster, filtered] = await Promise.all([getRoster(), getPosts(filters)]);
   const metrics = sumMetrics(filtered);
   const cards = platformCards(filtered);
+  const employeeMap = employeeMapFromRoster(roster);
 
   return (
     <div className="space-y-6">
@@ -28,7 +33,7 @@ export default function OverviewPage() {
         <MetricCard label="Revenue" value={formatCurrency(metrics.revenue)} icon={Sparkles} detail="Modeled and direct influence" accent="text-red-300" />
       </section>
 
-      <OverviewCharts posts={filtered} />
+      <OverviewCharts posts={filtered} employeeMap={employeeMap} />
 
       <section className="grid gap-4 xl:grid-cols-[1fr_360px]">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

@@ -2,9 +2,12 @@ import { ArrowUpRight } from "lucide-react";
 
 import { ProgressLine } from "@/components/ProgressLine";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Employee } from "@/lib/types";
+import type { Employee, EmployeeWithSurfaces } from "@/lib/types";
 
-export function PlayerCard({ employee }: { employee: Employee }) {
+export function PlayerCard({ employee }: { employee: Employee | EmployeeWithSurfaces }) {
+  const postCount = "postCount" in employee ? employee.postCount : undefined;
+  const pendingPosts = postCount === 0;
+
   return (
     <Card className="border-white/10 bg-white/[0.045]">
       <CardHeader>
@@ -25,10 +28,22 @@ export function PlayerCard({ employee }: { employee: Employee }) {
           <Mini label="Best Assist" value={employee.bestAssist} wide />
         </div>
         <div className="space-y-3">
-          <ProgressLine label="Surface Presence" value={employee.surfacePresence} />
-          <ProgressLine label="Surface IQ" value={employee.surfaceIQ} tone="orange" />
-          <ProgressLine label="Trust Gravity" value={employee.trustGravity} tone="purple" />
-          <ProgressLine label="Social TS%" value={employee.socialTS} tone="teal" />
+          {pendingPosts ? (
+            <div className="rounded-md border border-white/10 bg-black/20 p-3">
+              <p className="stat-label">Data Readiness</p>
+              <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                Public surfaces are mapped. Post-level analytics wait for the scrape/import phase, so this card avoids
+                showing zeroes as performance.
+              </p>
+            </div>
+          ) : (
+            <>
+              <ProgressLine label="Surface Presence" value={employee.surfacePresence} />
+              <ProgressLine label="Surface IQ" value={employee.surfaceIQ} tone="orange" />
+              <ProgressLine label="Trust Gravity" value={employee.trustGravity} tone="purple" />
+              <ProgressLine label="Social TS%" value={employee.socialTS} tone="teal" />
+            </>
+          )}
         </div>
         <div className="rounded-md border border-white/10 bg-black/20 p-3">
           <p className="stat-label">Signature Move</p>

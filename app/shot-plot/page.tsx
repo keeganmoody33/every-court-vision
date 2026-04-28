@@ -1,14 +1,24 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
-import { useFilters } from "@/components/AppShell";
 import { ShotPlot } from "@/components/ShotPlot";
-import { filterPosts } from "@/lib/aggregations";
-import { posts } from "@/lib/mockData";
+import { employeeMapFromRoster, filtersFromSearchParams, getPlays, getPosts, getRippleEvents, getRoster, playMapFromPlays } from "@/lib/queries";
 
-export default function ShotPlotPage() {
-  const { filters } = useFilters();
-  const filtered = filterPosts(posts, filters);
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function ShotPlotPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const filters = filtersFromSearchParams(await searchParams);
+  const [filtered, roster, plays, rippleEvents] = await Promise.all([
+    getPosts(filters),
+    getRoster(),
+    getPlays(),
+    getRippleEvents(filters),
+  ]);
+  const employeeMap = employeeMapFromRoster(roster);
+  const playMap = playMapFromPlays(plays);
 
   return (
     <div className="space-y-6">
@@ -26,7 +36,13 @@ export default function ShotPlotPage() {
           <Badge variant="purple">Purple ring = assist</Badge>
         </div>
       </div>
-      <ShotPlot posts={filtered} scoringMode={filters.scoringMode} />
+      <ShotPlot
+        posts={filtered}
+        scoringMode={filters.scoringMode}
+        employeeMap={employeeMap}
+        playMap={playMap}
+        rippleEvents={rippleEvents}
+      />
     </div>
   );
 }

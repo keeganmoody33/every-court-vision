@@ -4,9 +4,15 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "eslint .",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"postinstall": "prisma generate",
+		"db:push": "prisma db push",
+		"db:seed": "tsx prisma/seed.ts",
+		"db:studio": "prisma studio"
 	},
 	"dependencies": {
+		"@prisma/adapter-pg": "^7.8.0",
+		"@prisma/client": "^7.8.0",
 		"@radix-ui/react-dialog": "^1.1.15",
 		"@radix-ui/react-popover": "^1.1.15",
 		"@radix-ui/react-scroll-area": "^1.2.10",
@@ -16,16 +22,19 @@
 		"@radix-ui/react-tabs": "^1.1.13",
 		"@radix-ui/react-tooltip": "^1.2.8",
 		"@tanstack/react-table": "^8.21.3",
+		"@types/pg": "^8.20.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"d3": "^7.9.0",
 		"framer-motion": "^12.38.0",
 		"lucide-react": "^1.11.0",
 		"next": "^16.2.4",
+		"pg": "^8.20.0",
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5",
 		"recharts": "^3.8.1",
-		"tailwind-merge": "^3.5.0"
+		"tailwind-merge": "^3.5.0",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.5",
@@ -35,12 +44,14 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"autoprefixer": "^10.5.0",
+		"dotenv": "^17.4.2",
 		"eslint": "^9.39.4",
 		"eslint-config-next": "^16.2.4",
 		"postcss": "^8.5.12",
 		"prettier": "^3.8.3",
 		"prisma": "^7.8.0",
 		"tailwindcss": "3.4.17",
+		"tsx": "^4.19.2",
 		"typescript": "^5.9.3"
 	}
 }

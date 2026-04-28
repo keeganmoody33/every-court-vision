@@ -13,11 +13,10 @@ import {
 } from "recharts";
 
 import { groupPosts, sumMetrics } from "@/lib/aggregations";
-import { employeeById } from "@/lib/mockData";
-import type { Post } from "@/lib/types";
+import type { Employee, Post } from "@/lib/types";
 import { formatNumber } from "@/lib/formatters";
 
-export function OverviewCharts({ posts }: { posts: Post[] }) {
+export function OverviewCharts({ posts, employeeMap }: { posts: Post[]; employeeMap: Record<string, Employee> }) {
   const platformData = Object.entries(groupPosts(posts, (post) => post.platform)).map(([platform, group]) => {
     const metrics = sumMetrics(group);
     return {
@@ -33,7 +32,7 @@ export function OverviewCharts({ posts }: { posts: Post[] }) {
   const employeeData = Object.entries(groupPosts(posts, (post) => post.employeeId)).map(([employeeId, group]) => {
     const metrics = sumMetrics(group);
     return {
-      name: employeeById[employeeId]?.name.split(" ")[0] ?? employeeId,
+      name: employeeMap[employeeId]?.name.split(" ")[0] ?? employeeId,
       Trust: group.reduce((sum, post) => sum + post.scores.trustGravity, 0) / group.length,
       "Social TS": group.reduce((sum, post) => sum + post.scores.socialTS, 0) / group.length,
       Assists: metrics.assistedConversions / 10,

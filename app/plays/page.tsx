@@ -1,10 +1,14 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlayCard } from "@/components/PlayCard";
-import { employeeById, experiments, plays } from "@/lib/mockData";
+import { employeeMapFromRoster, getExperiments, getPlays, getRoster } from "@/lib/queries";
 
-export default function PlaysPage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function PlaysPage() {
+  const [plays, experiments, roster] = await Promise.all([getPlays(), getExperiments(), getRoster()]);
+  const employeeById = employeeMapFromRoster(roster);
+
   return (
     <div className="space-y-6">
       <div>
