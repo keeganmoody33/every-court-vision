@@ -131,6 +131,23 @@ export async function GET(request: Request) {
   );
 }
 
+/**
+ * Validate a Referer header against the current origin before echoing it into the
+ * response HTML. A naive `startsWith(origin)` check is vulnerable to open redirect
+ * because `https://example.com.evil.com` starts with `https://example.com`. Parse
+ * the URL and compare origins strictly.
+ */
+function safeBackLink(referer: string | null, origin: string): string {
+  if (!referer) return "/overview";
+  try {
+    const parsed = new URL(referer);
+    if (parsed.origin === origin) return parsed.pathname + parsed.search + parsed.hash;
+  } catch {
+    // fallthrough
+  }
+  return "/overview";
+}
+
 function escapeHtml(input: string): string {
   return input
     .replace(/&/g, "&amp;")
