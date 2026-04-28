@@ -94,32 +94,11 @@ export const scoringThresholds: Record<ScoringMode, number> = {
   Assists: 12,
 };
 
-export const basicZones = [
-  { id: "X", label: "X", x: 18, y: 34, width: 24, height: 22 },
-  { id: "LinkedIn", label: "LinkedIn", x: 58, y: 34, width: 24, height: 22 },
-  { id: "GitHub", label: "GitHub", x: 12, y: 66, width: 18, height: 18 },
-  { id: "Instagram", label: "Instagram", x: 38, y: 68, width: 18, height: 16 },
-  { id: "Newsletter", label: "Newsletter", x: 70, y: 66, width: 20, height: 18 },
-  { id: "YouTube/Podcast", label: "YouTube/Podcast", x: 42, y: 20, width: 22, height: 16 },
-  { id: "Launches", label: "Launches", x: 42, y: 48, width: 16, height: 16 },
-  { id: "Teammate Amplification", label: "Teammate Amplification", x: 24, y: 12, width: 22, height: 14 },
-  { id: "External Amplification", label: "External Amplification", x: 64, y: 12, width: 22, height: 14 },
-];
+/** @deprecated Removed in Phase 3a. Components consuming this will be rewritten in Phase 3b. */
+export const basicZones: never[] = [];
 
-export const advancedZones = [
-  "X original posts",
-  "X replies",
-  "X quote posts",
-  "LinkedIn operator posts",
-  "LinkedIn consulting posts",
-  "GitHub technical proof",
-  "Newsletter bylines",
-  "Product CTAs",
-  "Personal AI observations",
-  "Teammate quote posts",
-  "External founder amplification",
-  "Launch windows",
-];
+/** @deprecated Removed in Phase 3a. Components consuming this will be rewritten in Phase 3b. */
+export const advancedZones: never[] = [];
 
 export const companyStats = {
   reach: 8700000,

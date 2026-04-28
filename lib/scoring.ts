@@ -1,5 +1,5 @@
 import { scoringThresholds } from "@/lib/constants";
-import type { Post, PostMetrics, ScoringMode } from "@/lib/types";
+import type { Post, PostMetrics, PostScores, ScoringMode } from "@/lib/types";
 
 export function engagementRate(metrics: PostMetrics) {
   if (!metrics.views) return 0;
@@ -8,7 +8,7 @@ export function engagementRate(metrics: PostMetrics) {
   return (engagements / metrics.views) * 100;
 }
 
-export function scoreForMode(post: Post, mode: ScoringMode) {
+export function scoreForMode(post: { metrics: PostMetrics; scores: PostScores }, mode: ScoringMode) {
   switch (mode) {
     case "Awareness":
       return post.scores.awareness;
@@ -31,7 +31,7 @@ export function scoreForMode(post: Post, mode: ScoringMode) {
   }
 }
 
-export function shotOutcome(post: Post, mode: ScoringMode): "make" | "miss" | "assist" {
+export function shotOutcome(post: { metrics: PostMetrics; scores: PostScores }, mode: ScoringMode): "make" | "miss" | "assist" {
   if (mode === "Assists" && post.metrics.assistedConversions >= scoringThresholds.Assists) {
     return "assist";
   }

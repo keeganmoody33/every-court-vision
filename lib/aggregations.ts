@@ -1,4 +1,5 @@
 import { coreSurfaces } from "@/lib/constants";
+import { computeIntentMetrics } from "@/lib/intent/metrics";
 import { assistRate, socialTS } from "@/lib/scoring";
 import type { FilterState, Platform, Post, PostMetrics, ScoringMode, SplitRow } from "@/lib/types";
 
@@ -76,6 +77,7 @@ export function modeValue(metrics: PostMetrics, mode: ScoringMode) {
 
 function splitFromPosts(segment: string, posts: Post[]): SplitRow {
   const metrics = sumMetrics(posts);
+  const intentMetrics = computeIntentMetrics(posts, 90);
   const conversions = metrics.signups + metrics.paidSubscriptions + metrics.consultingLeads;
   const avg = (selector: (post: Post) => number) =>
     posts.length ? posts.reduce((sum, post) => sum + selector(post), 0) / posts.length : 0;
@@ -107,6 +109,7 @@ function splitFromPosts(segment: string, posts: Post[]): SplitRow {
     revenuePerPost: posts.length ? metrics.revenue / posts.length : 0,
     conversionPer1KViews: metrics.views ? (conversions / metrics.views) * 1000 : 0,
     diffusionDepth: avg((post) => post.scores.assists / 15),
+    ...intentMetrics,
   };
 }
 

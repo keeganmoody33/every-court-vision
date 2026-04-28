@@ -69,6 +69,20 @@ enum AcquisitionJobStatus {
   DISABLED
 }
 
+enum IntentClass {
+  THREE_POINT
+  MID_RANGE
+  PAINT
+  FREE_THROW
+  PASS
+}
+
+enum ShotOutcome {
+  MADE
+  MISSED
+  TURNOVER
+}
+
 model Company {
   id        String     @id @default(cuid())
   name      String
@@ -170,6 +184,13 @@ model Post {
   y                  Float           @default(47)
   zone               String
   advancedZone       String
+  intentClass        IntentClass     @default(PASS)
+  intentConfidence   Float           @default(0)
+  outcome            ShotOutcome     @default(MISSED)
+  recovered          Boolean         @default(false)
+  isAssist           Boolean         @default(false)
+  classifiedAt       DateTime?
+  classifiedBy       String?
   confidence         MetricConfidence
   externalId         String?
   permalink          String?
@@ -193,6 +214,7 @@ model Post {
   @@index([surfaceId, externalId])
   @@index([sourceId])
   @@index([campaign])
+  @@index([employeeId, intentClass])
 }
 
 model PostMetrics {
@@ -281,11 +303,32 @@ model Metric {
   socialTS              Float    @default(0)
   assistRate            Float    @default(0)
   trustGravity          Float    @default(0)
+  totalAttempts         Int      @default(0)
+  threePtAttempts       Int      @default(0)
+  midAttempts           Int      @default(0)
+  paintAttempts         Int      @default(0)
+  ftAttempts            Int      @default(0)
+  passes                Int      @default(0)
+  turnovers             Int      @default(0)
+  threePtMade           Int      @default(0)
+  midMade               Int      @default(0)
+  paintMade             Int      @default(0)
+  threePtPct            Float    @default(0)
+  midPct                Float    @default(0)
+  paintPct              Float    @default(0)
+  fgPct                 Float    @default(0)
+  effectiveFgPct        Float    @default(0)
+  trueShootingPct       Float    @default(0)
+  pacePerWeek           Float    @default(0)
+  brandTouchEvery       Float    @default(0)
+  brandTouchPersonal    Float    @default(0)
+  assistsCreated        Int      @default(0)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
   @@index([employeeId, timeWindow, windowStart])
   @@index([surfaceId, timeWindow, windowStart])
+  @@unique([employeeId, surfaceId, timeWindow, windowStart])
 }
 
 model Play {
