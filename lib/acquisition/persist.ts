@@ -197,13 +197,21 @@ export async function persistActivities({
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
       select: { id: true },
+      orderBy: { createdAt: "asc" },
     });
 
     if (existing.length > 0) {
-      await Promise.all(
-        existing.map((post) =>
-          db.post.update({
-            where: { id: post.id },
+      const [canonical, ...duplicates] = existing;
+
+      if (duplicates.length > 0) {
+        const duplicateIds = duplicates.map((p) => p.id);
+        await db.$transaction(async (tx) => {
+          await tx.postMetrics.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.postScores.deleteMany({ where: { postId: { in: duplicateIds } } });
+          await tx.rippleEvent.deleteMany({ where: { rootPostId: { in: duplicateIds } } });
+          await tx.post.deleteMany({ where: { id: { in: duplicateIds } } });
+          await tx.post.update({
+            where: { id: canonical.id },
             data: {
               text,
               permalink: activity.permalink,
@@ -214,9 +222,23 @@ export async function persistActivities({
               metrics: { upsert: { create: metrics, update: metrics } },
               scores: { upsert: { create: scores, update: scores } },
             },
-          }),
-        ),
-      );
+          });
+        });
+      } else {
+        await db.post.update({
+          where: { id: canonical.id },
+          data: {
+            text,
+            permalink: activity.permalink,
+            acquiredVia: provider,
+            acquiredAt,
+            rawActivityId: raw.id,
+            sourceId,
+            metrics: { upsert: { create: metrics, update: metrics } },
+            scores: { upsert: { create: scores, update: scores } },
+          },
+        });
+      }
       updated += 1;
     } else {
       await db.post.create({
