@@ -1,0 +1,20 @@
+{
+  "crons": [
+    {
+      "path": "/api/ingest?source=youtube",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/ingest?source=x_company",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/ingest?source=x_dan",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/ingest?source=github",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}
