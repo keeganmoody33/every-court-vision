@@ -10,7 +10,11 @@
 		"prisma:generate": "prisma generate",
 		"db:push": "prisma db push",
 		"db:seed": "tsx prisma/seed.ts",
-		"db:studio": "prisma studio"
+		"db:studio": "prisma studio",
+		"ingest": "tsx scripts/ingest-all.ts",
+		"seed:employees": "tsx scripts/seed-employees.ts",
+		"discover:surfaces": "tsx scripts/discover-surfaces.ts",
+		"sync:sheets": "tsx scripts/sync-from-sheets.ts"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.8.0",
@@ -28,6 +32,7 @@
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"d3": "^7.9.0",
+		"googleapis": "^164.1.0",
 		"framer-motion": "^12.38.0",
 		"lucide-react": "^1.11.0",
 		"next": "^16.2.4",
