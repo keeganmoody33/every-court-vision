@@ -1,123 +1,114 @@
 # Every Court Vision
 
-**Every Court Vision is NBA.com shot charts for Every's off-platform growth.**
+_Last updated: 2026-04-29_
 
-A basketball analytics translation layer that frames distributed off-platform growth like an NBA film room: posts are shots, clicks are attempts, signups are makes, paid subscriptions are threes, consulting leads are and-ones, teammate amplification is assists, and trust-building content creates gravity.
+> Every Court Vision is a basketball analytics translation layer for growth, not a social media dashboard.
+>
+> The product frames Every's distributed off-platform growth like an NBA film room: posts are shots, clicks are attempts, signups are makes, paid subscriptions are threes, consulting leads are and-ones, teammate amplification is assists, and trust-building content creates gravity.
+>
+> The rule to preserve across product, copy, data, and demos:
+>
+> > This does not tell people to post more. It helps people understand what kind of growth they already create.
 
----
+(Lifted verbatim from [`TODO.md:12-21`](TODO.md). The canonical mission doc lives in [`docs/MISSION.md`](docs/MISSION.md).)
 
-## Product Principle: Not a Leaderboard
-
-This does not tell people to post more. It helps people understand **what kind of growth they already create**.
-
-Volume, efficiency, value, and shot quality are different things. A player who takes fewer shots but converts at a higher rate is not worse than a high-volume shooter. The same applies to content and growth: a personal post that builds trust over weeks is not less valuable than a hard CTA that converts immediately. Court Vision exists to surface these distinctions — not to rank teammates against each other.
-
----
-
-## Setup
+## Quick start
 
 ```bash
 pnpm install
-cp .env.example .env        # fill in DATABASE_URL at minimum
-pnpm prisma generate
-pnpm dev
+cp .env.example .env            # set DATABASE_URL to your Neon Postgres
+pnpm db:push                    # apply Prisma schema
+pnpm db:seed                    # seed the demo roster + posts
+pnpm dev                        # http://localhost:3000
 ```
 
-The app runs at `http://localhost:3000`.
-
----
+Requires Node ≥ 20, pnpm, and a Postgres-compatible database (Neon recommended).
 
 ## Scripts
 
-| Command              | Description                                  |
-| -------------------- | -------------------------------------------- |
-| `pnpm dev`           | Start Next.js dev server                     |
-| `pnpm build`         | Production build                             |
-| `pnpm lint`          | Run ESLint                                   |
-| `pnpm typecheck`     | Run TypeScript type checking (`tsc --noEmit`)|
-| `pnpm prisma:validate` | Validate Prisma schema                    |
-| `pnpm db:push`       | Push schema to database                      |
-| `pnpm db:seed`       | Seed database with fixture data              |
-| `pnpm db:studio`     | Open Prisma Studio                           |
+| Script | What it does |
+|---|---|
+| `pnpm dev` | Run the Next.js dev server |
+| `pnpm build` | Production build |
+| `pnpm start` | Run the production build |
+| `pnpm lint` | ESLint over `.` |
+| `pnpm typecheck` | `tsc --noEmit` |
+| `pnpm db:push` | Apply Prisma schema to the configured DB |
+| `pnpm db:seed` | Seed company + roster + posts from `prisma/fixtures/` |
+| `pnpm db:studio` | Open Prisma Studio against the configured DB |
 
----
+## Routes
 
-## Route Map
+| Route | What it renders |
+|---|---|
+| `/` | Redirects to `/overview` |
+| `/overview` | Company profile + 90-day stats (reach, engagements, clicks, signups, paid, consulting, assists, Social TS%) + platform cards + surface/outcome mix charts |
+| `/court-heat` | Interactive court-zone map with scoring modes (awareness, engagement, trust, clicks, signups, paid, consulting, revenue, assists) |
+| `/shot-plot` | Individual posts as court points with made/miss logic, side panel for post detail |
+| `/players` | Roster cards with role, archetype, surfaces, signature move, Surface IQ, Trust Gravity, Social TS% |
+| `/splits` | TanStack splits table — Traditional and Advanced tabs across platform / employee / archetype / content type / CTA / brand touch / product / campaign / launch window / time / day |
+| `/stream` | Timeline of ripple events + ripple graph from root post to downstream conversion |
+| `/plays` | Play cards (Soft CTA After Trust, Teammate Alley-Oop, LinkedIn Consulting Wedge, Human Halo, Launch Rotation, Newsletter Conversion Bridge, GitHub-to-LinkedIn Technical Proof) |
+| `/attribution` | Data source layers (public, authenticated, internal, modeled) + connector readiness cards |
+| `/acquisition` | Acquisition router status — coverage, manual import, raw activity / post counts |
+| `/shot-zones` | Surface and content motion groups, zones categorized by type |
 
-| Route           | View                                                    |
-| --------------- | ------------------------------------------------------- |
-| `/`             | Home — entry point and navigation                       |
-| `/overview`     | Company-level 90-day stats, platform cards, outcome mix |
-| `/court-heat`   | Interactive court surface map with zone scoring          |
-| `/shot-plot`    | Individual posts as court points with side panel         |
-| `/players`      | Player cards: role, archetype, Surface IQ, signature move |
-| `/splits`       | NBA-style splits table (Traditional + Advanced tabs)    |
-| `/stream`       | Ripple event timeline and replay graph                  |
-| `/plays`        | Play cards: codified content strategies                 |
-| `/attribution`  | Attribution model, connector readiness, confidence badges |
-| `/acquisition`  | Acquisition pipeline and data ingestion status          |
+## Data model
 
----
+```
+Company
+  ├── Surface (one per platform, no employeeId)
+  └── Employee
+        ├── Surface (one per (employeeId, platform))   ← @@unique enforced
+        ├── SocialAccount (thinner mirror of Surface)
+        ├── Post (linked to one Surface and one Employee)
+        │     ├── PostMetrics
+        │     ├── PostScores
+        │     └── RippleEvent (downstream conversions, assists, paid)
+        ├── Metric (rolled-up scores)
+        └── Experiment (tied to Plays)
+```
 
-## Demo Flow
+For the full schema with column-level documentation, query patterns, and metric definitions, see the data-context skill at [`.claude/skills/every-court-vision-analyst/`](.claude/skills/every-court-vision-analyst/).
 
-**Overview → Court Heat → Shot Plot → Players → Splits → Stream → Attribution**
+## Architecture
 
-Walk through the film room from macro to micro:
+```
+External           Acquisition           Persistence       Application
+─────────          ───────────           ───────────       ───────────
 
-1. **Overview** — See the full-court picture: reach, signups, paid, assists, Social TS%.
-2. **Court Heat** — Identify hot zones and cold zones by scoring mode.
-3. **Shot Plot** — Drill into individual posts; open the side panel for full context.
-4. **Players** — Compare archetypes and signature moves (not a leaderboard).
-5. **Splits** — Cut the data by platform, content type, CTA type, time of day.
-6. **Stream** — Replay the ripple graph from root post to downstream events.
-7. **Attribution** — Understand data confidence levels and connector readiness.
+Parallel ─┐
+Spider   ─┼──> lib/acquisition/        ─> lib/acquisition/  ─> Prisma DB
+RSS      ─┤      providers/*.ts            persist.ts          (Neon)
+GitHub   ─┤      router.ts                                       │
+X        ─┤      policies.ts                                     │
+LinkedIn ─┤      platform.ts                                     │
+YouTube  ─┤                                                      │
+IG       ─┘                                                      ▼
+Manual ────> /api/import/activity ───────────────────────> lib/queries.ts
+                                                          lib/aggregations.ts
+                                                          lib/scoring.ts
+                                                                 │
+                                                                 ▼
+                                                          app/* routes
+                                                          (Next.js App Router)
+                                                                 │
+                                                                 ▼
+                                                          CourtTelestrator,
+                                                          ShotPlot, RippleGraph,
+                                                          SplitsTable, etc.
+```
 
----
+**Discovery (Phase 5a, not yet shipped):** a per-employee surface-discovery pipeline at `lib/discovery/perEmployee.ts` will enumerate every public profile (X, LinkedIn, GitHub, Substack, Instagram, Newsletter, YouTube, Podcast appearances) using Parallel + Spider + web search and write Surface rows for downstream backfill. Spec: [`docs/codex/phase-5a-surface-discovery.md`](docs/codex/phase-5a-surface-discovery.md).
 
-## Interpretation Moments
+## Roadmap
 
-Three examples of how Court Vision reframes "performance":
+The live status of every section (scaffold, data model, app shell, overview, court heat, shot plot, players, splits, stream, plays, polish, exports, narrative, connectors, release hygiene) lives in [`TODO.md`](TODO.md) with `[x]` / `[~]` / `[ ]` / `[?]` markers.
 
-1. **Hard CTA can miss on engagement and still score on signups.**
-   A promotional post may get low likes and comments (a "miss" in the engagement zone) while quietly driving direct signups. Court Vision shows the make where it matters.
+## Mission
 
-2. **Personal post can miss direct conversion and still create trust or assists.**
-   A reflective thread may never produce a trackable click. But it generates profile visits, DMs, and downstream teammate conversions — an assist, not a miss.
+This does not tell people to post more. It helps people understand what kind of growth they already create. Read [`docs/MISSION.md`](docs/MISSION.md) for the full framing — the translation table, the audience, what good looks like, and what this product explicitly is not.
 
-3. **LinkedIn operator post can have low reach and still score on consulting intent.**
-   A niche operational post may reach 400 people. If three of them are qualified consulting leads, that's an and-one — low volume, high value.
+## Not a leaderboard
 
----
-
-## Tech Stack
-
-| Layer        | Technology                          |
-| ------------ | ----------------------------------- |
-| Framework    | Next.js 16 (App Router)             |
-| UI           | React 19, Tailwind CSS, Radix UI    |
-| Language     | TypeScript (strict)                  |
-| Database     | Prisma 7 + Neon Postgres            |
-| Charts       | Recharts, D3                         |
-| Tables       | TanStack Table                       |
-| Package Mgr  | pnpm                                 |
-
----
-
-## Phase Overview
-
-| Phase | Name                          | Status       |
-| ----- | ----------------------------- | ------------ |
-| 0     | Scaffold & Design System      | Complete     |
-| 1     | Data Model & Mock Data        | Complete     |
-| 2     | App Shell & Global Filters    | Complete     |
-| 3a    | Intent Classification (Data)  | Complete     |
-| 3b    | Intent Classification (UI)    | Complete     |
-| 4a    | Acquisition Pipeline          | Complete     |
-| 4b    | Live Connectors & Cron        | In Progress  |
-
----
-
-## License
-
-Private. Internal prototype for Every.
+Player cards, splits, and stream views surface attribution and shot quality — they are not rankings. Comparing teammates is supported (see "teammate comparison view" in `TODO.md`) but the product principle is that every shot is contextual: a hard CTA can miss on engagement and still score on signups; a personal post can miss direct conversion and still create trust or assists.
