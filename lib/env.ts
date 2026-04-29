@@ -21,6 +21,14 @@ const schema = z.object({
   R2_ENDPOINT: z.string().optional(),
   CLERK_PUBLISHABLE_KEY: z.string().optional(),
   CLERK_SECRET_KEY: z.string().optional(),
+  INNGEST_EVENT_KEY: z.string().optional(),
+  INNGEST_SIGNING_KEY: z.string().optional(),
+  SPIDER_DAILY_CAP: z.coerce.number().optional(),
+  PARALLEL_DAILY_CAP: z.coerce.number().optional(),
+  X_API_DAILY_CAP: z.coerce.number().optional(),
+  GITHUB_API_DAILY_CAP: z.coerce.number().optional(),
+  YOUTUBE_API_DAILY_CAP: z.coerce.number().optional(),
+  INSTAGRAM_GRAPH_DAILY_CAP: z.coerce.number().optional(),
 });
 
 const parsed = schema.safeParse(process.env);
@@ -43,4 +51,5 @@ export const flags = {
   youtubeApi: Boolean(env.YOUTUBE_API_KEY),
   passwordGate: env.NODE_ENV === "production" && Boolean(env.SURFACE_IQ_PASSWORD),
   clerk: Boolean(env.CLERK_PUBLISHABLE_KEY && env.CLERK_SECRET_KEY),
+  queueDriver: (env.INNGEST_EVENT_KEY ? "inngest" : "sync") as "inngest" | "sync",
 };

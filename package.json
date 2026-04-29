@@ -10,7 +10,10 @@
 		"prisma:generate": "prisma generate",
 		"db:push": "prisma db push",
 		"db:seed": "tsx prisma/seed.ts",
-		"db:studio": "prisma studio"
+		"db:studio": "prisma studio",
+		"db:backfill": "tsx scripts/backfill-acquisition.ts",
+		"dev:inngest": "npx inngest-cli@latest dev",
+		"dev:all": "concurrently -n next,inngest 'pnpm dev' 'pnpm dev:inngest'"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.8.0",
@@ -29,6 +32,7 @@
 		"clsx": "^2.1.1",
 		"d3": "^7.9.0",
 		"framer-motion": "^12.38.0",
+		"inngest": "^3",
 		"lucide-react": "^1.11.0",
 		"next": "^16.2.4",
 		"openai": "^6.34.0",
@@ -47,6 +51,8 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"autoprefixer": "^10.5.0",
+		"concurrently": "^9.2.1",
+		"eslint-plugin-surface-iq": "file:./eslint-plugin-surface-iq",
 		"dotenv": "^17.4.2",
 		"eslint": "^9.39.4",
 		"eslint-config-next": "^16.2.4",

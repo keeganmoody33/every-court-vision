@@ -1,10 +1,16 @@
 import { AcquisitionJobStatus } from "@prisma/client";
 
-import { providerFor } from "@/lib/acquisition/providers";
-import { policiesForPlatform } from "@/lib/acquisition/policies";
+import { inngest } from "@/inngest/client";
 import { persistActivities } from "@/lib/acquisition/persist";
+import { policiesForPlatform } from "@/lib/acquisition/policies";
+import { providerFor } from "@/lib/acquisition/providers";
 import type { AcquisitionRunResult } from "@/lib/acquisition/types";
 import { db } from "@/lib/db";
+
+export interface QueuedResult {
+  jobId: string;
+  status: "QUEUED";
+}
 
 export async function ensureAcquisitionRoutes() {
   const policies = policiesForPlatform("X")
@@ -40,8 +46,22 @@ export async function ensureAcquisitionRoutes() {
   );
 }
 
-export async function runAcquisitionForSurface(surfaceId: string, windowDays = 90): Promise<AcquisitionRunResult> {
+export async function runAcquisitionForSurface(
+  surfaceId: string,
+  windowDays = 90,
+): Promise<AcquisitionRunResult | QueuedResult> {
   await ensureAcquisitionRoutes();
+
+  if (process.env.INNGEST_EVENT_KEY) {
+    const windowStart = new Date(Date.now() - windowDays * 86_400_000);
+    const idempotencyKey = `${surfaceId}:${windowStart.toISOString()}`;
+    await inngest.send({
+      name: "acquisition/surface.requested",
+      data: { surfaceId, windowDays, idempotencyKey },
+    });
+    return { jobId: idempotencyKey, status: "QUEUED" };
+  }
+
   const surface = await db.surface.findUnique({
     where: { id: surfaceId },
     include: { employee: true },

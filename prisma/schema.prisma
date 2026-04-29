@@ -67,6 +67,7 @@ enum AcquisitionJobStatus {
   PARTIAL
   FAILED
   DISABLED
+  DEAD_LETTER
 }
 
 enum IntentClass {
@@ -413,14 +414,30 @@ model AcquisitionJob {
   skipped       Int                  @default(0)
   failureCode   String?
   failureReason String?
-  rawActivities RawActivity[]
-  startedAt     DateTime?
-  completedAt   DateTime?
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @updatedAt
+  idempotencyKey String?              @unique
+  attemptNumber  Int                  @default(0)
+  nextAttemptAt  DateTime?
+  deadLetterAt   DateTime?
+  inngestRunId   String?
+  rawActivities  RawActivity[]
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
 
   @@index([surfaceId, createdAt])
   @@index([provider, status])
+}
+
+model ProviderBudget {
+  id       String              @id @default(cuid())
+  provider AcquisitionProvider
+  day      DateTime            @db.Date
+  used     Int                 @default(0)
+  cap      Int
+
+  @@unique([provider, day])
+  @@index([provider, day])
 }
 
 model RawActivity {
