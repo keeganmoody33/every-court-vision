@@ -9,7 +9,7 @@ const schema = z.object({
   OPENAI_API_KEY: z.string().optional(),
   SPIDER_API_KEY: z.string().optional(),
   PARALLEL_API_KEY: z.string().optional(),
-  X_API_KEY: z.string().optional(),
+  X_BEARER_TOKEN: z.string().optional(),
   GITHUB_TOKEN: z.string().optional(),
   LINKEDIN_ACCESS_TOKEN: z.string().optional(),
   INSTAGRAM_ACCESS_TOKEN: z.string().optional(),
@@ -21,8 +21,6 @@ const schema = z.object({
   R2_ENDPOINT: z.string().optional(),
   CLERK_PUBLISHABLE_KEY: z.string().optional(),
   CLERK_SECRET_KEY: z.string().optional(),
-  GOOGLE_SHEET_ID: z.string().optional(),
-  GOOGLE_SERVICE_ACCOUNT_KEY: z.string().optional(),
 });
 
 const parsed = schema.safeParse(process.env);
@@ -38,12 +36,11 @@ export const flags = {
   llmCategorization: Boolean(env.OPENAI_API_KEY),
   liveScraping: Boolean(env.SPIDER_API_KEY),
   parallelResearch: Boolean(env.PARALLEL_API_KEY),
-  xApi: Boolean(env.X_API_KEY),
+  xApi: Boolean(env.X_BEARER_TOKEN),
   githubApi: Boolean(env.GITHUB_TOKEN),
   linkedInApi: Boolean(env.LINKEDIN_ACCESS_TOKEN),
   instagramGraph: Boolean(env.INSTAGRAM_ACCESS_TOKEN),
   youtubeApi: Boolean(env.YOUTUBE_API_KEY),
   passwordGate: env.NODE_ENV === "production" && Boolean(env.SURFACE_IQ_PASSWORD),
   clerk: Boolean(env.CLERK_PUBLISHABLE_KEY && env.CLERK_SECRET_KEY),
-  sheetsSync: Boolean(env.GOOGLE_SHEET_ID && env.GOOGLE_SERVICE_ACCOUNT_KEY),
 };
