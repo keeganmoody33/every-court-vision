@@ -602,6 +602,7 @@ async function main() {
         surface = surfaceByEmployeePlatform.get(`${analytics.employeeId}:${platform}`);
       }
       if (!surface) continue;
+      if (platform === "X") continue;
       const sequence = shotSequence(entry.surface);
 
       for (let i = 0; i < entry.count; i += 1) {

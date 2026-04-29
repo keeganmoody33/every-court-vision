@@ -46,6 +46,7 @@ export interface RawActivityInput {
   permalink?: string;
   publishedAt: Date | string;
   text: string;
+  conversationId?: string;
   metrics?: NormalizedMetrics;
   rawPayload?: unknown;
   citations?: string[];
@@ -65,6 +66,7 @@ export interface ProviderResult {
   activities: RawActivityInput[];
   failureCode?: string;
   failureReason?: string;
+  retryAfterSeconds?: number;
 }
 
 export interface PersistResult {

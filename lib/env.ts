@@ -1,6 +1,10 @@
 import "server-only";
 
+import { config } from "dotenv";
 import { z } from "zod";
+
+config({ path: ".env", quiet: true });
+config({ path: ".env.local", override: true, quiet: true });
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -20,6 +24,7 @@ const schema = z.object({
   SPIDER_DAILY_CAP: z.coerce.number().int().positive().optional(),
   PARALLEL_DAILY_CAP: z.coerce.number().int().positive().optional(),
   X_API_DAILY_CAP: z.coerce.number().int().positive().optional(),
+  X_TIMELINE_MAX_TWEETS: z.coerce.number().int().positive().optional(),
   GITHUB_API_DAILY_CAP: z.coerce.number().int().positive().optional(),
   YOUTUBE_API_DAILY_CAP: z.coerce.number().int().positive().optional(),
   INSTAGRAM_GRAPH_DAILY_CAP: z.coerce.number().int().positive().optional(),

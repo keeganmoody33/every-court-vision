@@ -1,4 +1,4 @@
-import { AcquisitionJobStatus } from "@prisma/client";
+import { AcquisitionJobStatus, type AcquisitionProvider } from "@prisma/client";
 
 import { acquisitionSurfaceRequested, inngest } from "@/inngest/client";
 import { manualAcquisitionKey } from "@/lib/acquisition/idempotency";
@@ -45,11 +45,14 @@ export async function ensureAcquisitionRoutes() {
 
 export async function runAcquisitionForSurface(
   surfaceId: string,
-  windowDays = 90,
-  options: { idempotencyKey?: string; forceSync?: boolean } = {},
+  windowDaysOrOptions: number | { windowDays?: number; idempotencyKey?: string; forceSync?: boolean; onlyProvider?: AcquisitionProvider } = 90,
+  options: { idempotencyKey?: string; forceSync?: boolean; onlyProvider?: AcquisitionProvider } = {},
 ): Promise<AcquisitionRunResult> {
-  if (!options.forceSync && flags.queueDriver === "inngest") {
-    const idempotencyKey = options.idempotencyKey ?? manualAcquisitionKey(surfaceId);
+  const windowDays = typeof windowDaysOrOptions === "number" ? windowDaysOrOptions : windowDaysOrOptions.windowDays ?? 90;
+  const runOptions = typeof windowDaysOrOptions === "number" ? options : windowDaysOrOptions;
+
+  if (!runOptions.forceSync && flags.queueDriver === "inngest") {
+    const idempotencyKey = runOptions.idempotencyKey ?? manualAcquisitionKey(surfaceId);
     await inngest.send(acquisitionSurfaceRequested.create({ surfaceId, windowDays, idempotencyKey }));
     return {
       surfaceId,
@@ -87,7 +90,11 @@ export async function runAcquisitionForSurface(
   const windowStart = new Date(windowEnd.getTime() - windowDays * 24 * 60 * 60 * 1000);
   let lastResult: AcquisitionRunResult | null = null;
 
-  for (const policy of policiesForPlatform(surface.platform)) {
+  const policies = policiesForPlatform(surface.platform).filter((policy) =>
+    runOptions.onlyProvider ? policy.provider === runOptions.onlyProvider : true,
+  );
+
+  for (const policy of policies) {
     const job = await db.acquisitionJob.create({
       data: {
         surfaceId,

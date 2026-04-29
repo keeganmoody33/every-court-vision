@@ -156,7 +156,7 @@ export const acquireSurface = inngest.createFunction(
 
         if (result.status === "failed") {
           const shouldRetry = attemptIndex < attempts - 1;
-          const waitSeconds = shouldRetry ? backoffSeconds(policy.provider, attemptIndex) : 0;
+          const waitSeconds = shouldRetry ? result.retryAfterSeconds ?? backoffSeconds(policy.provider, attemptIndex) : 0;
           await step.run(`failed-${policy.provider}-${attemptIndex + 1}`, () =>
             db.acquisitionJob.update({
               where: { id: job.id },
