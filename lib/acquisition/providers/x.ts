@@ -31,19 +31,19 @@ function usernameFromHandle(handle: string) {
 export const xProvider: ProviderAdapter = {
   provider: AcquisitionProvider.X_API,
   async collect({ surface, windowStart, windowEnd }) {
-    if (!env.X_BEARER_TOKEN) {
+    if (!env.X_API_KEY) {
       return {
         status: "disabled",
         activities: [],
         failureCode: "x_api_disabled",
-        failureReason: "X_BEARER_TOKEN is not configured.",
+        failureReason: "X_API_KEY is not configured.",
       };
     }
 
     const username = usernameFromHandle(surface.handle);
     try {
       const userResponse = await fetch(`https://api.x.com/2/users/by/username/${encodeURIComponent(username)}`, {
-        headers: { Authorization: `Bearer ${env.X_BEARER_TOKEN}` },
+        headers: { Authorization: `Bearer ${env.X_API_KEY}` },
       });
       if (!userResponse.ok) {
         return {
@@ -67,7 +67,7 @@ export const xProvider: ProviderAdapter = {
         exclude: "retweets",
       });
       const tweetResponse = await fetch(`https://api.x.com/2/users/${userId}/tweets?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${env.X_BEARER_TOKEN}` },
+        headers: { Authorization: `Bearer ${env.X_API_KEY}` },
       });
       if (!tweetResponse.ok) {
         return {
