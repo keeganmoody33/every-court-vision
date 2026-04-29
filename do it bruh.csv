@@ -1,0 +1,8 @@
+﻿File,Put at,Purpose
+[lib\_ingestion\_pipeline.ts](sandbox:///mnt/agents/output/lib_ingestion_pipeline.ts),`lib/ingestion/pipeline.ts`,All ingestion functions
+[scripts\_ingest-all.ts](sandbox:///mnt/agents/output/scripts_ingest-all.ts),`scripts/ingest-all.ts`,Runner
+[app\_api\_ingest\_route.ts](sandbox:///mnt/agents/output/app_api_ingest_route.ts),`app/api/ingest/route.ts`,API endpoint
+[vercel.json](sandbox:///mnt/agents/output/vercel.json),`vercel.json`,Cron schedule
+[scripts\_seed-employees.ts](sandbox:///mnt/agents/output/scripts_seed-employees.ts),`scripts/seed-employees.ts`,Seed 16 employees + company
+[prisma\_additions.txt](sandbox:///mnt/agents/output/prisma_additions.txt),Add to `schema.prisma`,DB schema
+[README\_INGESTION.md](sandbox:///mnt/agents/output/README_INGESTION.md),Reference,Quick start guide
