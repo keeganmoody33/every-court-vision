@@ -1,5 +1,6 @@
 import { Database, KeyRound, Network, Sparkles } from "lucide-react";
 
+import { HudPanel } from "@/components/ArcadeChrome";
 import { AttributionBadge } from "@/components/AttributionBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDataSources } from "@/lib/queries";
@@ -19,15 +20,6 @@ export default async function AttributionPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="stat-label">Data Confidence</p>
-        <h2 className="text-2xl font-bold">Attribution</h2>
-        <p className="mt-1 max-w-3xl text-sm text-muted-foreground">
-          Public metrics can explain surface activity. Direct conversion, paid revenue, consulting demand, and assists
-          need authenticated platform data plus internal analytics.
-        </p>
-      </div>
-
       <div className="grid gap-4 xl:grid-cols-4">
         {columns.map((column) => {
           const Icon = column.icon;
@@ -55,17 +47,13 @@ export default async function AttributionPage() {
         })}
       </div>
 
-      <Card className="border-white/10 bg-white/[0.045]">
-        <CardHeader>
-          <p className="stat-label">Confidence Badges</p>
-          <CardTitle>How to read the prototype</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
+      <HudPanel kicker="Confidence Badges" title="How to read the prototype" tone="blue" icon={Sparkles}>
+        <div className="flex flex-wrap gap-2">
           {["Direct", "Estimated", "Modeled", "Hypothesis", "Needs Internal Analytics"].map((confidence) => (
             <AttributionBadge key={confidence} confidence={confidence as never} />
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </HudPanel>
     </div>
   );
 }

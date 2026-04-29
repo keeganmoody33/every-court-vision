@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
+import { GamebreakerCallout, MiniHudChip } from "@/components/ArcadeChrome";
 import { AssistArc } from "@/components/AssistArc";
 import { CourtCanvas } from "@/components/CourtCanvas";
 import { PassingLane } from "@/components/PassingLane";
@@ -102,10 +103,32 @@ export function ShotPlot({
       });
   }, [posts]);
 
+  const madeShots = posts.filter((post) => post.outcome === "made").length;
+  const missedShots = posts.filter((post) => post.outcome === "missed").length;
+  const selectedEmployee = selectedPost ? employeeMap[selectedPost.employeeId]?.name ?? "Roster" : "None";
+
   return (
     <>
-      <Card className="border-white/10 bg-black/25">
+      <Card className="border-arcade-cyan/20 bg-black/35">
         <CardContent className="p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap gap-2">
+              <MiniHudChip label="Mode" value={scoringMode} tone="teal" />
+              <MiniHudChip label="Made" value={String(madeShots)} tone="orange" />
+              <MiniHudChip label="Miss" value={String(missedShots)} tone="red" />
+              <MiniHudChip label="Focus" value={selectedEmployee} tone="purple" />
+            </div>
+            {assistPairs.length >= 3 ? (
+              <div className="w-full sm:w-[280px]">
+                <GamebreakerCallout
+                  level={2}
+                  label="Assist Combo"
+                  detail={`${assistPairs.length} conservative assist arcs are visible in this window.`}
+                  active
+                />
+              </div>
+            ) : null}
+          </div>
           <div className="relative h-[420px]">
             <CourtCanvas>
               {(["left", "right", "top"] as const).map((lane) => (
@@ -129,6 +152,7 @@ export function ShotPlot({
                 const platformColor = PLATFORM_COLORS[post.platform];
                 const glow = post.metrics.assistedConversions > 100;
                 const employee = employeeMap[post.employeeId];
+                const selected = selectedPost?.id === post.id;
 
                 return (
                   <motion.g
@@ -145,14 +169,14 @@ export function ShotPlot({
                         cy={post.y}
                         r={radius}
                         fill={platformColor}
-                        fillOpacity={visual.opacity}
+                        fillOpacity={selected ? 1 : visual.opacity}
                         stroke="white"
-                        strokeOpacity={0.5}
-                        strokeWidth={0.55}
-                        filter={glow ? "url(#softGlow)" : undefined}
+                        strokeOpacity={selected ? 0.95 : 0.5}
+                        strokeWidth={selected ? 1.15 : 0.55}
+                        filter={glow || selected ? "url(#softGlow)" : undefined}
                       />
                     ) : post.outcome === "missed" ? (
-                      xMark({ x: post.x, y: post.y, radius, color: platformColor, opacity: visual.opacity })
+                      xMark({ x: post.x, y: post.y, radius: selected ? radius * 1.25 : radius, color: platformColor, opacity: selected ? 1 : visual.opacity })
                     ) : (
                       xMark({
                         x: post.x,

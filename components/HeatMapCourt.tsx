@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { scaleLinear } from "d3";
 import { motion } from "framer-motion";
 
+import { GamebreakerCallout, MiniHudChip } from "@/components/ArcadeChrome";
 import { CourtCanvas } from "@/components/CourtCanvas";
 import { StatTile } from "@/components/essay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,11 +82,25 @@ export function HeatMapCourt({
   const selectedMetrics = selected ? sumMetrics(selected.posts) : undefined;
   const selectedIntentMetrics = selected ? computeIntentMetrics(selected.posts, zoneMode === "Basic" ? 90 : 30) : undefined;
   const fill = heatFill(scoringMode, colorScale);
+  const hottest = regions.reduce((best, region) => (region.posts.length > best.posts.length ? region : best), regions[0]);
 
   return (
     <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
-      <Card className="border-white/10 bg-black/25">
+      <Card className="border-court-orange/20 bg-black/35">
         <CardContent className="p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap gap-2">
+              <MiniHudChip label="Mode" value={scoringMode} tone="orange" />
+              <MiniHudChip label="Scale" value={colorScale} tone="teal" />
+              <MiniHudChip label="Zones" value={zoneMode} tone="purple" />
+            </div>
+            <div className="flex items-center gap-2 rounded-md border border-white/10 bg-black/35 px-3 py-2">
+              <span className="size-2 rounded-full bg-court-orange shadow-orange-glow" />
+              <span className="font-mono text-[10px] uppercase tracking-ticker-tight text-muted-foreground">
+                Heat = volume. Panel = quality.
+              </span>
+            </div>
+          </div>
           <CourtCanvas>
             <IntentRegionButton
               id="threePoint"
@@ -169,7 +184,7 @@ export function HeatMapCourt({
         </CardContent>
       </Card>
 
-      <Card className="border-white/10 bg-white/[0.045]">
+      <Card className="border-court-red/20 bg-white/[0.055]">
         <CardHeader>
           <p className="stat-label">Selected Region</p>
           <CardTitle>{selected?.label ?? "No region"}</CardTitle>
@@ -194,6 +209,14 @@ export function HeatMapCourt({
                   Phase 3a&apos;s intent mapping.
                 </p>
               </div>
+              {selected.id === hottest.id && selected.posts.length > 0 ? (
+                <GamebreakerCallout
+                  level={1}
+                  label="Hot Zone Locked"
+                  detail={`${selected.label} is carrying the most visible volume in this filter window.`}
+                  active
+                />
+              ) : null}
             </>
           ) : null}
         </CardContent>
