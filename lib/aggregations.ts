@@ -1,4 +1,5 @@
 import { coreSurfaces } from "@/lib/constants";
+import { computeIntentMetrics } from "@/lib/intent/metrics";
 import { assistRate, socialTS } from "@/lib/scoring";
 import type { FilterState, Platform, Post, PostMetrics, ScoringMode, SplitRow } from "@/lib/types";
 
@@ -21,9 +22,20 @@ export const emptyMetrics: PostMetrics = {
 };
 
 export function filterPosts(posts: Post[], filters: FilterState) {
+  const windowDays =
+    filters.timeWindow === "7D" ? 7 : filters.timeWindow === "30D" ? 30 : filters.timeWindow === "90D" ? 90 : undefined;
+  const windowStart = windowDays ? Date.now() - windowDays * 86_400_000 : undefined;
+
   return posts.filter((post) => {
     if (filters.surface !== "All" && post.platform !== filters.surface) return false;
     if (filters.timeWindow === "Launch Window" && !post.launchWindow) return false;
+    if (windowStart !== undefined) {
+      const timestamp = Date.parse(post.timestamp);
+      if (!Number.isNaN(timestamp) && timestamp < windowStart) return false;
+    }
+    if (filters.intentClass?.length && !filters.intentClass.includes(post.intentClass)) return false;
+    if (filters.outcome?.length && !filters.outcome.includes(post.outcome)) return false;
+    if (filters.platforms?.length && !filters.platforms.includes(post.platform)) return false;
     return true;
   });
 }
@@ -76,6 +88,7 @@ export function modeValue(metrics: PostMetrics, mode: ScoringMode) {
 
 function splitFromPosts(segment: string, posts: Post[]): SplitRow {
   const metrics = sumMetrics(posts);
+  const intentMetrics = computeIntentMetrics(posts, 90);
   const conversions = metrics.signups + metrics.paidSubscriptions + metrics.consultingLeads;
   const avg = (selector: (post: Post) => number) =>
     posts.length ? posts.reduce((sum, post) => sum + selector(post), 0) / posts.length : 0;
@@ -107,6 +120,7 @@ function splitFromPosts(segment: string, posts: Post[]): SplitRow {
     revenuePerPost: posts.length ? metrics.revenue / posts.length : 0,
     conversionPer1KViews: metrics.views ? (conversions / metrics.views) * 1000 : 0,
     diffusionDepth: avg((post) => post.scores.assists / 15),
+    ...intentMetrics,
   };
 }
 

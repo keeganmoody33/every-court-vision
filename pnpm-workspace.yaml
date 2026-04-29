@@ -1,0 +1,11 @@
+packages:
+  - "."
+
+onlyBuiltDependencies:
+  - "@prisma/engines"
+  - "esbuild"
+  - "inngest-cli"
+  - "prisma"
+  - "protobufjs"
+  - "sharp"
+  - "unrs-resolver"

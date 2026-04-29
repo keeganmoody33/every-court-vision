@@ -1,10 +1,13 @@
-import { AcquisitionJobStatus } from "@prisma/client";
+import { AcquisitionJobStatus, type AcquisitionProvider } from "@prisma/client";
 
+import { acquisitionSurfaceRequested, inngest } from "@/inngest/client";
+import { manualAcquisitionKey } from "@/lib/acquisition/idempotency";
 import { providerFor } from "@/lib/acquisition/providers";
 import { policiesForPlatform } from "@/lib/acquisition/policies";
 import { persistActivities } from "@/lib/acquisition/persist";
 import type { AcquisitionRunResult } from "@/lib/acquisition/types";
 import { db } from "@/lib/db";
+import { flags } from "@/lib/env";
 
 export async function ensureAcquisitionRoutes() {
   const policies = policiesForPlatform("X")
@@ -40,7 +43,30 @@ export async function ensureAcquisitionRoutes() {
   );
 }
 
-export async function runAcquisitionForSurface(surfaceId: string, windowDays = 90): Promise<AcquisitionRunResult> {
+export async function runAcquisitionForSurface(
+  surfaceId: string,
+  windowDaysOrOptions: number | { windowDays?: number; idempotencyKey?: string; forceSync?: boolean; onlyProvider?: AcquisitionProvider } = 90,
+  options: { idempotencyKey?: string; forceSync?: boolean; onlyProvider?: AcquisitionProvider } = {},
+): Promise<AcquisitionRunResult> {
+  const windowDays = typeof windowDaysOrOptions === "number" ? windowDaysOrOptions : windowDaysOrOptions.windowDays ?? 90;
+  const runOptions = typeof windowDaysOrOptions === "number" ? options : windowDaysOrOptions;
+
+  if (!runOptions.forceSync && flags.queueDriver === "inngest") {
+    const idempotencyKey = runOptions.idempotencyKey ?? manualAcquisitionKey(surfaceId);
+    await inngest.send(acquisitionSurfaceRequested.create({ surfaceId, windowDays, idempotencyKey }));
+    return {
+      surfaceId,
+      provider: "MANUAL",
+      status: "QUEUED",
+      jobId: idempotencyKey,
+      idempotencyKey,
+      rawCount: 0,
+      inserted: 0,
+      updated: 0,
+      skipped: 0,
+    };
+  }
+
   await ensureAcquisitionRoutes();
   const surface = await db.surface.findUnique({
     where: { id: surfaceId },
@@ -64,7 +90,11 @@ export async function runAcquisitionForSurface(surfaceId: string, windowDays = 9
   const windowStart = new Date(windowEnd.getTime() - windowDays * 24 * 60 * 60 * 1000);
   let lastResult: AcquisitionRunResult | null = null;
 
-  for (const policy of policiesForPlatform(surface.platform)) {
+  const policies = policiesForPlatform(surface.platform).filter((policy) =>
+    runOptions.onlyProvider ? policy.provider === runOptions.onlyProvider : true,
+  );
+
+  for (const policy of policies) {
     const job = await db.acquisitionJob.create({
       data: {
         surfaceId,

@@ -1,6 +1,11 @@
 import { AcquisitionProvider, MetricConfidence, Platform, Prisma } from "@prisma/client";
 
+import { platformFromDb } from "@/lib/acquisition/platform";
 import { db } from "@/lib/db";
+import { classifyIntent } from "@/lib/intent/classify";
+import { postToCoord } from "@/lib/intent/courtMapping";
+import { intentClassToDb, shotOutcomeToDb } from "@/lib/intent/dbMapping";
+import { classifyOutcome } from "@/lib/intent/outcome";
 import { assistRate, socialTS, trustGravityScore } from "@/lib/scoring";
 import type { PersistResult, RawActivityInput } from "@/lib/acquisition/types";
 import type { PostMetrics } from "@/lib/types";
@@ -90,44 +95,6 @@ function contentTypeFor(platform: Platform, text: string) {
   return platform === "LINKEDIN" ? "Operator Post" : "Original Post";
 }
 
-function zoneFor(platform: Platform) {
-  // Display-format zone names. Must stay in sync with prisma/seed.ts:zoneFor and the
-  // basicZones table in lib/constants.ts. Returning the raw Prisma enum here (e.g.,
-  // "LINKEDIN") would break zone grouping on Shot Zones, Court Heat, and Players.
-  if (platform === "LINKEDIN") return "LinkedIn";
-  if (platform === "GITHUB") return "GitHub";
-  if (platform === "INSTAGRAM") return "Instagram";
-  if (platform === "NEWSLETTER" || platform === "SUBSTACK") return "Newsletter";
-  if (platform === "YOUTUBE" || platform === "PODCAST") return "YouTube/Podcast";
-  if (platform === "TEAMMATE_AMPLIFICATION") return "Teammate Amplification";
-  if (platform === "EXTERNAL_AMPLIFICATION") return "External Amplification";
-  if (platform === "LAUNCHES" || platform === "PRODUCT_HUNT") return "Launches";
-  return "X";
-}
-
-function coordFor(platform: Platform, externalId: string, publishedAt: Date) {
-  const zoneCenters: Partial<Record<Platform, { x: number; y: number }>> = {
-    X: { x: 30, y: 45 },
-    LINKEDIN: { x: 70, y: 45 },
-    GITHUB: { x: 20, y: 75 },
-    NEWSLETTER: { x: 78, y: 74 },
-    SUBSTACK: { x: 78, y: 74 },
-    YOUTUBE: { x: 53, y: 28 },
-    PODCAST: { x: 53, y: 28 },
-    INSTAGRAM: { x: 47, y: 76 },
-    WEBSITE: { x: 54, y: 54 },
-    PERSONAL_SITE: { x: 54, y: 54 },
-  };
-  const center = zoneCenters[platform] ?? { x: 50, y: 50 };
-  const seed = `${externalId}:${platform}:${publishedAt.toISOString().slice(0, 10)}`;
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) hash = (hash * 33 + seed.charCodeAt(i)) >>> 0;
-  return {
-    x: Math.max(6, Math.min(94, center.x + ((hash % 17) - 8))),
-    y: Math.max(8, Math.min(92, center.y + (((hash >> 8) % 13) - 6))),
-  };
-}
-
 export async function persistActivities({
   surfaceId,
   jobId,
@@ -206,12 +173,37 @@ export async function persistActivities({
 
     const metrics = metricsFromActivity(activity);
     const scores = scoresFromMetrics(metrics);
-    const { x, y } = coordFor(surface.platform, externalId, publishedAt);
-    const sourceId = `acquired:${provider.toLowerCase()}`;
+    const appPlatform = platformFromDb[surface.platform];
+    const intent = classifyIntent(text, {
+      name: surface.employee.name,
+      role: surface.employee.role,
+      platform: appPlatform,
+    });
+    const outcomeResult = classifyOutcome({ text, metrics, scores }, intent.intentClass);
+    const { x, y, zone } = postToCoord(
+      externalId,
+      surface.employeeId!,
+      intent.intentClass,
+      outcomeResult.outcome,
+      appPlatform,
+    );
+    const classificationData = {
+      intentClass: intentClassToDb[intent.intentClass],
+      intentConfidence: intent.intentConfidence,
+      outcome: shotOutcomeToDb[outcomeResult.outcome],
+      recovered: outcomeResult.recovered,
+      isAssist: intent.isAssist,
+      classifiedAt: new Date(),
+      classifiedBy: intent.source,
+      x,
+      y,
+      zone,
+    };
+    const sourceId = `acquired:${provider}:${externalId}`;
     const acquiredAt = new Date();
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },
-      select: { id: true },
+      select: { id: true, classifiedBy: true },
       orderBy: { createdAt: "asc" },
     });
 
@@ -237,6 +229,7 @@ export async function persistActivities({
               acquiredAt,
               rawActivityId: raw.id,
               sourceId,
+              ...(canonical.classifiedBy === "manual" ? {} : classificationData),
               metrics: { upsert: { create: metrics, update: metrics } },
               scores: { upsert: { create: scores, update: scores } },
             },
@@ -252,6 +245,7 @@ export async function persistActivities({
             acquiredAt,
             rawActivityId: raw.id,
             sourceId,
+            ...(canonical.classifiedBy === "manual" ? {} : classificationData),
             metrics: { upsert: { create: metrics, update: metrics } },
             scores: { upsert: { create: scores, update: scores } },
           },
@@ -281,8 +275,15 @@ export async function persistActivities({
           publishedAt,
           x,
           y,
-          zone: zoneFor(surface.platform),
+          zone,
           advancedZone: contentTypeFor(surface.platform, text),
+          intentClass: intentClassToDb[intent.intentClass],
+          intentConfidence: intent.intentConfidence,
+          outcome: shotOutcomeToDb[outcomeResult.outcome],
+          recovered: outcomeResult.recovered,
+          isAssist: intent.isAssist,
+          classifiedAt: new Date(),
+          classifiedBy: intent.source,
           confidence: activity.confidence ?? MetricConfidence.ESTIMATED,
           recommendedPlayId: surface.employee.recommendedPlayId ?? "play-soft-cta",
           metrics: { create: metrics },

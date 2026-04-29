@@ -67,18 +67,46 @@ enum AcquisitionJobStatus {
   PARTIAL
   FAILED
   DISABLED
+  DEAD_LETTER
+}
+
+enum IntentClass {
+  THREE_POINT
+  MID_RANGE
+  PAINT
+  FREE_THROW
+  PASS
+}
+
+enum ShotOutcome {
+  MADE
+  MISSED
+  TURNOVER
 }
 
 model Company {
-  id        String     @id @default(cuid())
-  name      String
-  domain    String
-  website   String
-  employees Employee[]
-  surfaces  Surface[]
-  reports   Report[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id                     String     @id @default(cuid())
+  name                   String
+  domain                 String
+  website                String
+  slug                   String?    @unique
+  description            String?
+  youtubeSubscribers     Int?
+  youtubeViews           Int?
+  youtubeVideos          Int?
+  newsletterSubscribers  Int?
+  xFollowers             Int?
+  linkedinFollowers      Int?
+  githubRepos            Int?
+  productHuntProducts    Int?
+  podcastEpisodes        Int?
+  teamSize               Int?
+  publicFacingCount      Int?
+  employees              Employee[]
+  surfaces               Surface[]
+  reports                Report[]
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
 }
 
 model Employee {
@@ -100,6 +128,8 @@ model Employee {
   trustGravity      Float           @default(0)
   socialTS          Float           @default(0)
   shotDistribution  Json            @default("{}")
+  xFollowers        Int?
+  isPublicFacing    Boolean         @default(false)
   recommendedPlayId String?
   accounts          SocialAccount[]
   surfaces          Surface[]
@@ -107,6 +137,7 @@ model Employee {
   posts             Post[]
   rippleEvents      RippleEvent[]
   experiments       Experiment[]
+  discoveredSurfaces DiscoveredSurface[]
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
 }
@@ -171,6 +202,13 @@ model Post {
   y                  Float           @default(47)
   zone               String
   advancedZone       String
+  intentClass        IntentClass     @default(PASS)
+  intentConfidence   Float           @default(0)
+  outcome            ShotOutcome     @default(MISSED)
+  recovered          Boolean         @default(false)
+  isAssist           Boolean         @default(false)
+  classifiedAt       DateTime?
+  classifiedBy       String?
   confidence         MetricConfidence
   externalId         String?
   permalink          String?
@@ -194,6 +232,7 @@ model Post {
   @@index([surfaceId, externalId])
   @@index([sourceId])
   @@index([campaign])
+  @@index([employeeId, intentClass])
 }
 
 model PostMetrics {
@@ -282,11 +321,33 @@ model Metric {
   socialTS              Float    @default(0)
   assistRate            Float    @default(0)
   trustGravity          Float    @default(0)
+  totalAttempts         Int      @default(0)
+  threePtAttempts       Int      @default(0)
+  midAttempts           Int      @default(0)
+  paintAttempts         Int      @default(0)
+  ftAttempts            Int      @default(0)
+  ftMade                Int      @default(0)
+  passes                Int      @default(0)
+  turnovers             Int      @default(0)
+  threePtMade           Int      @default(0)
+  midMade               Int      @default(0)
+  paintMade             Int      @default(0)
+  threePtPct            Float    @default(0)
+  midPct                Float    @default(0)
+  paintPct              Float    @default(0)
+  fgPct                 Float    @default(0)
+  effectiveFgPct        Float    @default(0)
+  trueShootingPct       Float    @default(0)
+  pacePerWeek           Float    @default(0)
+  brandTouchEvery       Float    @default(0)
+  brandTouchPersonal    Float    @default(0)
+  assistsCreated        Int      @default(0)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
   @@index([employeeId, timeWindow, windowStart])
   @@index([surfaceId, timeWindow, windowStart])
+  @@unique([employeeId, surfaceId, timeWindow, windowStart])
 }
 
 model Play {
@@ -361,9 +422,14 @@ model AcquisitionJob {
   surface       Surface              @relation(fields: [surfaceId], references: [id])
   provider      AcquisitionProvider
   status        AcquisitionJobStatus @default(QUEUED)
+  idempotencyKey String?             @unique
+  attemptNumber  Int                 @default(0)
   windowStart   DateTime
   windowEnd     DateTime
   attempts      Int                  @default(0)
+  nextAttemptAt  DateTime?
+  deadLetterAt   DateTime?
+  inngestRunId   String?
   rawCount      Int                  @default(0)
   inserted      Int                  @default(0)
   updated       Int                  @default(0)
@@ -378,6 +444,19 @@ model AcquisitionJob {
 
   @@index([surfaceId, createdAt])
   @@index([provider, status])
+}
+
+model ProviderBudget {
+  id        String              @id @default(cuid())
+  provider  AcquisitionProvider
+  day       DateTime
+  used      Int                 @default(0)
+  cap       Int
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@unique([provider, day])
+  @@index([provider, day])
 }
 
 model RawActivity {
@@ -403,4 +482,110 @@ model RawActivity {
   @@unique([surfaceId, externalId])
   @@index([surfaceId, publishedAt])
   @@index([provider, publishedAt])
+}
+
+// Ingestion staging (raw pulls before normalization into Post / RawActivity)
+model RawPost {
+  id                 String   @id @default(cuid())
+  platform           String
+  nativeId           String
+  entityType         String // company | employee | product
+  entityId           String
+  content            String   @db.Text
+  contentType        String
+  url                String?
+  mediaUrl           String?
+  postedAt           DateTime
+  collectedAt        DateTime @default(now())
+  rawReach           Int?
+  rawLikes           Int?
+  rawReplies         Int?
+  rawReposts         Int?
+  rawClicks          Int?
+  rawOpens           Int?
+  rawComments        Int?
+  rawStars           Int?
+  rawForks           Int?
+  rawMetrics         Json?
+  extractedUrls      String[] @default([])
+  rawHash            String   @unique
+  normalizedToPostId String?  @unique
+
+  @@index([platform, entityId, postedAt])
+}
+
+model TrackedRedirect {
+  id             String   @id @default(cuid())
+  shortId        String   @unique
+  postId         String?
+  destinationUrl String
+  clickCount     Int      @default(0)
+  utmCampaign    String?
+  utmMedium      String?
+  utmContent     String?
+  createdAt      DateTime @default(now())
+}
+
+model ConversionEvent {
+  id          String   @id @default(cuid())
+  redirectId  String?
+  postId      String?
+  entityType  String
+  entityId    String
+  eventType   String
+  referrerUrl String?
+  utmCampaign String?
+  utmMedium   String?
+  utmContent  String?
+  userAgent   String?
+  ipAddress   String?
+  occurredAt  DateTime @default(now())
+
+  @@index([entityType, entityId, eventType])
+  @@index([occurredAt])
+}
+
+// Phase 4 — surface discovery (staging before Surface / acquisition jobs)
+model DiscoveredSurface {
+  id              String   @id @default(cuid())
+  employeeId      String
+  employee        Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  surface         String
+  label           String
+  handle          String?
+  url             String?
+  status          String   @default("unknown")
+  discoveryMethod String
+  discoveredAt    DateTime @default(now())
+  lastVerifiedAt  DateTime?
+  confidenceScore Float    @default(0)
+  evidence        String[] @default([])
+  notes           String?
+  searchQuery     String?
+  searchRank      Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([employeeId, surface, handle])
+  @@index([employeeId])
+  @@index([surface])
+  @@index([status])
+}
+
+model DiscoveryJob {
+  id                String    @id @default(cuid())
+  jobType           String
+  status            String    @default("pending")
+  employeeId        String?
+  surface           String?
+  surfacesFound     Int       @default(0)
+  surfacesUpdated   Int       @default(0)
+  errors            String[]  @default([])
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime  @default(now())
+
+  @@index([status])
+  @@index([employeeId])
 }

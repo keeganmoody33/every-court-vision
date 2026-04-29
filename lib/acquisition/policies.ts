@@ -21,7 +21,7 @@ const policy = (
 });
 
 export const acquisitionPolicies: AcquisitionPolicy[] = [
-  policy("X", "X_API", 1, "User timeline for authored posts in the 90-day window", "X_BEARER_TOKEN", "DIRECT", "Use official X API. Do not scrape logged-in feeds."),
+  policy("X", "X_API", 1, "User timeline for authored posts in the 90-day window", "X_API_KEY", "DIRECT", "Use official X API. Do not scrape logged-in feeds."),
   policy("X", "MANUAL", 2, "Owner export or curated CSV when API access is unavailable", undefined, "DIRECT", "Requires owner-provided export or explicit manual curation."),
   policy("X", "PARALLEL", 3, "Cited public discovery of canonical profile and notable public posts", "PARALLEL_API_KEY", "ESTIMATED", "Discovery/enrichment only; not primary high-volume post capture."),
   policy("X", "SPIDER", 4, "Public profile extraction fallback", "SPIDER_API_KEY", "ESTIMATED", "Public pages only; no login-wall bypassing."),

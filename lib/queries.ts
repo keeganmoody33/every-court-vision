@@ -4,7 +4,7 @@ import { Platform as DbPlatform } from "@prisma/client";
 
 import { filterPosts } from "@/lib/aggregations";
 import { policiesForPlatform } from "@/lib/acquisition/policies";
-import { providerLabel, statusLabel } from "@/lib/acquisition/platform";
+import { platformFromDb, providerLabel, statusLabel } from "@/lib/acquisition/platform";
 import { defaultFilters } from "@/lib/constants";
 import { db } from "@/lib/db";
 import type {
@@ -19,7 +19,6 @@ import type {
   Experiment,
   FilterState,
   MetricConfidence,
-  Platform,
   Play,
   Post,
   PostMetrics,
@@ -36,33 +35,26 @@ import type {
 
 type SearchParamsLike = Record<string, string | string[] | undefined> | URLSearchParams | undefined;
 
-const platformFromDb: Record<DbPlatform, Platform> = {
-  X: "X",
-  LINKEDIN: "LinkedIn",
-  GITHUB: "GitHub",
-  INSTAGRAM: "Instagram",
-  NEWSLETTER: "Newsletter",
-  YOUTUBE: "YouTube",
-  PODCAST: "Podcast",
-  LAUNCHES: "Launches",
-  TEAMMATE_AMPLIFICATION: "Teammate Amplification",
-  EXTERNAL_AMPLIFICATION: "External Amplification",
-  PRODUCT_HUNT: "Product Hunt",
-  PERSONAL_SITE: "Personal Site",
-  TIKTOK: "TikTok",
-  WEBSITE: "Website",
-  SUBSTACK: "Substack",
-  APP_STORE: "App Store",
-  REFERRAL: "Referral",
-  CONSULTING: "Consulting",
-};
-
 const confidenceFromDb: Record<string, MetricConfidence> = {
   DIRECT: "Direct",
   ESTIMATED: "Estimated",
   MODELED: "Modeled",
   HYPOTHESIS: "Hypothesis",
   NEEDS_INTERNAL_ANALYTICS: "Needs Internal Analytics",
+};
+
+const intentClassFromDb: Record<string, Post["intentClass"]> = {
+  THREE_POINT: "threePoint",
+  MID_RANGE: "midRange",
+  PAINT: "paint",
+  FREE_THROW: "freeThrow",
+  PASS: "pass",
+};
+
+const shotOutcomeFromDb: Record<string, Post["outcome"]> = {
+  MADE: "made",
+  MISSED: "missed",
+  TURNOVER: "turnover",
 };
 
 const sourceReadinessFromDb: Record<string, DataSource["readiness"]> = {
@@ -109,11 +101,21 @@ const emptyScores: PostScores = Object.freeze({
   humanHalo: 0,
 }) as PostScores;
 
-function getParam(searchParams: SearchParamsLike, key: keyof FilterState) {
+function getParam(searchParams: SearchParamsLike, key: keyof FilterState | string) {
   if (!searchParams) return undefined;
   if (searchParams instanceof URLSearchParams) return searchParams.get(key) ?? undefined;
   const value = searchParams[key];
   return Array.isArray(value) ? value[0] : value;
+}
+
+function getCsvParam(searchParams: SearchParamsLike, key: keyof FilterState | string) {
+  const value = getParam(searchParams, key);
+  if (!value) return undefined;
+  const values = value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return values.length ? values : undefined;
 }
 
 export function filtersFromSearchParams(searchParams: SearchParamsLike): FilterState {
@@ -127,6 +129,9 @@ export function filtersFromSearchParams(searchParams: SearchParamsLike): FilterS
     attribution: (getParam(searchParams, "attribution") as FilterState["attribution"]) ?? defaultFilters.attribution,
     zoneMode: (getParam(searchParams, "zoneMode") as FilterState["zoneMode"]) ?? defaultFilters.zoneMode,
     colorScale: (getParam(searchParams, "colorScale") as FilterState["colorScale"]) ?? defaultFilters.colorScale,
+    intentClass: (getCsvParam(searchParams, "intent") ?? getCsvParam(searchParams, "intentClass")) as FilterState["intentClass"],
+    outcome: getCsvParam(searchParams, "outcome") as FilterState["outcome"],
+    platforms: getCsvParam(searchParams, "platforms") as FilterState["platforms"],
   };
 }
 
@@ -242,6 +247,13 @@ function mapPost(post: {
   y: number;
   zone: string;
   advancedZone: string;
+  intentClass: string;
+  intentConfidence: number;
+  outcome: string;
+  recovered: boolean;
+  isAssist: boolean;
+  classifiedAt: Date | null;
+  classifiedBy: string | null;
   confidence: string;
   sourceId?: string | null;
   recommendedPlayId: string | null;
@@ -266,6 +278,16 @@ function mapPost(post: {
     y: post.y,
     zone: post.zone,
     advancedZone: post.advancedZone,
+    intentClass: intentClassFromDb[post.intentClass] ?? "pass",
+    intentConfidence: post.intentConfidence,
+    outcome: shotOutcomeFromDb[post.outcome] ?? "missed",
+    recovered: post.recovered,
+    isAssist: post.isAssist,
+    classifiedAt: post.classifiedAt?.toISOString(),
+    classifiedBy:
+      post.classifiedBy === "keyword" || post.classifiedBy === "llm" || post.classifiedBy === "manual"
+        ? post.classifiedBy
+        : undefined,
     confidence: confidenceFromDb[post.confidence] ?? "Estimated",
     sourceId: post.sourceId ?? null,
     metrics: post.metrics ?? emptyMetrics,
@@ -359,6 +381,27 @@ export async function getEmployee(id: string): Promise<EmployeeWithSurfacesAndMe
         ? ((metric.signups + metric.paidSubscriptions + metric.consultingLeads) / metric.views) * 1000
         : 0,
       diffusionDepth: metric.assistedConversions / Math.max(1, metric.posts),
+      totalAttempts: metric.totalAttempts,
+      threePtAttempts: metric.threePtAttempts,
+      midAttempts: metric.midAttempts,
+      paintAttempts: metric.paintAttempts,
+      ftAttempts: metric.ftAttempts,
+      ftMade: metric.ftMade,
+      passes: metric.passes,
+      turnovers: metric.turnovers,
+      threePtMade: metric.threePtMade,
+      midMade: metric.midMade,
+      paintMade: metric.paintMade,
+      threePtPct: metric.threePtPct,
+      midPct: metric.midPct,
+      paintPct: metric.paintPct,
+      fgPct: metric.fgPct,
+      effectiveFgPct: metric.effectiveFgPct,
+      trueShootingPct: metric.trueShootingPct,
+      pacePerWeek: metric.pacePerWeek,
+      brandTouchEvery: metric.brandTouchEvery,
+      brandTouchPersonal: metric.brandTouchPersonal,
+      assistsCreated: metric.assistsCreated,
     })),
   };
 }

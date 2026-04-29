@@ -15,7 +15,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import { CompanyHeader } from "@/components/CompanyHeader";
 import { GlobalFilters } from "@/components/GlobalFilters";
@@ -41,14 +41,29 @@ const navItems = [
 interface FilterContextValue {
   filters: FilterState;
   setFilter: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
+  setFilters: (next: FilterState) => void;
 }
 
 const FilterContext = createContext<FilterContextValue | null>(null);
+
+const filterParamAliases: Partial<Record<keyof FilterState, string>> = {
+  intentClass: "intent",
+};
 
 export function useFilters() {
   const context = useContext(FilterContext);
   if (!context) throw new Error("useFilters must be used within AppShell");
   return context;
+}
+
+function csvParam(searchParams: URLSearchParams, key: string) {
+  const value = searchParams.get(key);
+  if (!value) return undefined;
+  const values = value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return values.length ? values : undefined;
 }
 
 function filtersFromParams(searchParams: URLSearchParams): FilterState {
@@ -62,6 +77,9 @@ function filtersFromParams(searchParams: URLSearchParams): FilterState {
     attribution: (searchParams.get("attribution") as FilterState["attribution"]) ?? defaultFilters.attribution,
     zoneMode: (searchParams.get("zoneMode") as FilterState["zoneMode"]) ?? defaultFilters.zoneMode,
     colorScale: (searchParams.get("colorScale") as FilterState["colorScale"]) ?? defaultFilters.colorScale,
+    intentClass: (csvParam(searchParams, "intent") ?? csvParam(searchParams, "intentClass")) as FilterState["intentClass"],
+    outcome: csvParam(searchParams, "outcome") as FilterState["outcome"],
+    platforms: csvParam(searchParams, "platforms") as FilterState["platforms"],
   };
 }
 
@@ -71,18 +89,33 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState<FilterState>(() => filtersFromParams(new URLSearchParams(searchParams)));
 
+  const syncFilters = useCallback((next: FilterState) => {
+    setFilters(next);
+    const params = new URLSearchParams(searchParams);
+    for (const key of Object.keys(next) as Array<keyof FilterState>) {
+      const option = next[key];
+      const paramKey = filterParamAliases[key] ?? key;
+      if (key === "intentClass") params.delete("intentClass");
+      if (option === undefined || (Array.isArray(option) && option.length === 0)) {
+        params.delete(paramKey);
+      } else if (Array.isArray(option)) {
+        params.set(paramKey, option.join(","));
+      } else {
+        params.set(paramKey, String(option));
+      }
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [pathname, router, searchParams]);
+
   const value = useMemo<FilterContextValue>(
     () => ({
       filters,
       setFilter: (key, option) => {
-        const next = { ...filters, [key]: option };
-        setFilters(next);
-        const params = new URLSearchParams(searchParams);
-        params.set(key, String(option));
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        syncFilters({ ...filters, [key]: option });
       },
+      setFilters: syncFilters,
     }),
-    [filters, pathname, router, searchParams],
+    [filters, syncFilters],
   );
 
   return (

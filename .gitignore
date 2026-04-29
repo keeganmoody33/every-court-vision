@@ -10,7 +10,14 @@ coverage
 .DS_Store
 .playwright-mcp
 desktop-overview.png
+<<<<<<< claude/editorial-publication-wrap
 *\ 2.*
 .claude/*
 !.claude/skills/
 !.claude/skills/**
+=======
+.claude/
+
+# Editor state
+.cursor/
+>>>>>>> main
