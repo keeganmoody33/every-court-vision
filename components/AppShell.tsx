@@ -17,10 +17,12 @@ import {
 } from "lucide-react";
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
+import { ArcadePageHeader } from "@/components/ArcadeChrome";
 import { CompanyHeader } from "@/components/CompanyHeader";
 import { GlobalFilters } from "@/components/GlobalFilters";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { arcadeMetaForPath } from "@/lib/arcadeMeta";
 import { defaultFilters } from "@/lib/constants";
 import type { FilterState } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -88,6 +90,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState<FilterState>(() => filtersFromParams(new URLSearchParams(searchParams)));
+  const activeMeta = arcadeMetaForPath(pathname);
 
   const syncFilters = useCallback((next: FilterState) => {
     setFilters(next);
@@ -120,17 +123,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <FilterContext.Provider value={value}>
-      <div className="min-h-screen lg:grid lg:grid-cols-[248px_1fr]">
-        <aside className="hidden border-r border-white/10 bg-black/25 lg:block">
+      <div className="arcade-shell min-h-screen lg:grid lg:grid-cols-[228px_1fr]">
+        <aside className="hidden border-r border-white/10 bg-black/35 lg:block">
           <div className="sticky top-0 flex h-screen flex-col">
-            <div className="border-b border-white/10 p-5">
+            <div className="border-b border-white/10 p-4">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-lg border border-primary/30 bg-primary/10 shadow-glow">
-                  <Activity className="size-5 text-primary" />
+                <div className="flex size-10 items-center justify-center rounded-md border border-court-orange/40 bg-court-orange/10 shadow-orange-glow">
+                  <Activity className="size-5 text-court-orange" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold">Every Court Vision</p>
-                  <p className="text-xs text-muted-foreground">Growth film room</p>
+                  <p className="gamebreaker text-lg leading-none text-white">Court Vision</p>
+                  <p className="font-mono text-[10px] uppercase tracking-ticker-tight text-muted-foreground">
+                    Arcade film room
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 grid grid-cols-2 overflow-hidden rounded-md border border-white/10 bg-black/35 text-center">
+                <div className="border-r border-white/10 p-2">
+                  <p className="font-mono text-[9px] uppercase tracking-ticker-tight text-muted-foreground">QTR</p>
+                  <p className="font-mono text-lg font-black text-court-line tabular">04</p>
+                </div>
+                <div className="p-2">
+                  <p className="font-mono text-[9px] uppercase tracking-ticker-tight text-muted-foreground">CLOCK</p>
+                  <p className="font-mono text-lg font-black text-arcade-cyan tabular">:24</p>
                 </div>
               </div>
             </div>
@@ -144,9 +159,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       key={item.href}
                       asChild
                       variant={active ? "secondary" : "ghost"}
-                      className={cn("w-full justify-start", active && "border border-white/10 bg-white/10 text-white")}
+                      className={cn(
+                        "h-9 w-full justify-start rounded-md font-mono text-[11px] uppercase tracking-ticker-tight",
+                        active
+                          ? "border border-court-orange/30 bg-court-orange/[0.12] text-court-line shadow-orange-glow"
+                          : "text-muted-foreground hover:bg-white/[0.08] hover:text-white",
+                      )}
                     >
-                      <Link href={item.href}>
+                      <Link href={item.href} aria-current={active ? "page" : undefined}>
                         <Icon className="size-4" />
                         {item.label}
                       </Link>
@@ -155,26 +175,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 })}
               </nav>
             </ScrollArea>
-            <div className="border-t border-white/10 p-4">
-              <p className="text-xs leading-5 text-muted-foreground">
-                Film-room rule: understand everyone&apos;s best shot. This is not a leaderboard.
+            <div className="border-t border-white/10 p-3">
+              <p className="font-mono text-[10px] uppercase leading-5 tracking-ticker-tight text-muted-foreground">
+                Not a leaderboard. Find the best shot.
               </p>
             </div>
           </div>
         </aside>
 
         <main className="min-w-0">
-          <div className="sticky top-0 z-40 border-b border-white/10 bg-background/85 px-4 py-3 backdrop-blur-xl lg:px-6">
+          <div className="sticky top-0 z-40 border-b border-white/10 bg-background/90 px-3 py-3 shadow-[0_20px_80px_-50px_rgba(0,0,0,0.9)] backdrop-blur-xl lg:px-5">
             <div className="mb-3 flex gap-2 overflow-x-auto lg:hidden">
-              {navItems.map((item) => (
-                <Button key={item.href} asChild variant={pathname === item.href ? "secondary" : "ghost"} size="sm">
-                  <Link href={item.href}>{item.label}</Link>
-                </Button>
-              ))}
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Button key={item.href} asChild variant={pathname === item.href ? "secondary" : "ghost"} size="sm" className="shrink-0">
+                    <Link href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+                      <Icon className="size-4" />
+                      {item.label}
+                    </Link>
+                  </Button>
+                );
+              })}
             </div>
             <GlobalFilters />
           </div>
-          <div className="space-y-6 p-4 lg:p-6">
+          <div className="space-y-5 p-3 sm:p-4 lg:p-5">
+            <ArcadePageHeader
+              eyebrow={activeMeta.eyebrow}
+              title={activeMeta.title}
+              subtitle={activeMeta.subtitle}
+              accent={activeMeta.accent}
+              tone={activeMeta.tone}
+              stats={activeMeta.stats}
+              gamebreaker={activeMeta.gamebreaker}
+            />
             <CompanyHeader />
             {children}
           </div>

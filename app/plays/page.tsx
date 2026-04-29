@@ -1,4 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { FlaskConical } from "lucide-react";
+
+import { HudPanel } from "@/components/ArcadeChrome";
 import { PlayCard } from "@/components/PlayCard";
 import { employeeMapFromRoster, getExperiments, getPlays, getRoster } from "@/lib/queries";
 
@@ -11,26 +13,18 @@ export default async function PlaysPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="stat-label">Experiments and Motion Design</p>
-        <h2 className="text-2xl font-bold">Plays</h2>
-      </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {plays.map((play) => (
           <PlayCard key={play.id} play={play} />
         ))}
       </div>
-      <Card className="border-white/10 bg-white/[0.045]">
-        <CardHeader>
-          <p className="stat-label">Next Experiments</p>
-          <CardTitle>Active play tests</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-2">
+      <HudPanel kicker="Next Experiments" title="Active play tests" tone="purple" icon={FlaskConical}>
+        <div className="grid gap-3 md:grid-cols-2">
           {experiments.map((experiment) => (
-            <div key={experiment.id} className="rounded-md border border-white/10 bg-black/20 p-4">
+            <div key={experiment.id} className="rounded-md border border-white/10 bg-black/30 p-4">
               <div className="mb-2 flex items-center justify-between gap-3">
                 <h3 className="font-semibold text-white">{experiment.name}</h3>
-                <span className="rounded-full border border-primary/25 bg-primary/10 px-2 py-0.5 text-xs text-primary">
+                <span className="rounded-full border border-arcade-magenta/25 bg-arcade-magenta/10 px-2 py-0.5 text-xs text-arcade-magenta">
                   {experiment.status}
                 </span>
               </div>
@@ -40,8 +34,8 @@ export default async function PlaysPage() {
               </p>
             </div>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </HudPanel>
     </div>
   );
 }

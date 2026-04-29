@@ -6,6 +6,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Employee, Post, RippleEvent } from "@/lib/types";
+import { GamebreakerCallout } from "@/components/ArcadeChrome";
 
 /**
  * CourtTelestrator — the centerpiece. Chalk-on-court view that collapses
@@ -122,6 +123,18 @@ export function CourtTelestrator({
   }
 
   const visibleRipples = focusRipples.slice(0, progress);
+  const rippleValue = focusRipples.reduce((sum, event) => sum + (event.value || 0), 0);
+  const explicitGamebreakerLevel =
+    gamebreakerLevel === 1 || gamebreakerLevel === 2 || gamebreakerLevel === 3 ? gamebreakerLevel : undefined;
+  const autoGamebreakerLevel: 0 | 1 | 2 | 3 =
+    explicitGamebreakerLevel ??
+    (rippleValue > 10000 && focusRipples.length >= 4
+      ? 3
+      : focusRipples.length >= 3
+        ? 2
+        : focusRipples.length >= 1
+          ? 1
+          : 0);
 
   const handleSelect = (id: string | undefined) => {
     if (selectedPostId === undefined) setInternalSelected(id);
@@ -154,8 +167,8 @@ export function CourtTelestrator({
   return (
     <div className={cn("relative isolate", className)}>
       {/* GameBreaker overlay — rare, only fires when caller passes a level. */}
-      {gamebreakerLevel === 1 || gamebreakerLevel === 2 || gamebreakerLevel === 3 ? (
-        <GameBreakerOverlay level={gamebreakerLevel} />
+      {autoGamebreakerLevel === 1 || autoGamebreakerLevel === 2 || autoGamebreakerLevel === 3 ? (
+        <GameBreakerOverlay level={autoGamebreakerLevel} />
       ) : null}
 
       {/* Top chrome — ticker scoreboard + selection chip */}
@@ -173,6 +186,17 @@ export function CourtTelestrator({
           LIVE READING
         </div>
       </div>
+
+      {autoGamebreakerLevel === 1 || autoGamebreakerLevel === 2 || autoGamebreakerLevel === 3 ? (
+        <div className="mb-3 px-1 sm:px-2">
+          <GamebreakerCallout
+            level={autoGamebreakerLevel}
+            label="Ripple Chain"
+            detail={`${focusRipples.length} downstream events, ${formatTicker(rippleValue)} modeled value on the focused root.`}
+            active
+          />
+        </div>
+      ) : null}
 
       {/* The court canvas. The HTML click-overlay below positions buttons in CSS
          percentages relative to this container; for that to line up with the SVG

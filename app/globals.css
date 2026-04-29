@@ -71,6 +71,12 @@
     /* Halftime lights — atmospheric glows. */
     --halftime-warm: 36 100% 60%;
     --halftime-cool: 196 90% 60%;
+
+    /* Arcade HUD accents — used only for chrome and status edges. */
+    --arcade-cyan: 183 100% 62%;
+    --arcade-magenta: 315 100% 67%;
+    --arcade-yellow: 51 100% 62%;
+    --arcade-grid: 183 100% 62%;
   }
 
   .light,
@@ -139,6 +145,100 @@
 
   .glass-panel {
     @apply rounded-md border border-white/10 bg-white/[0.02] shadow-[0_30px_120px_-40px_rgba(0,0,0,0.6)] backdrop-blur-sm;
+  }
+
+  .arcade-shell {
+    background:
+      linear-gradient(90deg, hsl(var(--arcade-grid) / 0.035) 1px, transparent 1px),
+      linear-gradient(0deg, hsl(var(--arcade-grid) / 0.025) 1px, transparent 1px);
+    background-size: 46px 46px;
+  }
+
+  .arcade-kicker {
+    @apply rounded-full px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-ticker-tight tabular;
+  }
+
+  .arcade-page-header {
+    @apply relative rounded-md border border-white/10 bg-black/35 shadow-[0_40px_140px_-70px_rgba(0,0,0,0.9)] backdrop-blur-md;
+  }
+
+  .arcade-page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, hsl(var(--court-line) / 0.16), transparent 36%),
+      radial-gradient(circle at 90% 10%, hsl(var(--arcade-magenta) / 0.12), transparent 34%),
+      radial-gradient(circle at 8% 100%, hsl(var(--arcade-cyan) / 0.12), transparent 36%);
+    opacity: 0.85;
+  }
+
+  .arcade-hud-panel,
+  .arcade-card {
+    @apply relative overflow-hidden rounded-md border border-white/10 bg-white/[0.045] shadow-[0_28px_100px_-58px_rgba(0,0,0,0.88)] backdrop-blur;
+  }
+
+  .arcade-hud-panel::before,
+  .arcade-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-top: 1px solid hsl(var(--court-line) / 0.22);
+    background:
+      linear-gradient(90deg, transparent, hsl(var(--arcade-cyan) / 0.1), transparent),
+      repeating-linear-gradient(0deg, transparent 0 7px, hsl(var(--foreground) / 0.025) 7px 8px);
+    mix-blend-mode: screen;
+    opacity: 0.62;
+  }
+
+  .arcade-score-rail {
+    @apply grid grid-cols-3 overflow-hidden rounded-md border border-white/10 bg-black/40 py-2 shadow-[inset_0_0_28px_rgba(0,0,0,0.55)];
+  }
+
+  .arcade-mini-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-2.5 py-1 font-mono text-[10px] uppercase tracking-ticker-tight tabular;
+  }
+
+  .gamebreaker-callout {
+    @apply relative overflow-hidden rounded-md border border-court-line/20 bg-black/45 p-3 shadow-[inset_0_0_34px_rgba(255,157,66,0.08)];
+  }
+
+  .gamebreaker-callout::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      hsl(var(--court-teal) / 0.14),
+      hsl(var(--arcade-magenta) / 0.16),
+      hsl(var(--court-orange) / 0.18),
+      hsl(var(--court-teal) / 0.14)
+    );
+    background-size: 200% 100%;
+    opacity: 0;
+  }
+
+  .gamebreaker-callout.is-active::before {
+    opacity: 1;
+    animation: hologram 3.2s linear infinite;
+  }
+
+  .arcade-scanline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      hsl(var(--foreground) / 0.035) 48%,
+      transparent 52%
+    );
+    background-size: 100% 6px;
+    opacity: 0.4;
   }
 
   /* Editorial paper surface — Every essay container nested inside the film-room canvas. */
@@ -273,5 +373,18 @@
   }
   .animate-count {
     animation: count-rise 700ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-draw-in,
+    .animate-drift,
+    .holographic,
+    .gamebreaker-callout.is-active::before {
+      animation: none !important;
+    }
+
+    .arcade-scanline::after {
+      opacity: 0.18;
+    }
   }
 }

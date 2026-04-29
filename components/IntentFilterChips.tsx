@@ -60,7 +60,10 @@ export function IntentFilterChips() {
   }
 
   return (
-    <div className="sticky top-0 z-10 flex max-w-full items-center gap-3 overflow-x-auto border-b border-paper-rule/20 bg-background/85 px-4 py-3 backdrop-blur">
+    <div className="sticky top-[104px] z-10 flex max-w-full items-center gap-3 overflow-x-auto rounded-md border border-white/10 bg-black/70 px-3 py-2 shadow-[0_18px_70px_-48px_rgba(0,0,0,0.9)] backdrop-blur">
+      <span className="shrink-0 font-mono text-[10px] font-semibold uppercase tracking-ticker text-court-line tabular">
+        Lock
+      </span>
       <ChipGroup label="Intent">
         {INTENT_CHIPS.map((chip) => {
           const active = filters.intentClass?.includes(chip.value) ?? false;

@@ -1,8 +1,8 @@
 import { DatabaseZap, FileWarning, Network, Radar } from "lucide-react";
 
+import { HudPanel } from "@/components/ArcadeChrome";
 import { AcquisitionTable } from "@/components/AcquisitionTable";
 import { MetricCard } from "@/components/MetricCard";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAcquisitionRows } from "@/lib/queries";
 
 export const runtime = "nodejs";
@@ -24,11 +24,8 @@ export default async function AcquisitionPage() {
         <MetricCard label="Activity Stored" value={`${raw}/${posts}`} detail="Raw activity records / posts" icon={Network} accent="text-orange-300" />
       </div>
 
-      <Card className="border-white/10 bg-white/[0.045]">
-        <CardHeader>
-          <CardTitle>Route Doctrine</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-4">
+      <HudPanel kicker="Connector Bay" title="Route Doctrine" tone="red" icon={DatabaseZap}>
+        <div className="grid gap-3 md:grid-cols-4">
           {[
             ["1", "Native source", "Official APIs and first-party feeds before anything else."],
             ["2", "Parallel", "Cited discovery and enrichment for sparse or missing surfaces."],
@@ -41,8 +38,8 @@ export default async function AcquisitionPage() {
               <p className="mt-1 text-sm text-muted-foreground">{copy}</p>
             </div>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </HudPanel>
 
       <AcquisitionTable rows={rows} />
     </div>

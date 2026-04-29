@@ -86,6 +86,13 @@ const config: Config = {
           warm: "hsl(var(--halftime-warm))",
           cool: "hsl(var(--halftime-cool))",
         },
+
+        arcade: {
+          cyan: "hsl(var(--arcade-cyan) / <alpha-value>)",
+          magenta: "hsl(var(--arcade-magenta) / <alpha-value>)",
+          yellow: "hsl(var(--arcade-yellow) / <alpha-value>)",
+          grid: "hsl(var(--arcade-grid) / <alpha-value>)",
+        },
       },
 
       fontFamily: {
@@ -123,6 +130,7 @@ const config: Config = {
         glow: "0 0 30px hsl(var(--primary) / 0.22)",
         "orange-glow": "0 0 30px hsl(var(--court-orange) / 0.24)",
         chalk: "0 0 12px rgba(242, 210, 165, 0.18)",
+        hud: "0 28px 100px -58px rgba(0,0,0,0.88)",
         paper:
           "0 1px 0 hsl(var(--paper-rule) / 0.5), 0 40px 120px -30px rgba(0,0,0,0.55), 0 8px 30px -10px rgba(0,0,0,0.4)",
       },
