@@ -533,6 +533,7 @@ Inngest, not BullMQ/QStash — see prompt §2 for the why.
 6. **Do not** add new dependencies beyond `inngest`, `@inngest/cli`, `concurrently`, and the local plugin. Justify any other addition in the PR description.
 7. **Do not** force-push, amend a pushed commit, or skip pre-commit hooks. Direct push to `main` fails — use `gh pr create`.
 8. **Do not** commit any `.env` file or any file containing real API keys.
+9. **Do not touch `lib/ingestion/pipeline.ts`** — that file is a parallel path Devin shipped in PR #11, and its dissolution is the responsibility of Phase 4B-X-provider (`docs/codex/phase-4b-x-provider.md` §5.3, which dissolves it into `lib/acquisition/*`). If you find yourself wanting to refactor it, **stop**: Phase 4A's job is queue plumbing on top of `lib/acquisition/*`, not architectural cleanup of a sibling module. If you need to call into it (you shouldn't), STOP and report.
 
 ---
 
