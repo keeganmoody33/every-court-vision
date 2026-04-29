@@ -25,6 +25,8 @@ export default async function ShotPlotPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = filtersFromSearchParams(await searchParams);
+  // Run all four DB round-trips in parallel; scope ripple events to the
+  // filtered post set in memory once everything resolves.
   const briefingDate = formatBriefingDate(new Date());
   const [filtered, roster, plays, allRippleEvents] = await Promise.all([
     getPosts(filters),

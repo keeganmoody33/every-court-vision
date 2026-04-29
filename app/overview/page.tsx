@@ -25,6 +25,7 @@ import {
   getRoster,
   scopeRippleEventsToPosts,
 } from "@/lib/queries";
+import { socialTS } from "@/lib/scoring";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -87,7 +88,11 @@ export default async function OverviewPage({
 
   const totalSurfaces = Object.keys(byPlatform).length;
   const conversions = metrics.signups + metrics.paidSubscriptions + metrics.consultingLeads;
-  const ts = metrics.views ? (conversions / metrics.views) * 100 : 0;
+  // Social TS% — use the canonical weighted formula from lib/scoring.ts so the
+  // TLDR matches what /splits and per-post scores show. A naive
+  // conversions/views ratio omits per-conversion weights, revenue, and
+  // assisted conversions.
+  const ts = socialTS(metrics);
 
   return (
     <Essay
