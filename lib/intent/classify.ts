@@ -24,7 +24,7 @@ export interface IntentResult {
 }
 
 function matchingSignals(text: string, prefix: string, signals: string[]) {
-  return signals.filter((signal) => text.includes(signal)).map((signal) => `${prefix}:${signal}`);
+  return signals.filter((signal) => hasSignal(text, signal)).map((signal) => `${prefix}:${signal}`);
 }
 
 function hasSignal(text: string, signal: string) {
