@@ -12,7 +12,8 @@
 		"db:seed": "tsx prisma/seed.ts",
 		"db:studio": "prisma studio",
 		"db:backfill": "tsx scripts/backfill-acquisition.ts",
-		"ingest": "tsx scripts/ingest-all.ts",
+		"backfill:x": "NODE_OPTIONS=--conditions=react-server tsx scripts/backfill-x.ts",
+		"ingest": "NODE_OPTIONS=--conditions=react-server tsx scripts/ingest-all.ts",
 		"dev:inngest": "node_modules/inngest-cli/bin/inngest dev",
 		"dev:all": "concurrently -n next,inngest \"pnpm dev\" \"pnpm dev:inngest\"",
 		"seed:employees": "tsx scripts/seed-employees.ts",
@@ -45,6 +46,7 @@
 		"react": "^19.2.5",
 		"react-dom": "^19.2.5",
 		"recharts": "^3.8.1",
+		"server-only": "^0.0.1",
 		"tailwind-merge": "^3.5.0",
 		"zod": "^3.23.8"
 	},

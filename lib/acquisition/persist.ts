@@ -199,7 +199,7 @@ export async function persistActivities({
       y,
       zone,
     };
-    const sourceId = `acquired:${provider.toLowerCase()}`;
+    const sourceId = `acquired:${provider}:${externalId}`;
     const acquiredAt = new Date();
     const existing = await db.post.findMany({
       where: { OR: [{ rawActivityId: raw.id }, { surfaceId, externalId }] },

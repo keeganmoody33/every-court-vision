@@ -1,20 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { Platform } from "@prisma/client";
 
-import {
-  ingestGitHub,
-  ingestSubstackRSS,
-  ingestXPublic,
-  ingestYouTube,
-  runFullIngestion,
-} from "@/lib/ingestion/pipeline";
-
-const EVERY_ID = "comp_every_001";
+import { syncGitHubOrgMetrics, syncYouTubeChannelMetrics } from "@/lib/acquisition/companyMetrics";
+import { runAcquisitionForSurface } from "@/lib/acquisition/router";
+import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
 
+const sourceMatchers: Record<string, { platform?: Platform; handle?: string }> = {
+  youtube: { platform: "YOUTUBE" },
+  x_company: { platform: "X", handle: "@every" },
+  x_dan: { platform: "X", handle: "@danshipper" },
+  x_austin: { platform: "X", handle: "@tedescau" },
+  substack_dan: { platform: "SUBSTACK", handle: "every.substack.com" },
+  substack_austin: { platform: "SUBSTACK", handle: "@tedescau" },
+  github: { platform: "GITHUB", handle: "every-io" },
+  github_company: { platform: "GITHUB", handle: "every-io" },
+  github_kieran: { platform: "GITHUB", handle: "kieranklaassen" },
+};
+
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!process.env.CRON_SECRET || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -22,48 +29,26 @@ export async function GET(req: NextRequest) {
   const source = searchParams.get("source");
 
   try {
-    if (source === "youtube") {
-      const result = await ingestYouTube("EveryInc", 90);
-      return NextResponse.json({ source: "youtube", ...result });
+    const where = source && sourceMatchers[source]
+      ? {
+          present: true,
+          platform: sourceMatchers[source].platform,
+          ...(sourceMatchers[source].handle ? { handle: sourceMatchers[source].handle } : {}),
+        }
+      : { present: true };
+    const surfaces = await db.surface.findMany({ where, orderBy: [{ platform: "asc" }, { handle: "asc" }] });
+    const results = [];
+
+    for (const surface of surfaces) {
+      results.push(await runAcquisitionForSurface(surface.id, { windowDays: 90, forceSync: true }));
     }
 
-    if (source === "x_company") {
-      const result = await ingestXPublic("every", "company", EVERY_ID, 90);
-      return NextResponse.json({ source: "x_company", ...result });
-    }
+    const metrics = {
+      youtube: await syncYouTubeChannelMetrics("EveryInc"),
+      github: await syncGitHubOrgMetrics("every-io"),
+    };
 
-    if (source === "x_dan") {
-      const result = await ingestXPublic("danshipper", "employee", "emp_001", 90);
-      return NextResponse.json({ source: "x_dan", ...result });
-    }
-
-    if (source === "x_austin") {
-      const result = await ingestXPublic("austin_tedesco", "employee", "emp_002", 90);
-      return NextResponse.json({ source: "x_austin", ...result });
-    }
-
-    if (source === "substack_dan") {
-      const result = await ingestSubstackRSS("danshipper", "employee", "emp_001", 90);
-      return NextResponse.json({ source: "substack_dan", ...result });
-    }
-
-    if (source === "substack_austin") {
-      const result = await ingestSubstackRSS("austintedesco", "employee", "emp_002", 90);
-      return NextResponse.json({ source: "substack_austin", ...result });
-    }
-
-    if (source === "github" || source === "github_company") {
-      const result = await ingestGitHub("EveryInc", "company", EVERY_ID, 90);
-      return NextResponse.json({ source: "github_company", ...result });
-    }
-
-    if (source === "github_kieran") {
-      const result = await ingestGitHub("kieranklaassen", "employee", "emp_005", 90);
-      return NextResponse.json({ source: "github_kieran", ...result });
-    }
-
-    const results = await runFullIngestion();
-    return NextResponse.json({ success: true, results });
+    return NextResponse.json({ success: true, source: source ?? "all", results, metrics });
   } catch (err) {
     return NextResponse.json({ error: String(err) }, { status: 500 });
   }
