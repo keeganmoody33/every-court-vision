@@ -87,7 +87,8 @@ export default async function OverviewPage({
 
   const totalSurfaces = Object.keys(byPlatform).length;
   const conversions = metrics.signups + metrics.paidSubscriptions + metrics.consultingLeads;
-  const ts = metrics.views ? (conversions / metrics.views) * 100 : 0;
+  const { socialTS: socialTSFn } = await import("@/lib/scoring");
+  const ts = socialTSFn(metrics);
 
   return (
     <Essay
