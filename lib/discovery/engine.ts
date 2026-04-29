@@ -216,7 +216,7 @@ export async function saveDiscoveryResults(
   results: DiscoveryResult[],
 ): Promise<void> {
   for (const result of results) {
-    const handleKey = result.handle?.trim() ? result.handle : "_none_";
+    const handleKey = result.handle?.trim() || "_none_";
 
     await prisma.discoveredSurface.upsert({
       where: {

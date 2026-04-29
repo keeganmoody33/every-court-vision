@@ -232,7 +232,7 @@ export async function ingestXPublic(
             entityType,
             entityId,
             content: tweet.text,
-            contentType: tweet.referenced_tweets ? "retweet" : "text",
+            contentType: tweet.referenced_tweets ? "quote" : "text",
             url: `https://x.com/${handle}/status/${tweet.id}`,
             postedAt,
             rawReach: tweet.public_metrics?.impression_count || 0,

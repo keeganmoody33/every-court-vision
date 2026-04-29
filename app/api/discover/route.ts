@@ -21,6 +21,13 @@ export async function GET(req: NextRequest) {
 
   const surfaceFilter = parseSurfaceFilter(surface);
 
+  if (surface && !surfaceFilter) {
+    return NextResponse.json(
+      { error: `Invalid surface: "${surface}". Valid values: x, linkedin, github, substack, youtube, instagram, tiktok, product_hunt, personal_site, podcast, newsletter, medium, devto, dribbble, figma, twitch, calendly, discord, book, external_interview, other` },
+      { status: 400 },
+    );
+  }
+
   const job = await prisma.discoveryJob.create({
     data: {
       jobType: employeeId
