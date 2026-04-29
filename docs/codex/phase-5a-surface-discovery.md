@@ -1,10 +1,16 @@
 # Phase 5a — Per-Employee Surface Discovery Pipeline
 
-_Codex prompt drafted 2026-04-29. Pre-req: Phase 0 schema fix `Surface @@unique([employeeId, platform])` is shipped on `main` (see [`prisma/schema.prisma`](../../prisma/schema.prisma))._
+_Codex prompt drafted 2026-04-29. Updated 2026-04-29 to reference PR #17._
+
+> **2026-04-29 update — read this first.** [PR #17](https://github.com/keeganmoody33/every-court-vision/pull/17) (which supersedes the closed [PR #13](https://github.com/keeganmoody33/every-court-vision/pull/13)) brings in [`lib/discovery/engine.ts`](../../lib/discovery/engine.ts) — a 21-platform surface discovery engine that generates per-platform search queries, plus a `DiscoveredSurface` Prisma model. After PR #17 lands, this Phase 5a spec is the **verification + idempotency + Bearer-auth layer** that wraps the engine. Specifically: this spec adds (a) Parallel + HEAD verification on top of the engine's search-query generation, (b) idempotent `upsert` keyed on `Surface @@unique([employeeId, platform])`, (c) a `PodcastAppearance` model for guest spots (a different shape than `DiscoveredSurface` — N rows per employee, not one), and (d) a Bearer-protected single-employee trigger. Don't rebuild the engine; build on top of it.
+
+**Pre-reqs:**
+- Phase 0 schema fix `Surface @@unique([employeeId, platform])` is shipped (see [`prisma/schema.prisma`](../../prisma/schema.prisma) on PR #18).
+- PR #17 is merged, providing `lib/discovery/engine.ts`, `DiscoveredSurface`, `RawPost`, and the `/api/discover` route.
 
 ## Mission
 
-For every `Employee` in the database, populate `Surface` rows across the **8 active discovery platforms**, plus `PodcastAppearance` rows for guest spots on shows owned by other people. Use Parallel as the primary search, Spider as opt-in deep-dive, and native web search as fallback. Re-runnable. Idempotent. Bearer-auth-gated.
+For every `Employee` in the database, populate `Surface` rows across the **8 active discovery platforms** (verified subset of the engine's 21), plus `PodcastAppearance` rows for guest spots on shows owned by other people. Use the existing engine's search-query output, run Parallel + HEAD on each candidate URL, upsert verified Surfaces. Re-runnable. Idempotent. Bearer-auth-gated.
 
 Writing surfaces this way unblocks the existing acquisition router ([`lib/acquisition/router.ts`](../../lib/acquisition/router.ts)) — once `Surface` rows exist, the router has something to iterate over for ingestion. Right now it has nothing to iterate over for surfaces that aren't in the seed fixture.
 
