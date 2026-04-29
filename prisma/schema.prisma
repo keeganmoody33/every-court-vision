@@ -67,6 +67,7 @@ enum AcquisitionJobStatus {
   PARTIAL
   FAILED
   DISABLED
+  DEAD_LETTER
 }
 
 enum IntentClass {
@@ -420,9 +421,14 @@ model AcquisitionJob {
   surface       Surface              @relation(fields: [surfaceId], references: [id])
   provider      AcquisitionProvider
   status        AcquisitionJobStatus @default(QUEUED)
+  idempotencyKey String?             @unique
+  attemptNumber  Int                 @default(0)
   windowStart   DateTime
   windowEnd     DateTime
   attempts      Int                  @default(0)
+  nextAttemptAt  DateTime?
+  deadLetterAt   DateTime?
+  inngestRunId   String?
   rawCount      Int                  @default(0)
   inserted      Int                  @default(0)
   updated       Int                  @default(0)
@@ -437,6 +443,19 @@ model AcquisitionJob {
 
   @@index([surfaceId, createdAt])
   @@index([provider, status])
+}
+
+model ProviderBudget {
+  id        String              @id @default(cuid())
+  provider  AcquisitionProvider
+  day       DateTime
+  used      Int                 @default(0)
+  cap       Int
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@unique([provider, day])
+  @@index([provider, day])
 }
 
 model RawActivity {
