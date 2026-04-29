@@ -146,6 +146,7 @@ model Surface {
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
 
+  @@unique([employeeId, platform])
   @@index([companyId, platform])
   @@index([employeeId, platform])
 }
