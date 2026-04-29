@@ -120,8 +120,7 @@ export async function ingestYouTube(
             nativeId: video.id,
             entityType: "company",
             entityId: EVERY_COMPANY_ID,
-            content:
-              video.snippet.title + "\n" + (video.snippet.description || "").slice(0, 500),
+            content: `${video.snippet.title}\n${(video.snippet.description || "").slice(0, 500)}`,
             contentType: "video",
             url: `https://youtube.com/watch?v=${video.id}`,
             mediaUrl: video.snippet.thumbnails?.high?.url || video.snippet.thumbnails?.default?.url,

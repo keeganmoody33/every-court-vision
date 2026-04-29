@@ -12,6 +12,18 @@ import {
 
 const EVERY_ID = "comp_every_001";
 
+const VALID_SOURCES = [
+  "youtube",
+  "x_company",
+  "x_dan",
+  "x_austin",
+  "substack_dan",
+  "substack_austin",
+  "github",
+  "github_company",
+  "github_kieran",
+] as const;
+
 export async function GET(req: NextRequest) {
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers.get("authorization");
@@ -21,6 +33,13 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const source = searchParams.get("source");
+
+  if (source !== null && !VALID_SOURCES.includes(source as (typeof VALID_SOURCES)[number])) {
+    return NextResponse.json(
+      { error: "Invalid source parameter", validSources: VALID_SOURCES },
+      { status: 400 },
+    );
+  }
 
   try {
     if (source === "youtube") {
