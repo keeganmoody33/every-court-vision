@@ -77,7 +77,9 @@ export interface PersistResult {
 export interface AcquisitionRunResult extends PersistResult {
   surfaceId: string;
   provider: DbAcquisitionProvider;
-  status: "SUCCEEDED" | "PARTIAL" | "FAILED" | "DISABLED";
+  status: "QUEUED" | "SUCCEEDED" | "PARTIAL" | "FAILED" | "DISABLED" | "DEAD_LETTER";
+  jobId?: string;
+  idempotencyKey?: string;
   failureCode?: string;
   failureReason?: string;
 }

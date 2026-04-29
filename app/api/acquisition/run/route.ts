@@ -14,6 +14,7 @@ const runRequestSchema = z
     employeeId: z.string().optional(),
     platform: z.nativeEnum(Platform).optional(),
     windowDays: z.number().int().min(1).max(365).optional(),
+    idempotencyKey: z.string().optional(),
   })
   // Reject empty bodies. Without this, the endpoint runs acquisition for up to 24
   // arbitrary surfaces — uncontrolled fan-out + upstream API quota burn.
@@ -53,8 +54,17 @@ export async function POST(request: Request) {
   // is fine today because most providers return `disabled` instantly until tokens land.
   const results = [];
   for (const surface of surfaces) {
-    results.push(await runAcquisitionForSurface(surface.id, body.windowDays ?? 90));
+    results.push(
+      await runAcquisitionForSurface(surface.id, body.windowDays ?? 90, {
+        idempotencyKey: body.surfaceId ? body.idempotencyKey : undefined,
+      }),
+    );
   }
 
-  return NextResponse.json({ ok: true, results });
+  const single = results.length === 1 ? results[0] : undefined;
+  return NextResponse.json({
+    ok: true,
+    results,
+    ...(single ? { jobId: single.jobId, status: single.status, idempotencyKey: single.idempotencyKey } : {}),
+  });
 }

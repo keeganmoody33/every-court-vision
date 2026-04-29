@@ -1,10 +1,13 @@
 import { AcquisitionJobStatus } from "@prisma/client";
 
+import { acquisitionSurfaceRequested, inngest } from "@/inngest/client";
+import { manualAcquisitionKey } from "@/lib/acquisition/idempotency";
 import { providerFor } from "@/lib/acquisition/providers";
 import { policiesForPlatform } from "@/lib/acquisition/policies";
 import { persistActivities } from "@/lib/acquisition/persist";
 import type { AcquisitionRunResult } from "@/lib/acquisition/types";
 import { db } from "@/lib/db";
+import { flags } from "@/lib/env";
 
 export async function ensureAcquisitionRoutes() {
   const policies = policiesForPlatform("X")
@@ -40,7 +43,27 @@ export async function ensureAcquisitionRoutes() {
   );
 }
 
-export async function runAcquisitionForSurface(surfaceId: string, windowDays = 90): Promise<AcquisitionRunResult> {
+export async function runAcquisitionForSurface(
+  surfaceId: string,
+  windowDays = 90,
+  options: { idempotencyKey?: string; forceSync?: boolean } = {},
+): Promise<AcquisitionRunResult> {
+  if (!options.forceSync && flags.queueDriver === "inngest") {
+    const idempotencyKey = options.idempotencyKey ?? manualAcquisitionKey(surfaceId);
+    await inngest.send(acquisitionSurfaceRequested.create({ surfaceId, windowDays, idempotencyKey }));
+    return {
+      surfaceId,
+      provider: "MANUAL",
+      status: "QUEUED",
+      jobId: idempotencyKey,
+      idempotencyKey,
+      rawCount: 0,
+      inserted: 0,
+      updated: 0,
+      skipped: 0,
+    };
+  }
+
   await ensureAcquisitionRoutes();
   const surface = await db.surface.findUnique({
     where: { id: surfaceId },

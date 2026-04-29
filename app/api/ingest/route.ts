@@ -10,6 +10,8 @@ import {
 
 const EVERY_ID = "comp_every_001";
 
+export const runtime = "nodejs";
+
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
