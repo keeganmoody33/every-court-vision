@@ -302,6 +302,7 @@ export async function ingestSubstackRSS(
         )?.[1] || "";
 
       const postedAt = new Date(pubDate);
+      if (isNaN(postedAt.getTime())) continue;
       if (postedAt < cutoffDate) break;
       if (!link) continue;
 

@@ -12,7 +12,7 @@ if (!connectionString) {
 }
 
 const globalForPrisma = globalThis as unknown as {
-  prismaScript?: PrismaClient;
+  prisma?: PrismaClient;
 };
 
 function createPrismaClient() {
@@ -20,8 +20,8 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prismaScript ?? createPrismaClient();
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prismaScript = prisma;
+  globalForPrisma.prisma = prisma;
 }
