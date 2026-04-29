@@ -54,9 +54,10 @@ function isSurfaceTarget(value: string): value is SurfaceTarget {
 }
 
 export function parseSurfaceFilter(param: string | null): SurfaceTarget[] | undefined {
-  if (!param?.trim()) return undefined;
-  if (!isSurfaceTarget(param)) return undefined;
-  return [param];
+  const trimmed = param?.trim();
+  if (!trimmed) return undefined;
+  if (!isSurfaceTarget(trimmed)) return undefined;
+  return [trimmed];
 }
 
 interface DiscoveryResult {

@@ -12,7 +12,7 @@ import { DataReadiness, Platform } from "@prisma/client";
 
 const COMPANY_ID = "comp_every_001";
 
-const RANGE = "Roster!A1:BN25";
+const RANGE = "Roster!A1:BN26";
 
 function parseBool(cell: unknown): boolean {
   if (cell == null || typeof cell !== "string") return false;
