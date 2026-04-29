@@ -54,9 +54,10 @@ function isSurfaceTarget(value: string): value is SurfaceTarget {
 }
 
 export function parseSurfaceFilter(param: string | null): SurfaceTarget[] | undefined {
-  if (!param?.trim()) return undefined;
-  if (!isSurfaceTarget(param)) return undefined;
-  return [param];
+  const trimmed = param?.trim();
+  if (!trimmed) return undefined;
+  if (!isSurfaceTarget(trimmed)) return undefined;
+  return [trimmed];
 }
 
 interface DiscoveryResult {
@@ -108,16 +109,16 @@ const searchQueries: Record<SurfaceTarget, (name: string, handle?: string) => st
       `site:producthunt.com "${name}"`,
       handle ? `site:producthunt.com/@${handle}` : "",
     ].filter(Boolean),
-    personal_site: (name, handle) => [
+    personal_site: (name, _handle) => [
       `"${name}" portfolio OR about OR blog`,
       `"${name}" ${name.toLowerCase().replace(/ /g, "")}.com`,
     ],
-    podcast: (name, handle) => [
+    podcast: (name, _handle) => [
       `"${name}" podcast host OR guest`,
       `site:spotify.com "${name}"`,
       `site:apple.com/podcasts "${name}"`,
     ],
-    newsletter: (name, handle) => [
+    newsletter: (name, _handle) => [
       `"${name}" newsletter`,
       `site:substack.com "${name}"`,
       `site:beehiiv.com "${name}"`,
@@ -142,16 +143,16 @@ const searchQueries: Record<SurfaceTarget, (name: string, handle?: string) => st
       `site:calendly.com "${name}"`,
       `site:calendly.com/${handle || name.toLowerCase().replace(/ /g, "")}`,
     ],
-    discord: (name, handle) => [
+    discord: (name, _handle) => [
       `site:discord.gg "${name}"`,
       `"${name}" discord server`,
     ],
-    book: (name, handle) => [
+    book: (name, _handle) => [
       `"${name}" author`,
       `site:amazon.com "${name}"`,
       `site:goodreads.com "${name}"`,
     ],
-    external_interview: (name, handle) => [
+    external_interview: (name, _handle) => [
       `"${name}" interview`,
       `"${name}" podcast guest`,
       `"${name}" fireside chat`,
@@ -215,7 +216,7 @@ export async function saveDiscoveryResults(
   results: DiscoveryResult[],
 ): Promise<void> {
   for (const result of results) {
-    const handleKey = result.handle?.trim() ? result.handle : "_none_";
+    const handleKey = result.handle?.trim() || "_none_";
 
     await prisma.discoveredSurface.upsert({
       where: {

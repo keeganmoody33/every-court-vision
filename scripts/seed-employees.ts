@@ -36,7 +36,7 @@ const EMPLOYEES = [
 ] as const;
 
 async function main() {
-  console.log("Seeding company + employees…\n");
+  console.log("Seeding company + employees...\n");
 
   await prisma.company.upsert({
     where: { id: COMPANY_ID },

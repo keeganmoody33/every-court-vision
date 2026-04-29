@@ -1,10 +1,8 @@
-// lib/ingestion/pipeline.ts
-// Production-ready ingestion pipeline for Every
-// Company surfaces first, then employees
+// lib/ingestion/pipeline.ts — ingestion pulls into RawPost (staging) for Every surfaces
 
 import { prisma } from "@/lib/prisma";
 
-export type IngestionSource = 
+export type IngestionSource =
   | "youtube_api"
   | "x_api_public"
   | "substack_rss"
@@ -15,13 +13,15 @@ interface IngestionResult {
   errors: string[];
 }
 
+const EVERY_COMPANY_ID = "comp_every_001";
+
 // ============================================
 // YOUTUBE INGESTION
 // ============================================
 
 export async function ingestYouTube(
-  channelHandle: string = "EveryInc",
-  days: number = 90,
+  channelHandle = "EveryInc",
+  days = 90,
 ): Promise<IngestionResult> {
   const apiKey = process.env.YOUTUBE_API_KEY;
   if (!apiKey) return { collected: 0, errors: ["YOUTUBE_API_KEY not set"] };
@@ -30,9 +30,8 @@ export async function ingestYouTube(
   let collected = 0;
 
   try {
-    // Get channel ID from handle
     const channelRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet,contentDetails&forHandle=${channelHandle}&key=${apiKey}`
+      `https://www.googleapis.com/youtube/v3/channels?part=id,statistics,snippet,contentDetails&forHandle=${channelHandle}&key=${apiKey}`,
     );
     const channelData = await channelRes.json();
 
@@ -41,22 +40,23 @@ export async function ingestYouTube(
     }
 
     const channel = channelData.items[0];
-    const channelId = channel.id;
     const stats = channel.statistics;
     const playlistId = channel.contentDetails?.relatedPlaylists?.uploads;
 
-    // Update company metrics
     await prisma.company.upsert({
-      where: { slug: "every" },
+      where: { id: EVERY_COMPANY_ID },
       update: {
         youtubeSubscribers: parseInt(stats.subscriberCount) || 0,
         youtubeViews: parseInt(stats.viewCount) || 0,
         youtubeVideos: parseInt(stats.videoCount) || 0,
+        slug: "every",
       },
       create: {
-        id: "comp_every_001",
+        id: EVERY_COMPANY_ID,
         name: "Every",
         slug: "every",
+        domain: "every.to",
+        website: "https://every.to",
         youtubeSubscribers: parseInt(stats.subscriberCount) || 0,
         youtubeViews: parseInt(stats.viewCount) || 0,
         youtubeVideos: parseInt(stats.videoCount) || 0,
@@ -69,7 +69,6 @@ export async function ingestYouTube(
       return { collected: 0, errors: ["No uploads playlist found"] };
     }
 
-    // Fetch videos
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
@@ -77,33 +76,36 @@ export async function ingestYouTube(
     const videoIds: string[] = [];
 
     do {
-      const playlistRes = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50${nextPageToken ? `&pageToken=${nextPageToken}` : ""}&key=${apiKey}`
+      const playlistRes: Response = await fetch(
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50${nextPageToken ? `&pageToken=${nextPageToken}` : ""}&key=${apiKey}`,
       );
-      const playlistData = await playlistRes.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const playlistData = await playlistRes.json() as any;
 
+      let playlistHitCutoff = false;
       for (const item of playlistData.items || []) {
         const publishedAt = new Date(item.snippet.publishedAt);
         if (publishedAt < cutoffDate) {
-          nextPageToken = null;
+          playlistHitCutoff = true;
           break;
         }
         videoIds.push(item.contentDetails.videoId);
       }
 
-      nextPageToken = playlistData.nextPageToken || null;
+      nextPageToken = playlistHitCutoff
+        ? null
+        : playlistData.nextPageToken || null;
     } while (nextPageToken && videoIds.length < 500);
 
-    // Batch fetch video details (50 at a time)
     for (let i = 0; i < videoIds.length; i += 50) {
       const batch = videoIds.slice(i, i + 50);
       const videoRes = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${batch.join(",")}&key=${apiKey}`
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${batch.join(",")}&key=${apiKey}`,
       );
       const videoData = await videoRes.json();
 
       for (const video of videoData.items || []) {
-        const rawHash = `youtube:${video.id}:${Math.floor(Date.now() / 60000)}`;
+        const rawHash = `youtube:${video.id}`;
 
         await prisma.rawPost.upsert({
           where: { rawHash },
@@ -117,8 +119,8 @@ export async function ingestYouTube(
             platform: "youtube",
             nativeId: video.id,
             entityType: "company",
-            entityId: "comp_every_001",
-            content: video.snippet.title + "\n" + (video.snippet.description || "").slice(0, 500),
+            entityId: EVERY_COMPANY_ID,
+            content: `${video.snippet.title}\n${(video.snippet.description || "").slice(0, 500)}`,
             contentType: "video",
             url: `https://youtube.com/watch?v=${video.id}`,
             mediaUrl: video.snippet.thumbnails?.high?.url || video.snippet.thumbnails?.default?.url,
@@ -150,7 +152,7 @@ export async function ingestXPublic(
   handle: string,
   entityType: "company" | "employee",
   entityId: string,
-  days: number = 90,
+  days = 90,
 ): Promise<IngestionResult> {
   const bearerToken = process.env.X_BEARER_TOKEN;
   if (!bearerToken) return { collected: 0, errors: ["X_BEARER_TOKEN not set"] };
@@ -159,10 +161,9 @@ export async function ingestXPublic(
   let collected = 0;
 
   try {
-    // Get user ID
     const userRes = await fetch(
       `https://api.twitter.com/2/users/by/username/${handle}?user.fields=public_metrics,created_at,description`,
-      { headers: { Authorization: `Bearer ${bearerToken}` } }
+      { headers: { Authorization: `Bearer ${bearerToken}` } },
     );
     const userData = await userRes.json();
 
@@ -173,7 +174,6 @@ export async function ingestXPublic(
     const userId = userData.data.id;
     const metrics = userData.data.public_metrics;
 
-    // Update entity follower count
     if (entityType === "company") {
       await prisma.company.update({
         where: { id: entityId },
@@ -186,34 +186,35 @@ export async function ingestXPublic(
       });
     }
 
-    // Fetch tweets
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     let nextToken: string | null = null;
 
     do {
-      const url = `https://api.twitter.com/2/users/${userId}/tweets?max_results=100&tweet.fields=public_metrics,created_at,entities,referenced_tweets&exclude=replies,retweets${nextToken ? `&pagination_token=${nextToken}` : ""}`;
+      const tweetsUrl: string = `https://api.twitter.com/2/users/${userId}/tweets?max_results=100&tweet.fields=public_metrics,created_at,entities,referenced_tweets&exclude=replies,retweets${nextToken ? `&pagination_token=${nextToken}` : ""}`;
 
-      const tweetsRes = await fetch(url, {
+      const tweetsRes: Response = await fetch(tweetsUrl, {
         headers: { Authorization: `Bearer ${bearerToken}` },
       });
-      const tweetsData = await tweetsRes.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const tweetsData = await tweetsRes.json() as any;
 
       if (tweetsData.errors) {
-        errors.push(...tweetsData.errors.map((e: any) => e.message));
+        errors.push(...tweetsData.errors.map((e: { message?: string }) => e.message ?? String(e)));
         break;
       }
 
+      let timelineHitCutoff = false;
       for (const tweet of tweetsData.data || []) {
         const postedAt = new Date(tweet.created_at);
         if (postedAt < cutoffDate) {
-          nextToken = null;
+          timelineHitCutoff = true;
           break;
         }
 
-        const urls = tweet.entities?.urls?.map((u: any) => u.expanded_url) || [];
-        const rawHash = `x:${tweet.id}:${Math.floor(Date.now() / 60000)}`;
+        const urls = tweet.entities?.urls?.map((u: { expanded_url?: string }) => u.expanded_url).filter(Boolean) as string[] | undefined;
+        const rawHash = `x:${tweet.id}`;
 
         await prisma.rawPost.upsert({
           where: { rawHash },
@@ -230,7 +231,7 @@ export async function ingestXPublic(
             entityType,
             entityId,
             content: tweet.text,
-            contentType: tweet.referenced_tweets ? "retweet" : "text",
+            contentType: tweet.referenced_tweets ? "quote" : "text",
             url: `https://x.com/${handle}/status/${tweet.id}`,
             postedAt,
             rawReach: tweet.public_metrics?.impression_count || 0,
@@ -239,7 +240,7 @@ export async function ingestXPublic(
             rawReplies: tweet.public_metrics?.reply_count || 0,
             rawClicks: tweet.public_metrics?.url_link_clicks || 0,
             rawMetrics: tweet.public_metrics,
-            extractedUrls: urls,
+            extractedUrls: urls ?? [],
             rawHash,
           },
         });
@@ -247,9 +248,10 @@ export async function ingestXPublic(
         collected++;
       }
 
-      nextToken = tweetsData.meta?.next_token || null;
+      nextToken = timelineHitCutoff
+        ? null
+        : tweetsData.meta?.next_token || null;
     } while (nextToken && collected < 1000);
-
   } catch (err) {
     errors.push(String(err));
   }
@@ -265,7 +267,7 @@ export async function ingestSubstackRSS(
   handle: string,
   entityType: "company" | "employee",
   entityId: string,
-  days: number = 90,
+  days = 90,
 ): Promise<IngestionResult> {
   const errors: string[] = [];
   let collected = 0;
@@ -280,7 +282,6 @@ export async function ingestSubstackRSS(
 
     const rssText = await rssRes.text();
 
-    // Parse RSS items
     const itemRegex = /<item>[\s\S]*?<\/item>/g;
     const items = rssText.match(itemRegex) || [];
 
@@ -288,16 +289,23 @@ export async function ingestSubstackRSS(
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     for (const item of items) {
-      const title = item.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/)?.[1] || "";
-      const link = item.match(/<link>(.*?)<\/link>/)?.[1] || "";
-      const pubDate = item.match(/<pubDate>(.*?)<\/pubDate>/)?.[1] || "";
-      const content = item.match(/<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/description>/)?.[1] || "";
+      const title =
+        item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/)?.[1] || "";
+      const link =
+        item.match(/<link>([\s\S]*?)<\/link>/)?.[1]?.trim() || "";
+      const pubDate =
+        item.match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1]?.trim() || "";
+      const content =
+        item.match(
+          /<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/,
+        )?.[1] || "";
 
       const postedAt = new Date(pubDate);
+      if (isNaN(postedAt.getTime())) continue;
       if (postedAt < cutoffDate) break;
       if (!link) continue;
 
-      const rawHash = `substack:${link}:${Math.floor(Date.now() / 60000)}`;
+      const rawHash = `substack:${link}`;
 
       await prisma.rawPost.upsert({
         where: { rawHash },
@@ -320,7 +328,6 @@ export async function ingestSubstackRSS(
 
       collected++;
     }
-
   } catch (err) {
     errors.push(String(err));
   }
@@ -336,14 +343,14 @@ export async function ingestGitHub(
   orgOrUser: string,
   entityType: "company" | "employee",
   entityId: string,
-  days: number = 90,
+  days = 90,
 ): Promise<IngestionResult> {
   const token = process.env.GITHUB_TOKEN;
   const headers: Record<string, string> = {
     Accept: "application/vnd.github.v3+json",
     "User-Agent": "Every-Signal-Capture",
   };
-  if (token) headers.Authorization = `token ${token}`;
+  if (token) headers.Authorization = `Bearer ${token}`;
 
   const errors: string[] = [];
   let collected = 0;
@@ -352,9 +359,10 @@ export async function ingestGitHub(
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
-    const endpoint = entityType === "company"
-      ? `https://api.github.com/orgs/${orgOrUser}/repos`
-      : `https://api.github.com/users/${orgOrUser}/repos`;
+    const endpoint =
+      entityType === "company"
+        ? `https://api.github.com/orgs/${orgOrUser}/repos`
+        : `https://api.github.com/users/${orgOrUser}/repos`;
 
     const reposRes = await fetch(`${endpoint}?sort=pushed&per_page=100`, { headers });
     const reposData = await reposRes.json();
@@ -367,7 +375,7 @@ export async function ingestGitHub(
       const pushedAt = new Date(repo.pushed_at);
       if (pushedAt < cutoffDate) continue;
 
-      const rawHash = `github:${repo.id}:${Math.floor(Date.now() / 60000)}`;
+      const rawHash = `github:${repo.id}`;
 
       await prisma.rawPost.upsert({
         where: { rawHash },
@@ -404,7 +412,6 @@ export async function ingestGitHub(
 
       collected++;
     }
-
   } catch (err) {
     errors.push(String(err));
   }
@@ -419,30 +426,28 @@ export async function ingestGitHub(
 export async function runFullIngestion(): Promise<Record<string, IngestionResult>> {
   const results: Record<string, IngestionResult> = {};
 
-  // Company surfaces
-  console.log("📺 YouTube (@EveryInc)...");
+  console.log("YouTube (@EveryInc)...");
   results.youtube = await ingestYouTube("EveryInc", 90);
 
-  console.log("🐦 X Company (@every)...");
-  results.x_company = await ingestXPublic("every", "company", "comp_every_001", 90);
+  console.log("X Company (@every)...");
+  results.x_company = await ingestXPublic("every", "company", EVERY_COMPANY_ID, 90);
 
-  console.log("💻 GitHub Org (EveryInc)...");
-  results.github_company = await ingestGitHub("EveryInc", "company", "comp_every_001", 90);
+  console.log("GitHub Org (EveryInc)...");
+  results.github_company = await ingestGitHub("EveryInc", "company", EVERY_COMPANY_ID, 90);
 
-  // Employee surfaces
-  console.log("🐦 X Dan (@danshipper)...");
+  console.log("X Dan (@danshipper)...");
   results.x_dan = await ingestXPublic("danshipper", "employee", "emp_001", 90);
 
-  console.log("🐦 X Austin (@austin_tedesco)...");
+  console.log("X Austin (@austin_tedesco)...");
   results.x_austin = await ingestXPublic("austin_tedesco", "employee", "emp_002", 90);
 
-  console.log("📝 Substack Dan...");
+  console.log("Substack Dan...");
   results.substack_dan = await ingestSubstackRSS("danshipper", "employee", "emp_001", 90);
 
-  console.log("📝 Substack Austin...");
+  console.log("Substack Austin...");
   results.substack_austin = await ingestSubstackRSS("austintedesco", "employee", "emp_002", 90);
 
-  console.log("💻 GitHub Kieran...");
+  console.log("GitHub Kieran...");
   results.github_kieran = await ingestGitHub("kieranklaassen", "employee", "emp_005", 90);
 
   return results;

@@ -32,7 +32,7 @@ This updates `Employee` rows and upserts `DiscoveredSurface` rows with `discover
 
 ## 3. Discovery (queries → `DiscoveredSurface`)
 
-The discovery engine builds search-query “evidence” per surface and persists rows (real search APIs can be wired into `searchForSurface` later).
+The discovery engine builds search-query "evidence" per surface and persists rows (real search APIs can be wired into `searchForSurface` later).
 
 ```bash
 pnpm discover:surfaces
@@ -55,6 +55,6 @@ See [README_INGESTION.md](../README_INGESTION.md) for sources, env vars, and Stu
 
 Vercel cron entries are in `vercel.json`. Crons call the same paths; ensure `CRON_SECRET` is configured so `Authorization: Bearer …` succeeds (same pattern as [Vercel cron documentation](https://vercel.com/docs/cron-jobs)).
 
-## 6. Next steps for “real” discovery
+## 6. Next steps for "real" discovery
 
 Hook `lib/discovery/engine.ts` `searchForSurface` to Serper, Spider, or Google Custom Search using your API keys; see comments in that file.

@@ -1,6 +1,6 @@
 # Every Signal Capture — ingestion quick start
 
-Canonical path: **`lib/acquisition/*`**. Providers write through `persistActivities()`, which upserts `RawActivity` and normalized `Post` rows that the dashboard renders directly.
+Staging table: **`RawPost`** (`lib/ingestion/pipeline.ts`). Normalize into `Post` / `RawActivity` in a later step.
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Canonical path: **`lib/acquisition/*`**. Providers write through `persistActivit
 
 ```bash
 # 1) Env (local: .env / .env.local — or: vercel env add …)
-#    YOUTUBE_API_KEY, GITHUB_TOKEN, X_API_KEY, CRON_SECRET
+#    YOUTUBE_API_KEY, GITHUB_TOKEN, X_BEARER_TOKEN, CRON_SECRET
 #    SPIDER_API_KEY, PARALLEL_API_KEY — optional
 
 # 2) Apply schema (pick one)
@@ -21,20 +21,20 @@ pnpm exec prisma migrate dev
 #    If your DB was created only with db push (no migrations), fix drift first or use db push instead:
 pnpm exec prisma db push
 
-# 3) Seed company + employees/surfaces
-pnpm db:seed
+# 3) Seed company + employees (ids line up with ingestion)
+npx tsx scripts/seed-employees.ts
 
 # 4) Full ingest run (project root — folder with package.json)
-pnpm ingest
+npx tsx scripts/ingest-all.ts
 ```
 
 ### Project root
 
-Run `pnpm ingest` from the directory containing `package.json`, `app/`, `scripts/`.
+Run `npx tsx scripts/ingest-all.ts` from the directory containing `package.json`, `app/`, `scripts/`.
 
 ## Cron / API
 
-`GET /api/ingest` requires `Authorization: Bearer $CRON_SECRET`. Optional `?source=` matches `youtube`, `x_company`, `x_dan`, `x_austin`, `substack_dan`, `substack_austin`, `github`, `github_kieran`; omit source to walk every present Surface through the canonical acquisition router.
+`GET /api/ingest` requires `Authorization: Bearer $CRON_SECRET`. Optional `?source=` matches `youtube`, `x_company`, `x_dan`, `x_austin`, `substack_dan`, `substack_austin`, `github`, `github_kieran`; omit source for **`runFullIngestion()`**.
 
 Schedules live in **`vercel.json`**; ensure `CRON_SECRET` is set on Vercel and that cron jobs can authenticate (per [Vercel cron docs](https://vercel.com/docs/cron-jobs)).
 
@@ -46,10 +46,10 @@ Schedules live in **`vercel.json`**; ensure `CRON_SECRET` is set on Vercel and t
 | X        | Company | @every           |
 | X        | Emp     | @danshipper, @austin_tedesco |
 | Substack | Emp     | danshipper, austintedesco (RSS) |
-| GitHub   | Company | every-io         |
+| GitHub   | Company | EveryInc         |
 | GitHub   | Emp     | kieranklaassen   |
 
-Inspect rows: `pnpm exec prisma studio` -> models **Post**, **RawActivity**, and **AcquisitionJob**.
+Inspect rows: `pnpm exec prisma studio` → model **RawPost**.
 
 ## Discovery, Sheets, and roster
 

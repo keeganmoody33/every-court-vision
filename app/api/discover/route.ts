@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 import {
   discoverEmployeeSurfaces,
   parseSurfaceFilter,
@@ -7,11 +9,10 @@ import {
 } from "@/lib/discovery/engine";
 import { prisma } from "@/lib/prisma";
 
-export const runtime = "nodejs";
-
 export async function GET(req: NextRequest) {
+  const cronSecret = process.env.CRON_SECRET;
   const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -21,6 +22,13 @@ export async function GET(req: NextRequest) {
   const surface = searchParams.get("surface");
 
   const surfaceFilter = parseSurfaceFilter(surface);
+
+  if (surface && !surfaceFilter) {
+    return NextResponse.json(
+      { error: `Invalid surface: "${surface}". Valid values: x, linkedin, github, substack, youtube, instagram, tiktok, product_hunt, personal_site, podcast, newsletter, medium, devto, dribbble, figma, twitch, calendly, discord, book, external_interview, other` },
+      { status: 400 },
+    );
+  }
 
   const job = await prisma.discoveryJob.create({
     data: {
