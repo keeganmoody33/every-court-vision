@@ -233,7 +233,7 @@ export async function saveDiscoveryResults(
         ${id}, ${employeeId}, ${result.surface}, ${label}, ${handleKey},
         ${result.url ?? null}, ${result.status}, ${result.confidenceScore},
         ${evidence}, ${result.discoveryMethod},
-        ${now}, ${now}, ${now}, ${now}
+        ${now}, ${null}, ${now}, ${now}
       )
       ON CONFLICT ("employeeId", surface, handle) DO UPDATE SET
         status = EXCLUDED.status,
@@ -241,7 +241,7 @@ export async function saveDiscoveryResults(
         "confidenceScore" = EXCLUDED."confidenceScore",
         evidence = EXCLUDED.evidence,
         "discoveryMethod" = EXCLUDED."discoveryMethod",
-        "lastVerifiedAt" = EXCLUDED."lastVerifiedAt",
+        "lastVerifiedAt" = ${now},
         handle = EXCLUDED.handle,
         "updatedAt" = EXCLUDED."updatedAt"
     `;
