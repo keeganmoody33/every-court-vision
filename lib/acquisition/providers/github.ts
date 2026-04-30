@@ -1,4 +1,4 @@
-import { AcquisitionProvider } from "@prisma/client";
+import { AcquisitionProvider } from "@/lib/db-enums";
 
 import { env } from "@/lib/env";
 import type { ProviderAdapter, RawActivityInput } from "@/lib/acquisition/types";

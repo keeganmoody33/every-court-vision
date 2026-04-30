@@ -1,4 +1,4 @@
-import { AcquisitionJobStatus, AcquisitionProvider } from "@prisma/client";
+import { AcquisitionJobStatus, AcquisitionProvider } from "@/lib/db-enums";
 import { NonRetriableError } from "inngest";
 
 import { acquisitionSurfaceRequested, inngest, postsRecategorizeRequested } from "@/inngest/client";

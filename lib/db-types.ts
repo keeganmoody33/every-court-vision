@@ -5,70 +5,22 @@
 // present (use `T | null` for nullable columns; never `T?`, which would
 // imply the column is missing).
 //
-// Enum types are placeholder string-literal unions in this file. U4
-// replaces them with imports from @/lib/db-enums. When you change a
-// schema field, change BOTH this file and db/schema.sql.
+// Enum types come from @/lib/db-enums (single source of identifier
+// strings). When you change a schema field, change BOTH this file and
+// db/schema.sql.
 //
 // Types are ordered alphabetically by name for diff stability.
 
-// ---------------------------------------------------------------------------
-// Enum placeholders (replaced by imports in U4)
-// ---------------------------------------------------------------------------
-
-type AcquisitionJobStatus =
-  | "QUEUED"
-  | "RUNNING"
-  | "SUCCEEDED"
-  | "PARTIAL"
-  | "FAILED"
-  | "DISABLED"
-  | "DEAD_LETTER";
-
-type AcquisitionProvider =
-  | "X_API"
-  | "LINKEDIN_API"
-  | "GITHUB_API"
-  | "YOUTUBE_API"
-  | "RSS"
-  | "SPIDER"
-  | "PARALLEL"
-  | "MANUAL"
-  | "INSTAGRAM_GRAPH";
-
-type DataReadiness = "PUBLIC_ONLY" | "MANUAL_IMPORT" | "LIVE";
-
-type IntentClass = "THREE_POINT" | "MID_RANGE" | "PAINT" | "FREE_THROW" | "PASS";
-
-type MetricConfidence =
-  | "DIRECT"
-  | "ESTIMATED"
-  | "MODELED"
-  | "HYPOTHESIS"
-  | "NEEDS_INTERNAL_ANALYTICS";
-
-type Platform =
-  | "X"
-  | "LINKEDIN"
-  | "GITHUB"
-  | "INSTAGRAM"
-  | "NEWSLETTER"
-  | "YOUTUBE"
-  | "PODCAST"
-  | "LAUNCHES"
-  | "TEAMMATE_AMPLIFICATION"
-  | "EXTERNAL_AMPLIFICATION"
-  | "PRODUCT_HUNT"
-  | "PERSONAL_SITE"
-  | "TIKTOK"
-  | "WEBSITE"
-  | "SUBSTACK"
-  | "APP_STORE"
-  | "REFERRAL"
-  | "CONSULTING";
-
-type ShotOutcome = "MADE" | "MISSED" | "TURNOVER";
-
-type SourceReadiness = "READY" | "MANUAL_IMPORT" | "NEEDS_OAUTH" | "FUTURE";
+import type {
+  AcquisitionJobStatus,
+  AcquisitionProvider,
+  DataReadiness,
+  IntentClass,
+  MetricConfidence,
+  Platform,
+  ShotOutcome,
+  SourceReadiness,
+} from "@/lib/db-enums";
 
 // ---------------------------------------------------------------------------
 // Row types (alphabetical)

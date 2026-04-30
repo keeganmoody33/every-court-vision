@@ -8,7 +8,7 @@ import { google } from "googleapis";
 
 import { prisma } from "@/lib/prisma";
 
-import { DataReadiness, Platform } from "@prisma/client";
+import { DataReadiness, Platform } from "@/lib/db-enums";
 
 const COMPANY_ID = "comp_every_001";
 

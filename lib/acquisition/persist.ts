@@ -1,4 +1,6 @@
-import { AcquisitionProvider, MetricConfidence, Platform, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+import { AcquisitionProvider, MetricConfidence, Platform } from "@/lib/db-enums";
 
 import { platformFromDb } from "@/lib/acquisition/platform";
 import { db } from "@/lib/db";

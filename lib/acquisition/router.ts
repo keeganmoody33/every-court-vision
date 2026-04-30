@@ -1,4 +1,4 @@
-import { AcquisitionJobStatus, type AcquisitionProvider } from "@prisma/client";
+import { AcquisitionJobStatus, type AcquisitionProvider } from "@/lib/db-enums";
 
 import { acquisitionSurfaceRequested, inngest } from "@/inngest/client";
 import { manualAcquisitionKey } from "@/lib/acquisition/idempotency";

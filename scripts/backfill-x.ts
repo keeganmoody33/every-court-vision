@@ -4,7 +4,7 @@
 // 90-day window short-circuit. Real tweet rows are written through
 // lib/acquisition/persist.ts, which dedupes by surface/externalId.
 
-import { AcquisitionProvider, AcquisitionJobStatus } from "@prisma/client";
+import { AcquisitionProvider, AcquisitionJobStatus } from "@/lib/db-enums";
 
 import { runAcquisitionForSurface } from "@/lib/acquisition/router";
 import { prisma } from "@/lib/prisma";

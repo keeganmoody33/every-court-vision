@@ -1,4 +1,5 @@
-import { Platform, type Surface } from "@prisma/client";
+import { Platform } from "@/lib/db-enums";
+import type { Surface } from "@/lib/db-types";
 
 import { db } from "@/lib/db";
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Platform } from "@prisma/client";
+import { Platform } from "@/lib/db-enums";
 import { z } from "zod";
 
 import { runAcquisitionForSurface } from "@/lib/acquisition/router";
