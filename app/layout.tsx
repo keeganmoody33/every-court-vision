@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Fraunces, Geist, Geist_Mono, Permanent_Marker } from "next/font/google";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 import { AppShell } from "@/components/AppShell";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -65,6 +66,7 @@ export default function RootLayout({
             <AppShell>{children}</AppShell>
           </Suspense>
         </TooltipProvider>
+        <Analytics />
       </body>
     </html>
   );
