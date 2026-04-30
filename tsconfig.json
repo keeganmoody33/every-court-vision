@@ -25,5 +25,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "KIMI 2.678"]
+  "exclude": ["node_modules", "KIMI 2.678", "docs/data-archives/**"]
 }
