@@ -16,12 +16,13 @@ import { postToCoord } from "@/lib/intent/courtMapping";
 import { intentClassFromDb, intentClassToDb, shotOutcomeFromDb, shotOutcomeToDb } from "@/lib/intent/dbMapping";
 import { computeIntentMetrics } from "@/lib/intent/metrics";
 import { classifyOutcome } from "@/lib/intent/outcome";
+import { normalizeDatabaseUrl } from "@/lib/normalize-database-url";
 import type { Platform as AppPlatform, PostMetrics, PostScores } from "@/lib/types";
 
 config({ path: ".env" });
 config({ path: ".env.local", override: true });
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = normalizeDatabaseUrl(process.env.DATABASE_URL ?? "");
 
 if (!connectionString) {
   throw new Error("DATABASE_URL is required to seed the database.");

@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -7,7 +9,8 @@ import {
   parseSurfaceFilter,
   saveDiscoveryResults,
 } from "@/lib/discovery/engine";
-import { prisma } from "@/lib/prisma";
+import { sql } from "@/lib/db-neon";
+import type { Employee } from "@/lib/db-types";
 
 export async function GET(req: NextRequest) {
   const cronSecret = process.env.CRON_SECRET;
@@ -30,28 +33,28 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const job = await prisma.discoveryJob.create({
-    data: {
-      jobType: employeeId
-        ? "employee"
-        : scope === "public_facing"
-          ? "public_roster"
-          : "full_roster",
-      status: "running",
-      employeeId,
-      surface,
-      startedAt: new Date(),
-    },
-  });
+  const jobId = randomUUID();
+  const jobType = employeeId
+    ? "employee"
+    : scope === "public_facing"
+      ? "public_roster"
+      : "full_roster";
+  const startedAt = new Date();
+
+  await sql`
+    INSERT INTO "DiscoveryJob" (
+      id, "jobType", status, "employeeId", surface, "startedAt"
+    ) VALUES (
+      ${jobId}, ${jobType}, 'running', ${employeeId}, ${surface}, ${startedAt}
+    )
+  `;
 
   try {
-    const where = employeeId
-      ? { id: employeeId }
+    const employees = (employeeId
+      ? await sql`SELECT * FROM "Employee" WHERE id = ${employeeId}`
       : scope === "public_facing"
-        ? { isPublicFacing: true }
-        : {};
-
-    const employees = await prisma.employee.findMany({ where });
+        ? await sql`SELECT * FROM "Employee" WHERE "isPublicFacing" = true`
+        : await sql`SELECT * FROM "Employee"`) as Employee[];
 
     let totalFound = 0;
     let totalUpdated = 0;
@@ -73,32 +76,30 @@ export async function GET(req: NextRequest) {
       totalUpdated += results.filter((r) => r.status !== "unknown").length;
     }
 
-    await prisma.discoveryJob.update({
-      where: { id: job.id },
-      data: {
-        status: "completed",
-        surfacesFound: totalFound,
-        surfacesUpdated: totalUpdated,
-        completedAt: new Date(),
-      },
-    });
+    await sql`
+      UPDATE "DiscoveryJob"
+      SET status = 'completed',
+          "surfacesFound" = ${totalFound},
+          "surfacesUpdated" = ${totalUpdated},
+          "completedAt" = ${new Date()}
+      WHERE id = ${jobId}
+    `;
 
     return NextResponse.json({
       success: true,
-      jobId: job.id,
+      jobId,
       employeesScanned: employees.length,
       surfacesFound: totalFound,
       surfacesUpdated: totalUpdated,
     });
   } catch (err) {
-    await prisma.discoveryJob.update({
-      where: { id: job.id },
-      data: {
-        status: "failed",
-        errors: [String(err)],
-        completedAt: new Date(),
-      },
-    });
+    await sql`
+      UPDATE "DiscoveryJob"
+      SET status = 'failed',
+          errors = ${[String(err)]},
+          "completedAt" = ${new Date()}
+      WHERE id = ${jobId}
+    `;
 
     return NextResponse.json({ success: false, error: String(err) }, { status: 500 });
   }

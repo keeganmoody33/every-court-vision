@@ -2,10 +2,12 @@ import { config } from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+import { normalizeDatabaseUrl } from "@/lib/normalize-database-url";
+
 config({ path: ".env" });
 config({ path: ".env.local", override: true });
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = normalizeDatabaseUrl(process.env.DATABASE_URL ?? "");
 
 if (!connectionString) {
   throw new Error("DATABASE_URL is required.");

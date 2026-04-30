@@ -1,4 +1,4 @@
-import { AcquisitionProvider } from "@prisma/client";
+import { AcquisitionProvider } from "@/lib/db-enums";
 
 import { db } from "@/lib/db";
 import { env } from "@/lib/env";

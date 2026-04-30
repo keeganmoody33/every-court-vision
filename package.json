@@ -8,9 +8,10 @@
 		"postinstall": "prisma generate",
 		"prisma:validate": "prisma validate",
 		"prisma:generate": "prisma generate",
-		"db:push": "prisma db push",
+		"db:push": "psql \"$DATABASE_URL\" -f db/schema.sql",
 		"db:seed": "tsx prisma/seed.ts",
 		"db:studio": "prisma studio",
+		"db:migrate": "for f in db/migrations/*/migration.sql db/migrations/*.sql; do [ -f \"$f\" ] && (echo \"-- $f\" >&2; psql \"$DATABASE_URL\" -f \"$f\"); done",
 		"db:backfill": "tsx scripts/backfill-acquisition.ts",
 		"backfill:x": "NODE_OPTIONS=--conditions=react-server tsx scripts/backfill-x.ts",
 		"ingest": "NODE_OPTIONS=--conditions=react-server tsx scripts/ingest-all.ts",
@@ -21,6 +22,7 @@
 		"sync:sheets": "tsx scripts/sync-from-sheets.ts"
 	},
 	"dependencies": {
+		"@neondatabase/serverless": "^1.1.0",
 		"@prisma/adapter-pg": "^7.8.0",
 		"@prisma/client": "^7.8.0",
 		"@radix-ui/react-dialog": "^1.1.15",
@@ -72,6 +74,10 @@
 		"typescript": "^5.9.3"
 	},
 	"pnpm": {
+		"overrides": {
+			"postcss": ">=8.5.10",
+			"@hono/node-server": ">=1.19.13"
+		},
 		"onlyBuiltDependencies": [
 			"@prisma/engines",
 			"esbuild",

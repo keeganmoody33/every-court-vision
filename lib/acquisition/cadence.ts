@@ -1,6 +1,7 @@
-import { Platform, type Surface } from "@prisma/client";
+import { Platform } from "@/lib/db-enums";
+import type { Surface } from "@/lib/db-types";
 
-import { db } from "@/lib/db";
+import { sql } from "@/lib/db-neon";
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const DAY = 24 * 60 * 60 * 1000;
@@ -54,9 +55,10 @@ function isDue(surface: Pick<Surface, "platform" | "lastScrapedAt">, now: Date) 
 }
 
 export async function dueSurfaces(now: Date = new Date()): Promise<Surface[]> {
-  const surfaces = await db.surface.findMany({
-    where: { present: true },
-    orderBy: [{ platform: "asc" }, { handle: "asc" }],
-  });
+  const surfaces = (await sql`
+    SELECT * FROM "Surface"
+    WHERE present = true
+    ORDER BY platform ASC, handle ASC
+  `) as Surface[];
   return surfaces.filter((surface) => isDue(surface, now));
 }

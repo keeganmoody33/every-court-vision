@@ -1,7 +1,7 @@
 // scripts/seed-employees.ts — company + 25 employees (roster IDs align with ingestion + discovery)
 // Run: npx tsx scripts/seed-employees.ts
 
-import { DataReadiness, Platform } from "@prisma/client";
+import { DataReadiness, Platform } from "@/lib/db-enums";
 
 import { prisma } from "@/lib/prisma";
 

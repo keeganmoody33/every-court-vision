@@ -1,6 +1,8 @@
 // lib/ingestion/pipeline.ts — ingestion pulls into RawPost (staging) for Every surfaces
 
-import { prisma } from "@/lib/prisma";
+import { randomUUID } from "node:crypto";
+
+import { sql } from "@/lib/db-neon";
 
 export type IngestionSource =
   | "youtube_api"
@@ -43,27 +45,29 @@ export async function ingestYouTube(
     const stats = channel.statistics;
     const playlistId = channel.contentDetails?.relatedPlaylists?.uploads;
 
-    await prisma.company.upsert({
-      where: { id: EVERY_COMPANY_ID },
-      update: {
-        youtubeSubscribers: parseInt(stats.subscriberCount) || 0,
-        youtubeViews: parseInt(stats.viewCount) || 0,
-        youtubeVideos: parseInt(stats.videoCount) || 0,
-        slug: "every",
-      },
-      create: {
-        id: EVERY_COMPANY_ID,
-        name: "Every",
-        slug: "every",
-        domain: "every.to",
-        website: "https://every.to",
-        youtubeSubscribers: parseInt(stats.subscriberCount) || 0,
-        youtubeViews: parseInt(stats.viewCount) || 0,
-        youtubeVideos: parseInt(stats.videoCount) || 0,
-        teamSize: 25,
-        publicFacingCount: 16,
-      },
-    });
+    const subs = parseInt(stats.subscriberCount) || 0;
+    const views = parseInt(stats.viewCount) || 0;
+    const videos = parseInt(stats.videoCount) || 0;
+    const now = new Date();
+    await sql`
+      INSERT INTO "Company" (
+        id, name, slug, domain, website,
+        "youtubeSubscribers", "youtubeViews", "youtubeVideos",
+        "teamSize", "publicFacingCount",
+        "createdAt", "updatedAt"
+      ) VALUES (
+        ${EVERY_COMPANY_ID}, 'Every', 'every', 'every.to', 'https://every.to',
+        ${subs}, ${views}, ${videos},
+        25, 16,
+        ${now}, ${now}
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        "youtubeSubscribers" = EXCLUDED."youtubeSubscribers",
+        "youtubeViews" = EXCLUDED."youtubeViews",
+        "youtubeVideos" = EXCLUDED."youtubeVideos",
+        slug = EXCLUDED.slug,
+        "updatedAt" = EXCLUDED."updatedAt"
+    `;
 
     if (!playlistId) {
       return { collected: 0, errors: ["No uploads playlist found"] };
@@ -106,32 +110,37 @@ export async function ingestYouTube(
 
       for (const video of videoData.items || []) {
         const rawHash = `youtube:${video.id}`;
+        const reach = parseInt(video.statistics?.viewCount || "0");
+        const likes = parseInt(video.statistics?.likeCount || "0");
+        const comments = parseInt(video.statistics?.commentCount || "0");
+        const id = randomUUID();
+        const content = `${video.snippet.title}\n${(video.snippet.description || "").slice(0, 500)}`;
+        const url = `https://youtube.com/watch?v=${video.id}`;
+        const mediaUrl =
+          video.snippet.thumbnails?.high?.url || video.snippet.thumbnails?.default?.url || null;
+        const postedAt = new Date(video.snippet.publishedAt);
+        const collectedAt = new Date();
 
-        await prisma.rawPost.upsert({
-          where: { rawHash },
-          update: {
-            rawReach: parseInt(video.statistics?.viewCount || "0"),
-            rawLikes: parseInt(video.statistics?.likeCount || "0"),
-            rawComments: parseInt(video.statistics?.commentCount || "0"),
-            rawMetrics: video.statistics,
-          },
-          create: {
-            platform: "youtube",
-            nativeId: video.id,
-            entityType: "company",
-            entityId: EVERY_COMPANY_ID,
-            content: `${video.snippet.title}\n${(video.snippet.description || "").slice(0, 500)}`,
-            contentType: "video",
-            url: `https://youtube.com/watch?v=${video.id}`,
-            mediaUrl: video.snippet.thumbnails?.high?.url || video.snippet.thumbnails?.default?.url,
-            postedAt: new Date(video.snippet.publishedAt),
-            rawReach: parseInt(video.statistics?.viewCount || "0"),
-            rawLikes: parseInt(video.statistics?.likeCount || "0"),
-            rawComments: parseInt(video.statistics?.commentCount || "0"),
-            rawMetrics: video.statistics,
-            rawHash,
-          },
-        });
+        await sql`
+          INSERT INTO "RawPost" (
+            id, platform, "nativeId", "entityType", "entityId",
+            content, "contentType", url, "mediaUrl",
+            "postedAt", "collectedAt",
+            "rawReach", "rawLikes", "rawComments", "rawMetrics",
+            "rawHash"
+          ) VALUES (
+            ${id}, 'youtube', ${video.id}, 'company', ${EVERY_COMPANY_ID},
+            ${content}, 'video', ${url}, ${mediaUrl},
+            ${postedAt}, ${collectedAt},
+            ${reach}, ${likes}, ${comments}, ${JSON.stringify(video.statistics ?? {})}::jsonb,
+            ${rawHash}
+          )
+          ON CONFLICT ("rawHash") DO UPDATE SET
+            "rawReach" = EXCLUDED."rawReach",
+            "rawLikes" = EXCLUDED."rawLikes",
+            "rawComments" = EXCLUDED."rawComments",
+            "rawMetrics" = EXCLUDED."rawMetrics"
+        `;
 
         collected++;
       }
@@ -175,15 +184,19 @@ export async function ingestXPublic(
     const metrics = userData.data.public_metrics;
 
     if (entityType === "company") {
-      await prisma.company.update({
-        where: { id: entityId },
-        data: { xFollowers: metrics.followers_count },
-      });
+      await sql`
+        UPDATE "Company"
+        SET "xFollowers" = ${metrics.followers_count},
+            "updatedAt" = ${new Date()}
+        WHERE id = ${entityId}
+      `;
     } else {
-      await prisma.employee.update({
-        where: { id: entityId },
-        data: { xFollowers: metrics.followers_count },
-      });
+      await sql`
+        UPDATE "Employee"
+        SET "xFollowers" = ${metrics.followers_count},
+            "updatedAt" = ${new Date()}
+        WHERE id = ${entityId}
+      `;
     }
 
     const cutoffDate = new Date();
@@ -213,37 +226,43 @@ export async function ingestXPublic(
           break;
         }
 
-        const urls = tweet.entities?.urls?.map((u: { expanded_url?: string }) => u.expanded_url).filter(Boolean) as string[] | undefined;
+        const urls = (tweet.entities?.urls
+          ?.map((u: { expanded_url?: string }) => u.expanded_url)
+          .filter(Boolean) as string[] | undefined) ?? [];
         const rawHash = `x:${tweet.id}`;
+        const id = randomUUID();
+        const reach = tweet.public_metrics?.impression_count || 0;
+        const likes = tweet.public_metrics?.like_count || 0;
+        const reposts = tweet.public_metrics?.retweet_count || 0;
+        const replies = tweet.public_metrics?.reply_count || 0;
+        const clicks = tweet.public_metrics?.url_link_clicks || 0;
+        const contentType = tweet.referenced_tweets ? "quote" : "text";
+        const xUrl = `https://x.com/${handle}/status/${tweet.id}`;
+        const collectedAt = new Date();
 
-        await prisma.rawPost.upsert({
-          where: { rawHash },
-          update: {
-            rawReach: tweet.public_metrics?.impression_count || 0,
-            rawLikes: tweet.public_metrics?.like_count || 0,
-            rawReposts: tweet.public_metrics?.retweet_count || 0,
-            rawReplies: tweet.public_metrics?.reply_count || 0,
-            rawMetrics: tweet.public_metrics,
-          },
-          create: {
-            platform: "x",
-            nativeId: tweet.id,
-            entityType,
-            entityId,
-            content: tweet.text,
-            contentType: tweet.referenced_tweets ? "quote" : "text",
-            url: `https://x.com/${handle}/status/${tweet.id}`,
-            postedAt,
-            rawReach: tweet.public_metrics?.impression_count || 0,
-            rawLikes: tweet.public_metrics?.like_count || 0,
-            rawReposts: tweet.public_metrics?.retweet_count || 0,
-            rawReplies: tweet.public_metrics?.reply_count || 0,
-            rawClicks: tweet.public_metrics?.url_link_clicks || 0,
-            rawMetrics: tweet.public_metrics,
-            extractedUrls: urls ?? [],
-            rawHash,
-          },
-        });
+        await sql`
+          INSERT INTO "RawPost" (
+            id, platform, "nativeId", "entityType", "entityId",
+            content, "contentType", url,
+            "postedAt", "collectedAt",
+            "rawReach", "rawLikes", "rawReposts", "rawReplies", "rawClicks",
+            "rawMetrics", "extractedUrls", "rawHash"
+          ) VALUES (
+            ${id}, 'x', ${tweet.id}, ${entityType}, ${entityId},
+            ${tweet.text}, ${contentType}, ${xUrl},
+            ${postedAt}, ${collectedAt},
+            ${reach}, ${likes}, ${reposts}, ${replies}, ${clicks},
+            ${JSON.stringify(tweet.public_metrics ?? {})}::jsonb,
+            ${urls},
+            ${rawHash}
+          )
+          ON CONFLICT ("rawHash") DO UPDATE SET
+            "rawReach" = EXCLUDED."rawReach",
+            "rawLikes" = EXCLUDED."rawLikes",
+            "rawReposts" = EXCLUDED."rawReposts",
+            "rawReplies" = EXCLUDED."rawReplies",
+            "rawMetrics" = EXCLUDED."rawMetrics"
+        `;
 
         collected++;
       }
@@ -306,25 +325,25 @@ export async function ingestSubstackRSS(
       if (!link) continue;
 
       const rawHash = `substack:${link}`;
+      const fullContent = title + "\n" + content.slice(0, 500);
+      const id = randomUUID();
+      const collectedAt = new Date();
 
-      await prisma.rawPost.upsert({
-        where: { rawHash },
-        update: {
-          content: title + "\n" + content.slice(0, 500),
-        },
-        create: {
-          platform: "substack",
-          nativeId: link,
-          entityType,
-          entityId,
-          content: title + "\n" + content.slice(0, 500),
-          contentType: "article",
-          url: link,
-          postedAt,
-          rawMetrics: {},
-          rawHash,
-        },
-      });
+      await sql`
+        INSERT INTO "RawPost" (
+          id, platform, "nativeId", "entityType", "entityId",
+          content, "contentType", url,
+          "postedAt", "collectedAt",
+          "rawMetrics", "rawHash"
+        ) VALUES (
+          ${id}, 'substack', ${link}, ${entityType}, ${entityId},
+          ${fullContent}, 'article', ${link},
+          ${postedAt}, ${collectedAt},
+          ${JSON.stringify({})}::jsonb, ${rawHash}
+        )
+        ON CONFLICT ("rawHash") DO UPDATE SET
+          content = EXCLUDED.content
+      `;
 
       collected++;
     }
@@ -376,39 +395,35 @@ export async function ingestGitHub(
       if (pushedAt < cutoffDate) continue;
 
       const rawHash = `github:${repo.id}`;
+      const stars = repo.stargazers_count || 0;
+      const forks = repo.forks_count || 0;
+      const repoMetrics = {
+        stars: repo.stargazers_count,
+        forks: repo.forks_count,
+        language: repo.language,
+        openIssues: repo.open_issues_count,
+      };
+      const id = randomUUID();
+      const repoContent = repo.name + "\n" + (repo.description || "");
+      const collectedAt = new Date();
 
-      await prisma.rawPost.upsert({
-        where: { rawHash },
-        update: {
-          rawStars: repo.stargazers_count || 0,
-          rawForks: repo.forks_count || 0,
-          rawMetrics: {
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
-            language: repo.language,
-            openIssues: repo.open_issues_count,
-          },
-        },
-        create: {
-          platform: "github",
-          nativeId: repo.id.toString(),
-          entityType,
-          entityId,
-          content: repo.name + "\n" + (repo.description || ""),
-          contentType: "repo",
-          url: repo.html_url,
-          postedAt: pushedAt,
-          rawStars: repo.stargazers_count || 0,
-          rawForks: repo.forks_count || 0,
-          rawMetrics: {
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
-            language: repo.language,
-            openIssues: repo.open_issues_count,
-          },
-          rawHash,
-        },
-      });
+      await sql`
+        INSERT INTO "RawPost" (
+          id, platform, "nativeId", "entityType", "entityId",
+          content, "contentType", url,
+          "postedAt", "collectedAt",
+          "rawStars", "rawForks", "rawMetrics", "rawHash"
+        ) VALUES (
+          ${id}, 'github', ${repo.id.toString()}, ${entityType}, ${entityId},
+          ${repoContent}, 'repo', ${repo.html_url},
+          ${pushedAt}, ${collectedAt},
+          ${stars}, ${forks}, ${JSON.stringify(repoMetrics)}::jsonb, ${rawHash}
+        )
+        ON CONFLICT ("rawHash") DO UPDATE SET
+          "rawStars" = EXCLUDED."rawStars",
+          "rawForks" = EXCLUDED."rawForks",
+          "rawMetrics" = EXCLUDED."rawMetrics"
+      `;
 
       collected++;
     }

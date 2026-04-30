@@ -2,7 +2,7 @@ import type {
   AcquisitionProvider as DbAcquisitionProvider,
   MetricConfidence,
   Platform as DbPlatform,
-} from "@prisma/client";
+} from "@/lib/db-enums";
 
 export interface AcquisitionPolicy {
   platform: DbPlatform;

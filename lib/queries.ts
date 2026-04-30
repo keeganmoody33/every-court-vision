@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Platform as DbPlatform } from "@prisma/client";
+import { Platform as DbPlatform } from "@/lib/db-enums";
 
 import { filterPosts } from "@/lib/aggregations";
 import { policiesForPlatform } from "@/lib/acquisition/policies";

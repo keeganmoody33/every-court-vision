@@ -1,6 +1,8 @@
 // Exhaustive surface discovery engine for Every.to employees
 
-import { prisma } from "@/lib/prisma";
+import { randomUUID } from "node:crypto";
+
+import { sql } from "@/lib/db-neon";
 
 export type SurfaceTarget =
   | "x"
@@ -217,35 +219,31 @@ export async function saveDiscoveryResults(
 ): Promise<void> {
   for (const result of results) {
     const handleKey = result.handle?.trim() || "_none_";
+    const id = randomUUID();
+    const label = result.surface.replace(/_/g, " ").toUpperCase();
+    const evidence = result.evidence.length ? result.evidence : [];
+    const now = new Date();
 
-    await prisma.discoveredSurface.upsert({
-      where: {
-        employeeId_surface_handle: {
-          employeeId,
-          surface: result.surface,
-          handle: handleKey,
-        },
-      },
-      update: {
-        status: result.status,
-        url: result.url ?? null,
-        confidenceScore: result.confidenceScore,
-        evidence: result.evidence,
-        discoveryMethod: result.discoveryMethod,
-        lastVerifiedAt: new Date(),
-        handle: handleKey,
-      },
-      create: {
-        employeeId,
-        surface: result.surface,
-        label: result.surface.replace(/_/g, " ").toUpperCase(),
-        handle: handleKey,
-        url: result.url ?? null,
-        status: result.status,
-        confidenceScore: result.confidenceScore,
-        evidence: result.evidence.length ? result.evidence : [],
-        discoveryMethod: result.discoveryMethod,
-      },
-    });
+    await sql`
+      INSERT INTO "DiscoveredSurface" (
+        id, "employeeId", surface, label, handle, url, status,
+        "confidenceScore", evidence, "discoveryMethod",
+        "discoveredAt", "lastVerifiedAt", "createdAt", "updatedAt"
+      ) VALUES (
+        ${id}, ${employeeId}, ${result.surface}, ${label}, ${handleKey},
+        ${result.url ?? null}, ${result.status}, ${result.confidenceScore},
+        ${evidence}, ${result.discoveryMethod},
+        ${now}, ${null}, ${now}, ${now}
+      )
+      ON CONFLICT ("employeeId", surface, handle) DO UPDATE SET
+        status = EXCLUDED.status,
+        url = EXCLUDED.url,
+        "confidenceScore" = EXCLUDED."confidenceScore",
+        evidence = EXCLUDED.evidence,
+        "discoveryMethod" = EXCLUDED."discoveryMethod",
+        "lastVerifiedAt" = ${now},
+        handle = EXCLUDED.handle,
+        "updatedAt" = EXCLUDED."updatedAt"
+    `;
   }
 }

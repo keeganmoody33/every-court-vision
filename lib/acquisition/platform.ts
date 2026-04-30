@@ -1,4 +1,4 @@
-import { Platform as DbPlatform } from "@prisma/client";
+import { Platform as DbPlatform } from "@/lib/db-enums";
 
 import type { Platform } from "@/lib/types";
 
