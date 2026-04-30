@@ -1,0 +1,2326 @@
+{
+  "company": {
+    "name": "Every",
+    "description": "AI-powered tools for builders and founders",
+    "totalEmployees": 25,
+    "publicFacingEmployees": 16,
+    "verifiedCompanySurfaces": 7,
+    "productHuntPages": 5,
+    "makerProfilesAttached": 0,
+    "surfaceIQAverage": 62.4
+  },
+  "employees": [
+    {
+      "id": "emp_001",
+      "name": "Dan Shipper",
+      "role": "CEO & Co-Founder",
+      "archetype": "Founder Engine",
+      "archetypeDescription": "Dual threat: can score (narrative) and facilitate (team). Drives the offense.",
+      "department": "Leadership",
+      "isGM": true,
+      "productLine": "Every (company)",
+      "surfaceIQ": 91,
+      "coverageScore": 78,
+      "trustGravity": 88,
+      "assistCredit": 72,
+      "shotSelection": 85,
+      "signatureMove": "The Founder Thread \u2014 long-form narrative that converts readers to believers",
+      "badges": {
+        "gold": [
+          "X Authority",
+          "Substack Dominance",
+          "Founder Narrative"
+        ],
+        "silver": [
+          "LinkedIn Presence",
+          "Podcast Guest"
+        ],
+        "bronze": [
+          "GitHub Visibility"
+        ],
+        "hof": [
+          "Newsletter Mastery"
+        ]
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@danshipper",
+          "url": "https://x.com/danshipper",
+          "notes": "Primary surface. Founder narrative + product updates.",
+          "confidenceScore": 0.98
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "dan-shipper",
+          "url": "https://linkedin.com/in/dan-shipper",
+          "notes": "Professional presence, less active than X.",
+          "confidenceScore": 0.95
+        },
+        "substack": {
+          "status": "verified",
+          "handle": "danshipper",
+          "url": "https://danshipper.substack.com",
+          "notes": "Major authority surface. Long-form essays.",
+          "confidenceScore": 0.99
+        },
+        "newsletter": {
+          "status": "verified",
+          "handle": "n/a",
+          "url": "https://danshipper.substack.com",
+          "notes": "Same as Substack. High open rates.",
+          "confidenceScore": 0.99
+        },
+        "podcast": {
+          "status": "verified",
+          "handle": "n/a",
+          "url": "https://every.to/podcast",
+          "notes": "Guest appearances and host of Every podcast.",
+          "confidenceScore": 0.85
+        },
+        "github": {
+          "status": "likely",
+          "handle": "danshipper",
+          "url": "https://github.com/danshipper",
+          "notes": "Personal account visible. Limited code activity.",
+          "confidenceScore": 0.72
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated channel. Occasional guest clips.",
+          "confidenceScore": 0.15
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "verified",
+          "handle": "danshipper",
+          "url": "https://producthunt.com/@danshipper",
+          "notes": "Maker on multiple products. No profile attached to Every products.",
+          "confidenceScore": 0.88
+        },
+        "personal_site": {
+          "status": "verified",
+          "handle": "danshipper.com",
+          "url": "https://danshipper.com",
+          "notes": "Authority anchor. Portfolio + essays.",
+          "confidenceScore": 0.95
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.12,
+        "philosophy": 0.35,
+        "personal": 0.28,
+        "assists": 0.15,
+        "setup": 0.1
+      },
+      "efficiency": {
+        "socialTS": 0.142,
+        "socialEFG": 0.168,
+        "assistRate": 0.152,
+        "reboundRate": 0.08,
+        "turnoverRate": 0.03
+      },
+      "absentOpportunities": [
+        {
+          "surface": "youtube",
+          "title": "Founder Video Essays",
+          "description": "Dan's writing voice would translate to video essays. High trust gravity potential.",
+          "impact": "high",
+          "effort": "high",
+          "confidence": "estimated"
+        },
+        {
+          "surface": "github",
+          "title": "Every Org Visibility",
+          "description": "Attach Every products to GitHub org. Builder credibility.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_002",
+          "synergyName": "Founder-Growth Engine",
+          "chemistryScore": 94,
+          "effect": "Dan narrative + Austin conversion = +15% Trust Gravity on launch days"
+        },
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Builder-Philosopher Stack",
+          "chemistryScore": 82,
+          "effect": "Dan's vision + Kieran's conviction = product-market clarity"
+        }
+      ],
+      "scoutingNotes": [
+        "Elite at long-form narrative. His essays are the team's most reliable trust-building asset.",
+        "Low promo density (12%) but high conversion when he does ask. The anti-spammer.",
+        "Absent on video surfaces \u2014 biggest untapped potential for audience expansion."
+      ],
+      "takeoverLevel": 4,
+      "takeoverSurface": "substack"
+    },
+    {
+      "id": "emp_002",
+      "name": "Austin Tedesco",
+      "role": "Head of Growth",
+      "archetype": "Growth Playmaker",
+      "archetypeDescription": "High pass accuracy, creates for others, converts off assists. The floor general.",
+      "department": "Growth",
+      "isGM": true,
+      "productLine": "Every (company)",
+      "surfaceIQ": 84,
+      "coverageScore": 71,
+      "trustGravity": 79,
+      "assistCredit": 91,
+      "shotSelection": 88,
+      "signatureMove": "The Conversion Thread \u2014 efficient volume with surgical CTAs",
+      "badges": {
+        "gold": [
+          "X Efficiency",
+          "Assist King",
+          "Launch Coordinator"
+        ],
+        "silver": [
+          "LinkedIn Growth",
+          "Experiment Design"
+        ],
+        "bronze": [
+          "Newsletter Cross-Promo"
+        ],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@austin_tedesco",
+          "url": "https://x.com/austin_tedesco",
+          "notes": "Primary surface. High-efficiency posts, strong engagement.",
+          "confidenceScore": 0.97
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "austin-tedesco",
+          "url": "https://linkedin.com/in/austin-tedesco",
+          "notes": "Professional growth content. Lower volume than X.",
+          "confidenceScore": 0.92
+        },
+        "substack": {
+          "status": "verified",
+          "handle": "austintedesco",
+          "url": "https://austintedesco.substack.com",
+          "notes": "Discovered surface. Growth experiments + case studies.",
+          "confidenceScore": 0.88
+        },
+        "newsletter": {
+          "status": "verified",
+          "handle": "n/a",
+          "url": "https://austintedesco.substack.com",
+          "notes": "Same as Substack. High signal-to-noise.",
+          "confidenceScore": 0.88
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No visible presence.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No maker profile attached to Every products.",
+          "confidenceScore": 0.15
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.09,
+        "philosophy": 0.27,
+        "personal": 0.4,
+        "assists": 0.18,
+        "setup": 0.06
+      },
+      "efficiency": {
+        "socialTS": 0.112,
+        "socialEFG": 0.134,
+        "assistRate": 0.178,
+        "reboundRate": 0.06,
+        "turnoverRate": 0.04
+      },
+      "absentOpportunities": [
+        {
+          "surface": "substack",
+          "title": "Operationalize Austin's Substack",
+          "description": "Substack discovered but underutilized. Cross-promote with Every newsletter for compounding.",
+          "impact": "high",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "product_hunt",
+          "title": "Claim Product Hunt Maker Profile",
+          "description": "Attach Austin as maker on Every products. Attribution leak.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "github",
+          "title": "Growth Engineering Visibility",
+          "description": "Show growth experiments as code. Builder credibility.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Founder-Growth Engine",
+          "chemistryScore": 94,
+          "effect": "Austin conversion + Dan narrative = +15% Trust Gravity on launch days"
+        },
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Growth-Builder Pipeline",
+          "chemistryScore": 87,
+          "effect": "Austin's CTAs + Kieran's conviction = highest trial conversion rate"
+        }
+      ],
+      "scoutingNotes": [
+        "Elite assist rate (17.8%). The team's best playmaker \u2014 creates scoring chances for others.",
+        "Low promo density (9%) but highest TS% relative to follower count. Efficient volume.",
+        "Substack is the highest-opportunity absent surface \u2014 content exists in his head, the surface doesn't."
+      ],
+      "takeoverLevel": 3,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_003",
+      "name": "Brandon Gell",
+      "role": "Product Manager / GM",
+      "archetype": "Trust Builder",
+      "archetypeDescription": "Protects brand reputation, high interior presence. The defensive anchor.",
+      "department": "Product",
+      "isGM": true,
+      "productLine": "Cora",
+      "surfaceIQ": 68,
+      "coverageScore": 52,
+      "trustGravity": 76,
+      "assistCredit": 58,
+      "shotSelection": 71,
+      "signatureMove": "The Authentic Post \u2014 unpolished, high-trust content that converts through honesty",
+      "badges": {
+        "gold": [
+          "Authenticity",
+          "Community Trust"
+        ],
+        "silver": [
+          "X Presence",
+          "Product Storytelling"
+        ],
+        "bronze": [
+          "LinkedIn"
+        ],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@brandongell",
+          "url": "https://x.com/brandongell",
+          "notes": "Active. Product updates + authentic takes.",
+          "confidenceScore": 0.88
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "brandon-gell",
+          "url": "https://linkedin.com/in/brandon-gell",
+          "notes": "Professional presence.",
+          "confidenceScore": 0.82
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No visible presence.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "verified",
+          "handle": "brandongell",
+          "url": "https://producthunt.com/@brandongell",
+          "notes": "Maker profile exists. Not attached to Cora.",
+          "confidenceScore": 0.8
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.15,
+        "philosophy": 0.2,
+        "personal": 0.45,
+        "assists": 0.12,
+        "setup": 0.08
+      },
+      "efficiency": {
+        "socialTS": 0.095,
+        "socialEFG": 0.112,
+        "assistRate": 0.12,
+        "reboundRate": 0.07,
+        "turnoverRate": 0.05
+      },
+      "absentOpportunities": [
+        {
+          "surface": "substack",
+          "title": "Cora Product Chronicle",
+          "description": "Weekly 'Building Cora' transparency posts. High authenticity fit.",
+          "impact": "high",
+          "effort": "medium",
+          "confidence": "estimated"
+        },
+        {
+          "surface": "product_hunt",
+          "title": "Attach Maker Profile to Cora",
+          "description": "Brandon is maker on PH but not linked to Cora. Fix attribution.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Product-Builder Trust",
+          "chemistryScore": 79,
+          "effect": "Brandon's authenticity + Kieran's conviction = Cora's best trust signal"
+        }
+      ],
+      "scoutingNotes": [
+        "Highest authenticity FT% on the roster. Unpolished posts outperform polished ones.",
+        "Low coverage score (52) but high trust gravity per post. Quality over quantity.",
+        "Personal shot distribution (45%) is highest on team \u2014 his voice IS the brand."
+      ],
+      "takeoverLevel": 2,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_004",
+      "name": "Kate Lee",
+      "role": "Editorial Lead",
+      "archetype": "Authority Anchor",
+      "archetypeDescription": "Dominates specific authority surfaces. The post powerhouse.",
+      "department": "Editorial",
+      "isGM": false,
+      "productLine": "Every (content)",
+      "surfaceIQ": 75,
+      "coverageScore": 61,
+      "trustGravity": 82,
+      "assistCredit": 68,
+      "shotSelection": 79,
+      "signatureMove": "The Editorial Thread \u2014 long-form analysis that establishes topical authority",
+      "badges": {
+        "gold": [
+          "Editorial Authority",
+          "Substack Quality"
+        ],
+        "silver": [
+          "X Presence",
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@katelee",
+          "url": "https://x.com/katelee",
+          "notes": "Editorial takes, article promotion.",
+          "confidenceScore": 0.85
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "kate-lee",
+          "url": "https://linkedin.com/in/kate-lee",
+          "notes": "Professional editorial presence.",
+          "confidenceScore": 0.8
+        },
+        "substack": {
+          "status": "verified",
+          "handle": "katelee",
+          "url": "https://katelee.substack.com",
+          "notes": "Personal editorial newsletter.",
+          "confidenceScore": 0.82
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.18,
+        "philosophy": 0.42,
+        "personal": 0.22,
+        "assists": 0.12,
+        "setup": 0.06
+      },
+      "efficiency": {
+        "socialTS": 0.108,
+        "socialEFG": 0.125,
+        "assistRate": 0.12,
+        "reboundRate": 0.09,
+        "turnoverRate": 0.03
+      },
+      "absentOpportunities": [
+        {
+          "surface": "personal_site",
+          "title": "Editorial Portfolio Hub",
+          "description": "Aggregate best articles, editorial philosophy, writing process.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Founder-Editorial Narrative",
+          "chemistryScore": 85,
+          "effect": "Dan's vision + Kate's editorial rigor = Every's voice"
+        }
+      ],
+      "scoutingNotes": [
+        "Highest philosophy shot distribution (42%). The team's intellectual anchor.",
+        "Low turnover rate (3%). Consistent, reliable editorial presence.",
+        "Teaches the GMs about editorial trust \u2014 her process is the playbook."
+      ],
+      "takeoverLevel": 2,
+      "takeoverSurface": "substack"
+    },
+    {
+      "id": "emp_005",
+      "name": "Kieran Klaassen",
+      "role": "Engineering Lead / Builder",
+      "archetype": "Builder Philosopher",
+      "archetypeDescription": "Rare combo: technical depth + public communication range. The 2-way stretch five.",
+      "department": "Engineering",
+      "isGM": true,
+      "productLine": "Cora",
+      "surfaceIQ": 79,
+      "coverageScore": 65,
+      "trustGravity": 74,
+      "assistCredit": 81,
+      "shotSelection": 76,
+      "signatureMove": "The Conviction Tweet \u2014 technical depth with unshakeable product belief",
+      "badges": {
+        "gold": [
+          "GitHub Visibility",
+          "X Conviction",
+          "Technical Authority"
+        ],
+        "silver": [
+          "LinkedIn",
+          "Personal Product Site"
+        ],
+        "bronze": [
+          "Podcast Guest"
+        ],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@kieranklaassen",
+          "url": "https://x.com/kieranklaassen",
+          "notes": "Conviction tweets. Technical + product philosophy.",
+          "confidenceScore": 0.92
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "kieran-klaassen",
+          "url": "https://linkedin.com/in/kieran-klaassen",
+          "notes": "Professional builder presence.",
+          "confidenceScore": 0.85
+        },
+        "github": {
+          "status": "verified",
+          "handle": "kieranklaassen",
+          "url": "https://github.com/kieranklaassen",
+          "notes": "Only visible GitHub employee. Key differentiator.",
+          "confidenceScore": 0.95
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "verified",
+          "handle": "kieranklaassen",
+          "url": "https://producthunt.com/@kieranklaassen",
+          "notes": "Maker profile exists. Not attached to Cora.",
+          "confidenceScore": 0.78
+        },
+        "personal_site": {
+          "status": "verified",
+          "handle": "kieranklaassen.com",
+          "url": "https://kieranklaassen.com",
+          "notes": "Personal product site. Builder credibility.",
+          "confidenceScore": 0.88
+        },
+        "podcast": {
+          "status": "verified",
+          "handle": "n/a",
+          "url": "https://kieranklaassen.com/podcast",
+          "notes": "Personal podcast. Technical deep dives.",
+          "confidenceScore": 0.8
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.08,
+        "philosophy": 0.55,
+        "personal": 0.22,
+        "assists": 0.1,
+        "setup": 0.05
+      },
+      "efficiency": {
+        "socialTS": 0.095,
+        "socialEFG": 0.098,
+        "assistRate": 0.1,
+        "reboundRate": 0.11,
+        "turnoverRate": 0.02
+      },
+      "absentOpportunities": [
+        {
+          "surface": "product_hunt",
+          "title": "Attach Maker Profile to Cora",
+          "description": "Kieran is the face of Cora's engineering. Attach maker profile for attribution.",
+          "impact": "high",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "substack",
+          "title": "Builder's Chronicle",
+          "description": "Technical build logs. High conviction fit. Would attract engineering audience.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Builder-Philosopher Stack",
+          "chemistryScore": 82,
+          "effect": "Kieran's conviction + Dan's vision = product-market clarity"
+        },
+        {
+          "partnerId": "emp_002",
+          "synergyName": "Growth-Builder Pipeline",
+          "chemistryScore": 87,
+          "effect": "Kieran's conviction + Austin's CTAs = highest trial conversion rate"
+        },
+        {
+          "partnerId": "emp_003",
+          "synergyName": "Product-Builder Trust",
+          "chemistryScore": 79,
+          "effect": "Kieran's conviction + Brandon's authenticity = Cora's best trust signal"
+        }
+      ],
+      "scoutingNotes": [
+        "Highest philosophy shot distribution (55%). The team's conviction anchor.",
+        "60x gap: philosophy tweet gets 315 likes, promo tweet gets 5. Model says: 2 mid-range passes \u2192 1 three-pointer.",
+        "Only visible GitHub employee. This is a massive differentiator for builder trust.",
+        "Lowest turnover rate (2%). Every post is intentional."
+      ],
+      "takeoverLevel": 3,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_006",
+      "name": "Yash Poojary",
+      "role": "Growth Engineer",
+      "archetype": "Surface Specialist",
+      "archetypeDescription": "Elite at one surface type, average elsewhere. The 3-level scorer.",
+      "department": "Growth",
+      "isGM": false,
+      "productLine": "Every (growth systems)",
+      "surfaceIQ": 71,
+      "coverageScore": 48,
+      "trustGravity": 65,
+      "assistCredit": 72,
+      "shotSelection": 68,
+      "signatureMove": "The Promo Pivot \u2014 personality-driven growth content that doesn't feel like marketing",
+      "badges": {
+        "gold": [
+          "X Personality",
+          "Growth Experimentation"
+        ],
+        "silver": [
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@yashpoojary",
+          "url": "https://x.com/yashpoojary",
+          "notes": "Personality-driven growth content. Promo can have personality.",
+          "confidenceScore": 0.88
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "yash-poojary",
+          "url": "https://linkedin.com/in/yash-poojary",
+          "notes": "Professional presence.",
+          "confidenceScore": 0.78
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No visible presence.",
+          "confidenceScore": 0.1
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.22,
+        "philosophy": 0.25,
+        "personal": 0.35,
+        "assists": 0.12,
+        "setup": 0.06
+      },
+      "efficiency": {
+        "socialTS": 0.088,
+        "socialEFG": 0.102,
+        "assistRate": 0.12,
+        "reboundRate": 0.06,
+        "turnoverRate": 0.06
+      },
+      "absentOpportunities": [
+        {
+          "surface": "instagram",
+          "title": "Growth Memes / Carousels",
+          "description": "Yash's personality would translate to visual growth content. Instagram/TikTok opportunity.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        },
+        {
+          "surface": "github",
+          "title": "Growth Engineering Visibility",
+          "description": "Show growth experiments as code. Builder credibility.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_002",
+          "synergyName": "Growth Experiment Duo",
+          "chemistryScore": 83,
+          "effect": "Yash's experiments + Austin's strategy = rapid iteration cycle"
+        }
+      ],
+      "scoutingNotes": [
+        "Teaches Dan that promo can have personality. His voice bridges growth and authenticity.",
+        "Highest promo density (22%) on the growth team \u2014 but makes it feel natural.",
+        "Instagram is a natural fit for his visual personality. Low-effort, medium-impact opportunity."
+      ],
+      "takeoverLevel": 2,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_007",
+      "name": "Naveen Naidu",
+      "role": "Engineer / Product",
+      "archetype": "Human Halo",
+      "archetypeDescription": "Boosts teammates' performance by presence alone. The floor general.",
+      "department": "Engineering",
+      "isGM": false,
+      "productLine": "Cora",
+      "surfaceIQ": 66,
+      "coverageScore": 45,
+      "trustGravity": 71,
+      "assistCredit": 65,
+      "shotSelection": 62,
+      "signatureMove": "The Cultural Post \u2014 product-adjacent humanity that builds trust without asking",
+      "badges": {
+        "gold": [
+          "Cultural Trust",
+          "X Authenticity"
+        ],
+        "silver": [
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@naveennaidu",
+          "url": "https://x.com/naveennaidu",
+          "notes": "Cultural tweets. 'Dia and Granola' style content.",
+          "confidenceScore": 0.85
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "naveen-naidu",
+          "url": "https://linkedin.com/in/naveen-naidu",
+          "notes": "Professional presence.",
+          "confidenceScore": 0.75
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No visible presence.",
+          "confidenceScore": 0.1
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.05,
+        "philosophy": 0.18,
+        "personal": 0.55,
+        "assists": 0.15,
+        "setup": 0.07
+      },
+      "efficiency": {
+        "socialTS": 0.082,
+        "socialEFG": 0.095,
+        "assistRate": 0.15,
+        "reboundRate": 0.08,
+        "turnoverRate": 0.04
+      },
+      "absentOpportunities": [
+        {
+          "surface": "github",
+          "title": "Engineering Visibility",
+          "description": "Show Cora build process. Cultural + technical credibility.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Builder-Culture Stack",
+          "chemistryScore": 76,
+          "effect": "Naveen's cultural trust + Kieran's technical depth = Cora's human face"
+        }
+      ],
+      "scoutingNotes": [
+        "Highest personal shot distribution (55%). His humanity IS the marketing.",
+        "'Dia and Granola' tweet: 82 likes, zero ask. Free throws make 3s easier \u2014 his cultural posts build the floor for product launches.",
+        "Low promo density (5%) but high trust compounding. The team's best trust builder."
+      ],
+      "takeoverLevel": 2,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_008",
+      "name": "Natalia Quintero",
+      "role": "Enterprise / Consulting Lead",
+      "archetype": "Closer",
+      "archetypeDescription": "Peaks under pressure; late-game situations. The clutch gene.",
+      "department": "Sales",
+      "isGM": false,
+      "productLine": "Every (enterprise)",
+      "surfaceIQ": 72,
+      "coverageScore": 54,
+      "trustGravity": 80,
+      "assistCredit": 58,
+      "shotSelection": 83,
+      "signatureMove": "The LinkedIn Close \u2014 enterprise insight that converts comments to consulting leads",
+      "badges": {
+        "gold": [
+          "LinkedIn Enterprise",
+          "Consulting Authority"
+        ],
+        "silver": [
+          "X Presence"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@nataliaquintero",
+          "url": "https://x.com/nataliaquintero",
+          "notes": "Enterprise insights. Lower volume than LinkedIn.",
+          "confidenceScore": 0.78
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "natalia-quintero",
+          "url": "https://linkedin.com/in/natalia-quintero",
+          "notes": "Primary surface. Enterprise consulting content. Already generating leads in comments.",
+          "confidenceScore": 0.95
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.2,
+        "philosophy": 0.3,
+        "personal": 0.25,
+        "assists": 0.15,
+        "setup": 0.1
+      },
+      "efficiency": {
+        "socialTS": 0.105,
+        "socialEFG": 0.122,
+        "assistRate": 0.15,
+        "reboundRate": 0.1,
+        "turnoverRate": 0.04
+      },
+      "absentOpportunities": [
+        {
+          "surface": "substack",
+          "title": "Enterprise Consulting Chronicle",
+          "description": "Weekly enterprise AI insights. Natalia is already generating leads in LinkedIn comments \u2014 a newsletter would compound this.",
+          "impact": "high",
+          "effort": "medium",
+          "confidence": "direct"
+        },
+        {
+          "surface": "personal_site",
+          "title": "Consulting Portfolio",
+          "description": "Case studies, testimonials, service offerings. Direct lead generation.",
+          "impact": "high",
+          "effort": "low",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_013",
+          "synergyName": "Enterprise Authority Duo",
+          "chemistryScore": 88,
+          "effect": "Natalia's consulting + Mike's O'Reilly authority = enterprise demand generation"
+        }
+      ],
+      "scoutingNotes": [
+        "Already generating enterprise consulting leads in LinkedIn comments. The growth is happening \u2014 Surface IQ just makes it visible.",
+        "Highest shot selection score (83) on the sales team. Knows exactly when to ask.",
+        "LinkedIn is her court. Every other surface is an open lane."
+      ],
+      "takeoverLevel": 3,
+      "takeoverSurface": "linkedin"
+    },
+    {
+      "id": "emp_009",
+      "name": "Katie Parrott",
+      "role": "Writer / Editor",
+      "archetype": "Trust Builder",
+      "archetypeDescription": "Protects brand reputation, high interior presence. The defensive anchor.",
+      "department": "Editorial",
+      "isGM": false,
+      "productLine": "Every (content)",
+      "surfaceIQ": 70,
+      "coverageScore": 52,
+      "trustGravity": 75,
+      "assistCredit": 62,
+      "shotSelection": 74,
+      "signatureMove": "The Clarifying Thread \u2014 complex topics made accessible through patient explanation",
+      "badges": {
+        "gold": [
+          "Editorial Clarity",
+          "X Engagement"
+        ],
+        "silver": [
+          "LinkedIn",
+          "Substack"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@katieparrott",
+          "url": "https://x.com/katieparrott",
+          "notes": "Editorial threads. Complex topics made simple.",
+          "confidenceScore": 0.85
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "katie-parrott",
+          "url": "https://linkedin.com/in/katie-parrott",
+          "notes": "Professional editorial presence.",
+          "confidenceScore": 0.78
+        },
+        "substack": {
+          "status": "verified",
+          "handle": "katieparrott",
+          "url": "https://katieparrott.substack.com",
+          "notes": "Personal newsletter. Editorial deep dives.",
+          "confidenceScore": 0.8
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.14,
+        "philosophy": 0.38,
+        "personal": 0.28,
+        "assists": 0.14,
+        "setup": 0.06
+      },
+      "efficiency": {
+        "socialTS": 0.098,
+        "socialEFG": 0.115,
+        "assistRate": 0.14,
+        "reboundRate": 0.08,
+        "turnoverRate": 0.03
+      },
+      "absentOpportunities": [
+        {
+          "surface": "personal_site",
+          "title": "Writer Portfolio Hub",
+          "description": "Aggregate best work, writing philosophy, process.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_004",
+          "synergyName": "Editorial Clarity Duo",
+          "chemistryScore": 86,
+          "effect": "Katie's accessibility + Kate's authority = Every's editorial range"
+        }
+      ],
+      "scoutingNotes": [
+        "Strong editorial clarity. Complex topics become accessible in her hands.",
+        "Balanced shot distribution. Not afraid to promo (14%) but keeps it editorial.",
+        "Personal site is low-hanging fruit \u2014 would centralize her scattered authority."
+      ],
+      "takeoverLevel": 2,
+      "takeoverSurface": "x"
+    },
+    {
+      "id": "emp_010",
+      "name": "Laura Entis",
+      "role": "Writer / Reporter",
+      "archetype": "Launch Sixth Man",
+      "archetypeDescription": "Comes off bench cold, heats up fast for specific launches. The microwave.",
+      "department": "Editorial",
+      "isGM": false,
+      "productLine": "Every (content)",
+      "surfaceIQ": 64,
+      "coverageScore": 44,
+      "trustGravity": 68,
+      "assistCredit": 55,
+      "shotSelection": 70,
+      "signatureMove": "The Launch Heat \u2014 rapid, high-quality content that spikes during product moments",
+      "badges": {
+        "gold": [
+          "Launch Speed",
+          "X Quality"
+        ],
+        "silver": [
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No Twitter presence. Major gap for a writer.",
+          "confidenceScore": 0.08
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "laura-entis",
+          "url": "https://linkedin.com/in/laura-entis",
+          "notes": "Professional presence. Article promotion.",
+          "confidenceScore": 0.82
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.16,
+        "philosophy": 0.35,
+        "personal": 0.28,
+        "assists": 0.13,
+        "setup": 0.08
+      },
+      "efficiency": {
+        "socialTS": 0.085,
+        "socialEFG": 0.098,
+        "assistRate": 0.13,
+        "reboundRate": 0.07,
+        "turnoverRate": 0.04
+      },
+      "absentOpportunities": [
+        {
+          "surface": "x",
+          "title": "Laura Needs Twitter",
+          "description": "A writer without Twitter is a shooter without a court. This is the highest-priority absent surface on the roster.",
+          "impact": "high",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "substack",
+          "title": "Reporter's Notebook",
+          "description": "Behind-the-scenes reporting process. Would differentiate her from other Every writers.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_004",
+          "synergyName": "Editorial Launch Duo",
+          "chemistryScore": 78,
+          "effect": "Laura's launch speed + Kate's editorial rigor = rapid high-quality content"
+        }
+      ],
+      "scoutingNotes": [
+        "No Twitter presence. For a writer, this is like a shooter without a court. Highest-priority fix.",
+        "Launch Sixth Man archetype: heats up fast during product moments, then cools. Needs a surface to heat on.",
+        "LinkedIn is her only verified surface. Everything else is an open lane."
+      ],
+      "takeoverLevel": 1,
+      "takeoverSurface": null
+    },
+    {
+      "id": "emp_011",
+      "name": "Willie Williams",
+      "role": "Operations / Finance",
+      "archetype": "Human Halo",
+      "archetypeDescription": "Boosts teammates' performance by presence alone. The floor general.",
+      "department": "Operations",
+      "isGM": false,
+      "productLine": "Every (company)",
+      "surfaceIQ": 52,
+      "coverageScore": 32,
+      "trustGravity": 48,
+      "assistCredit": 55,
+      "shotSelection": 45,
+      "signatureMove": "The Quiet Assist \u2014 operational excellence that enables the team's public plays",
+      "badges": {
+        "gold": [
+          "Operational Trust"
+        ],
+        "silver": [
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "willie-williams",
+          "url": "https://linkedin.com/in/willie-williams",
+          "notes": "Professional presence. Limited activity.",
+          "confidenceScore": 0.72
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.1,
+        "philosophy": 0.2,
+        "personal": 0.45,
+        "assists": 0.2,
+        "setup": 0.05
+      },
+      "efficiency": {
+        "socialTS": 0.045,
+        "socialEFG": 0.052,
+        "assistRate": 0.2,
+        "reboundRate": 0.04,
+        "turnoverRate": 0.02
+      },
+      "absentOpportunities": [
+        {
+          "surface": "x",
+          "title": "Operations Transparency",
+          "description": "Startup ops/finance transparency is rare and valuable. Would differentiate Every.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Founder-Ops Stability",
+          "chemistryScore": 70,
+          "effect": "Willie's operational stability + Dan's vision = sustainable growth"
+        }
+      ],
+      "scoutingNotes": [
+        "Low coverage score (32) but high assist rate (20%). His operational work enables everyone else's public plays.",
+        "Not a public-facing player by design. His value is in the assist, not the shot.",
+        "X/Twitter would be a differentiation play \u2014 startup ops transparency is rare."
+      ],
+      "takeoverLevel": 0,
+      "takeoverSurface": null
+    },
+    {
+      "id": "emp_012",
+      "name": "Lucas Crespo",
+      "role": "Designer",
+      "archetype": "Surface Specialist",
+      "archetypeDescription": "Elite at one surface type, average elsewhere. The 3-level scorer.",
+      "department": "Design",
+      "isGM": false,
+      "productLine": "Every (design)",
+      "surfaceIQ": 61,
+      "coverageScore": 41,
+      "trustGravity": 58,
+      "assistCredit": 52,
+      "shotSelection": 65,
+      "signatureMove": "The Visual Essay \u2014 design thinking communicated through image and motion",
+      "badges": {
+        "gold": [
+          "Design Authority",
+          "External Interview"
+        ],
+        "silver": [
+          "LinkedIn"
+        ],
+        "bronze": [
+          "X"
+        ],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@lucascrespo",
+          "url": "https://x.com/lucascrespo",
+          "notes": "Design content. Lower volume.",
+          "confidenceScore": 0.72
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "lucas-crespo",
+          "url": "https://linkedin.com/in/lucas-crespo",
+          "notes": "Professional design presence.",
+          "confidenceScore": 0.78
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        },
+        "external_interview": {
+          "status": "verified",
+          "handle": null,
+          "url": "https://design.blog/interview-lucas-crespo",
+          "notes": "External authority surface. Design interview.",
+          "confidenceScore": 0.85
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.12,
+        "philosophy": 0.3,
+        "personal": 0.38,
+        "assists": 0.12,
+        "setup": 0.08
+      },
+      "efficiency": {
+        "socialTS": 0.068,
+        "socialEFG": 0.078,
+        "assistRate": 0.12,
+        "reboundRate": 0.06,
+        "turnoverRate": 0.04
+      },
+      "absentOpportunities": [
+        {
+          "surface": "instagram",
+          "title": "Design Portfolio on Instagram",
+          "description": "Visual-first surface for a designer. Natural fit. Would showcase Every's design quality.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "dribbble",
+          "title": "Dribbble Portfolio",
+          "description": "Design community authority. Would attract design-minded customers.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        },
+        {
+          "surface": "personal_site",
+          "title": "Design Portfolio Site",
+          "description": "Centralize external interview + design work. Authority anchor.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Design-Brand Trust",
+          "chemistryScore": 74,
+          "effect": "Lucas's design authority + Every brand = visual trust signal"
+        }
+      ],
+      "scoutingNotes": [
+        "External interview is a verified authority surface. Use it as the anchor for other surfaces.",
+        "Instagram/Dribbble are natural fits for a designer. Low-effort, medium-impact.",
+        "His visual essay style would work on any image-first platform."
+      ],
+      "takeoverLevel": 1,
+      "takeoverSurface": "external_interview"
+    },
+    {
+      "id": "emp_013",
+      "name": "Mike Taylor",
+      "role": "Engineer / Author",
+      "archetype": "Authority Anchor",
+      "archetypeDescription": "Dominates specific authority surfaces. The post powerhouse.",
+      "department": "Engineering",
+      "isGM": false,
+      "productLine": "Every (technical content)",
+      "surfaceIQ": 77,
+      "coverageScore": 58,
+      "trustGravity": 86,
+      "assistCredit": 64,
+      "shotSelection": 82,
+      "signatureMove": "The O'Reilly Authority \u2014 technical depth validated by publisher-grade credibility",
+      "badges": {
+        "gold": [
+          "O'Reilly Author",
+          "Technical Authority",
+          "LinkedIn Enterprise"
+        ],
+        "silver": [
+          "X Presence"
+        ],
+        "bronze": [
+          "GitHub"
+        ],
+        "hof": [
+          "Book Authority"
+        ]
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@miketaylor",
+          "url": "https://x.com/miketaylor",
+          "notes": "Technical content. Lower volume than authority surfaces.",
+          "confidenceScore": 0.78
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "mike-taylor",
+          "url": "https://linkedin.com/in/mike-taylor",
+          "notes": "Enterprise technical presence.",
+          "confidenceScore": 0.88
+        },
+        "github": {
+          "status": "verified",
+          "handle": "miketaylor",
+          "url": "https://github.com/miketaylor",
+          "notes": "Technical repos. Moderate activity.",
+          "confidenceScore": 0.75
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated newsletter.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No dedicated site.",
+          "confidenceScore": 0.1
+        },
+        "book": {
+          "status": "verified",
+          "handle": null,
+          "url": "https://oreilly.com/library/view/mike-taylor",
+          "notes": "O'Reilly book. Major authority surface.",
+          "confidenceScore": 0.98
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.15,
+        "philosophy": 0.45,
+        "personal": 0.2,
+        "assists": 0.12,
+        "setup": 0.08
+      },
+      "efficiency": {
+        "socialTS": 0.115,
+        "socialEFG": 0.132,
+        "assistRate": 0.12,
+        "reboundRate": 0.1,
+        "turnoverRate": 0.03
+      },
+      "absentOpportunities": [
+        {
+          "surface": "personal_site",
+          "title": "Author + Consultant Hub",
+          "description": "Combine O'Reilly authority with consulting offerings. Direct lead generation.",
+          "impact": "high",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "substack",
+          "title": "Technical Deep Dives Newsletter",
+          "description": "O'Reilly-level content in newsletter format. Would attract enterprise audience.",
+          "impact": "high",
+          "effort": "medium",
+          "confidence": "estimated"
+        },
+        {
+          "surface": "product_hunt",
+          "title": "Attach Maker Profile to Every Products",
+          "description": "Mike's technical authority + Product Hunt = builder trust.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_008",
+          "synergyName": "Enterprise Authority Duo",
+          "chemistryScore": 88,
+          "effect": "Mike's O'Reilly authority + Natalia's consulting = enterprise demand generation"
+        },
+        {
+          "partnerId": "emp_001",
+          "synergyName": "Founder-Authority Stack",
+          "chemistryScore": 84,
+          "effect": "Mike's technical depth + Dan's narrative = authoritative founder stories"
+        }
+      ],
+      "scoutingNotes": [
+        "O'Reilly book is the team's highest-confidence authority surface (98%). Use it everywhere.",
+        "Highest trust gravity (86) among non-founders. His name carries weight.",
+        "Personal site is the biggest open lane \u2014 combine book authority with consulting for direct revenue."
+      ],
+      "takeoverLevel": 3,
+      "takeoverSurface": "book"
+    },
+    {
+      "id": "emp_014",
+      "name": "Alex Duffy",
+      "role": "Engineer",
+      "archetype": "Builder Philosopher",
+      "archetypeDescription": "Rare combo: technical depth + public communication range. The 2-way stretch five.",
+      "department": "Engineering",
+      "isGM": false,
+      "productLine": "Cora",
+      "surfaceIQ": 58,
+      "coverageScore": 38,
+      "trustGravity": 52,
+      "assistCredit": 48,
+      "shotSelection": 55,
+      "signatureMove": "The Technical Clarifier \u2014 complex engineering concepts made accessible",
+      "badges": {
+        "gold": [
+          "GitHub Quality"
+        ],
+        "silver": [
+          "X"
+        ],
+        "bronze": [
+          "LinkedIn"
+        ],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@alexduffy",
+          "url": "https://x.com/alexduffy",
+          "notes": "Technical content. Lower volume.",
+          "confidenceScore": 0.72
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "alex-duffy",
+          "url": "https://linkedin.com/in/alex-duffy",
+          "notes": "Professional presence.",
+          "confidenceScore": 0.7
+        },
+        "github": {
+          "status": "verified",
+          "handle": "alexduffy",
+          "url": "https://github.com/alexduffy",
+          "notes": "Technical repos.",
+          "confidenceScore": 0.78
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.1,
+        "philosophy": 0.4,
+        "personal": 0.3,
+        "assists": 0.12,
+        "setup": 0.08
+      },
+      "efficiency": {
+        "socialTS": 0.058,
+        "socialEFG": 0.068,
+        "assistRate": 0.12,
+        "reboundRate": 0.06,
+        "turnoverRate": 0.03
+      },
+      "absentOpportunities": [
+        {
+          "surface": "substack",
+          "title": "Engineering Chronicle",
+          "description": "Technical build logs. Would complement Kieran's conviction with practical depth.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Engineering Depth Stack",
+          "chemistryScore": 75,
+          "effect": "Alex's practical depth + Kieran's conviction = complete technical picture"
+        }
+      ],
+      "scoutingNotes": [
+        "Solid GitHub presence. One of the few engineers with visible code.",
+        "Low volume but high philosophy density (40%). Quality over quantity.",
+        "Substack would be a natural extension \u2014 practical engineering + build logs."
+      ],
+      "takeoverLevel": 1,
+      "takeoverSurface": "github"
+    },
+    {
+      "id": "emp_015",
+      "name": "Rhea Purohit",
+      "role": "Growth / Marketing",
+      "archetype": "Launch Sixth Man",
+      "archetypeDescription": "Comes off bench cold, heats up fast for specific launches. The microwave.",
+      "department": "Growth",
+      "isGM": false,
+      "productLine": "Every (growth)",
+      "surfaceIQ": 63,
+      "coverageScore": 42,
+      "trustGravity": 61,
+      "assistCredit": 58,
+      "shotSelection": 64,
+      "signatureMove": "The Launch Sprint \u2014 rapid execution on growth campaigns with surgical timing",
+      "badges": {
+        "gold": [
+          "Personal Site",
+          "Launch Execution"
+        ],
+        "silver": [
+          "X",
+          "LinkedIn"
+        ],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "verified",
+          "handle": "@rheapurohit",
+          "url": "https://x.com/rheapurohit",
+          "notes": "Growth content. Campaign updates.",
+          "confidenceScore": 0.78
+        },
+        "linkedin": {
+          "status": "verified",
+          "handle": "rhea-purohit",
+          "url": "https://linkedin.com/in/rhea-purohit",
+          "notes": "Professional growth presence.",
+          "confidenceScore": 0.75
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.1
+        },
+        "personal_site": {
+          "status": "verified",
+          "handle": "rheapurohit.com",
+          "url": "https://rheapurohit.com",
+          "notes": "Personal site. Growth portfolio + case studies.",
+          "confidenceScore": 0.82
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.2,
+        "philosophy": 0.25,
+        "personal": 0.3,
+        "assists": 0.15,
+        "setup": 0.1
+      },
+      "efficiency": {
+        "socialTS": 0.075,
+        "socialEFG": 0.088,
+        "assistRate": 0.15,
+        "reboundRate": 0.07,
+        "turnoverRate": 0.05
+      },
+      "absentOpportunities": [
+        {
+          "surface": "product_hunt",
+          "title": "Claim Maker Profile",
+          "description": "Rhea's launch execution + Product Hunt = attribution for Every launches.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "substack",
+          "title": "Growth Playbook Newsletter",
+          "description": "Document launch experiments. Would attract growth-minded audience.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "estimated"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_002",
+          "synergyName": "Growth Execution Duo",
+          "chemistryScore": 80,
+          "effect": "Rhea's launch speed + Austin's strategy = rapid experiment iteration"
+        }
+      ],
+      "scoutingNotes": [
+        "Personal site is a verified authority surface. Use it as the anchor.",
+        "Launch Sixth Man archetype: best when there's a specific campaign to execute.",
+        "Product Hunt maker profile is low-hanging fruit for launch attribution."
+      ],
+      "takeoverLevel": 1,
+      "takeoverSurface": "personal_site"
+    },
+    {
+      "id": "emp_016",
+      "name": "Anthony Scarpulla",
+      "role": "Engineer",
+      "archetype": "Builder Philosopher",
+      "archetypeDescription": "Rare combo: technical depth + public communication range. The 2-way stretch five.",
+      "department": "Engineering",
+      "isGM": false,
+      "productLine": "Cora",
+      "surfaceIQ": 35,
+      "coverageScore": 18,
+      "trustGravity": 22,
+      "assistCredit": 30,
+      "shotSelection": 40,
+      "signatureMove": "The Quiet Build \u2014 technical excellence without the spotlight",
+      "badges": {
+        "gold": [],
+        "silver": [],
+        "bronze": [],
+        "hof": []
+      },
+      "surfaces": {
+        "x": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "linkedin": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.08
+        },
+        "github": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No visible presence.",
+          "confidenceScore": 0.1
+        },
+        "substack": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "youtube": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "instagram": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "tiktok": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "product_hunt": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        },
+        "personal_site": {
+          "status": "absent",
+          "handle": null,
+          "url": null,
+          "notes": "No presence.",
+          "confidenceScore": 0.05
+        }
+      },
+      "shotDistribution": {
+        "promo": 0.05,
+        "philosophy": 0.25,
+        "personal": 0.4,
+        "assists": 0.2,
+        "setup": 0.1
+      },
+      "efficiency": {
+        "socialTS": 0.0,
+        "socialEFG": 0.0,
+        "assistRate": 0.2,
+        "reboundRate": 0.02,
+        "turnoverRate": 0.0
+      },
+      "absentOpportunities": [
+        {
+          "surface": "github",
+          "title": "Engineering Visibility",
+          "description": "Anthony's technical work is invisible. GitHub would make it visible.",
+          "impact": "medium",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "linkedin",
+          "title": "Professional Presence",
+          "description": "Basic LinkedIn profile. Would enable recruiting and partnership visibility.",
+          "impact": "low",
+          "effort": "low",
+          "confidence": "direct"
+        },
+        {
+          "surface": "x",
+          "title": "Technical Voice",
+          "description": "Would Anthony want a public voice? Assess before recommending.",
+          "impact": "medium",
+          "effort": "medium",
+          "confidence": "hypothesis"
+        }
+      ],
+      "dynamicDuos": [
+        {
+          "partnerId": "emp_005",
+          "synergyName": "Engineering Pair",
+          "chemistryScore": 65,
+          "effect": "Anthony's quiet build + Kieran's public conviction = balanced engineering presence"
+        }
+      ],
+      "scoutingNotes": [
+        "Invisible on all surfaces. Not a failure \u2014 a choice. But the team loses attribution for his work.",
+        "Lowest coverage score (18) and surface IQ (35) on the roster.",
+        "Decision needed: should Anthony have visible social presence? If yes, GitHub is the lowest-effort start.",
+        "If no, document the decision. Invisibility is valid if intentional."
+      ],
+      "takeoverLevel": 0,
+      "takeoverSurface": null
+    }
+  ]
+}

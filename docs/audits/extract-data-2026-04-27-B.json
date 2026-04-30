@@ -1,0 +1,1320 @@
+{
+  "audit_metadata": {
+    "brand": "Every",
+    "brand_citation": "https://every.to",
+    "primary_domain": "every.to",
+    "primary_domain_citation": "https://every.to",
+    "research_scope": [
+      {
+        "value": "every.to homepage and product pages",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Cora product (cora.computer)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Monologue product (monologue.to)",
+        "value_citation": "https://www.monologue.to"
+      },
+      {
+        "value": "Article pages (Spiral, Proof, Sparkle introductions)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Studio products page",
+        "value_citation": "https://every.to/studio"
+      },
+      {
+        "value": "Plus One product page",
+        "value_citation": "https://every.to/plus-one"
+      }
+    ],
+    "output_notes": "Comprehensive analysis of Every's design system across main website and product ecosystem including Spiral, Cora, Sparkle, Monologue, Proof, and Plus One. Analysis based on HTML inspection and full-page screenshots.",
+    "output_notes_citation": "https://every.to"
+  },
+  "audited_pages": [
+    {
+      "url": "https://every.to",
+      "url_citation": "https://every.to",
+      "page_type": "Homepage / Marketing Landing",
+      "page_type_citation": "https://every.to",
+      "product_or_property": "Every main site",
+      "product_or_property_citation": "https://every.to",
+      "core_purpose": "Primary entry point showcasing AI tools subscription, products (Spiral, Cora, Monologue, Proof, Sparkle, Plus One), articles, and newsletter",
+      "core_purpose_citation": "https://every.to",
+      "key_patterns": [
+        {
+          "value": "Dark theme hero with large typography (52px+ on desktop)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Drawer menu navigation (slides from left, zinc-900 background)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Full-width sections with scrolling product showcases",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Grid layout for articles/content (5 columns on desktop, responsive)",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Subscribe popup with gradient background",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Floating action drawer menu (z-index 100001)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Hero section with animated product screenshots",
+          "value_citation": "https://every.to"
+        }
+      ]
+    },
+    {
+      "url": "https://cora.computer",
+      "url_citation": "https://cora.computer",
+      "page_type": "Product Landing Page",
+      "page_type_citation": "https://cora.computer",
+      "product_or_property": "Cora (Email AI Assistant)",
+      "product_or_property_citation": "https://cora.computer",
+      "core_purpose": "Convert visitors to Cora email assistant users with demo, features, pricing, and free trial CTA",
+      "core_purpose_citation": "https://cora.computer",
+      "key_patterns": [
+        {
+          "value": "Light theme with blue accent colors (#0B57D0, #065BA3)",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Large hero headline split across lines for emphasis",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Interactive demo sections (desktop-only and mobile-only variants)",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Privacy/security section with rounded container",
+          "value_citation": "https://cora.computer"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Pricing cards section",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Demo module with email screening visualization",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "'Get Started' CTA buttons throughout (consistent pattern)",
+          "value_citation": "https://cora.computer"
+        }
+      ]
+    },
+    {
+      "url": "https://www.monologue.to",
+      "url_citation": "https://www.monologue.to",
+      "page_type": "Product Landing Page",
+      "page_type_citation": "https://www.monologue.to",
+      "product_or_property": "Monologue (Voice Dictation)",
+      "product_or_property_citation": "https://www.monologue.to",
+      "core_purpose": "Promote voice dictation app with language support showcase, features, and download CTA",
+      "core_purpose_citation": "https://www.monologue.to",
+      "key_patterns": [
+        {
+          "value": "Headline with italicized emphasis ('_3x faster_')",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Video demo embed for product introduction",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Horizontal scrolling language list (100+ languages)",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Testimonial cards with avatar and role",
+          "value_citation": "https://www.monologue.to"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Download button (primary CTA)",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "'Included in Every subscription' badge",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Feature illustrations (Paper Monologue Wave)",
+          "value_citation": "https://www.monologue.to"
+        }
+      ]
+    },
+    {
+      "url": "https://every.to/on-every/introducing-spiral",
+      "url_citation": "https://every.to/on-every/introducing-spiral",
+      "page_type": "Article / Blog Post",
+      "page_type_citation": "https://every.to/on-every/introducing-spiral",
+      "product_or_property": "Every Blog",
+      "product_or_property_citation": "https://every.to/on-every/introducing-spiral",
+      "core_purpose": "Long-form content explaining Spiral product with author byline, cover image, and body text",
+      "core_purpose_citation": "https://every.to/on-every/introducing-spiral",
+      "key_patterns": [
+        {
+          "value": "16:9 aspect ratio cover image with max-height 324px (mobile), unconstrained desktop",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Centered article layout: max-width 720px, expanding to 1248px on desktop with sidebar",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "10-column grid layout on 1280px+ screens",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Author byline with avatar and column affiliation",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Post cover figure with caption",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Image lightbox overlay for expanded views",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ]
+    },
+    {
+      "url": "https://every.to/studio",
+      "url_citation": "https://every.to/studio",
+      "page_type": "Products Hub / Overview",
+      "page_type_citation": "https://every.to/studio",
+      "product_or_property": "Every Studio",
+      "product_or_property_citation": "https://every.to/studio",
+      "core_purpose": "Central hub showcasing all Every products with links to individual product pages",
+      "core_purpose_citation": "https://every.to/studio",
+      "key_patterns": [
+        {
+          "value": "Products grid layout with 3-column arrangement",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Consistent product card design across all items",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Max-width 1280px container with responsive padding",
+          "value_citation": "https://every.to/studio"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Product cards with hover states",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "'Become an Early Adopter' CTA section",
+          "value_citation": "https://every.to/studio"
+        }
+      ]
+    },
+    {
+      "url": "https://every.to/plus-one",
+      "url_citation": "https://every.to/plus-one",
+      "page_type": "Product Feature Page",
+      "page_type_citation": "https://every.to/plus-one",
+      "product_or_property": "Plus One (AI Agent for Slack)",
+      "product_or_property_citation": "https://every.to/plus-one",
+      "core_purpose": "Showcase Plus One AI agent capabilities with testimonials and team adoption pitch",
+      "core_purpose_citation": "https://every.to/plus-one",
+      "key_patterns": [
+        {
+          "value": "Social proof section: 'Users love their Plus Ones'",
+          "value_citation": "https://every.to/plus-one"
+        },
+        {
+          "value": "Team-focused messaging: 'Your entire team deserves a Plus One'",
+          "value_citation": "https://every.to/plus-one"
+        },
+        {
+          "value": "Integration showcase with tool logos",
+          "value_citation": "https://every.to/plus-one"
+        }
+      ],
+      "notable_components": [
+        {
+          "value": "Testimonial cards grid",
+          "value_citation": "https://every.to/plus-one"
+        },
+        {
+          "value": "'Promote yourself with a Plus One' hero headline",
+          "value_citation": "https://every.to/plus-one"
+        }
+      ]
+    }
+  ],
+  "design_system_data": {
+    "layout_structures": [
+      {
+        "value": "Full-width sections with centered max-width containers (720px for articles, 1248px for main content, 1280px for products)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Responsive grid system: 1-column mobile, 5-column tablet (976px+), 4-column desktop (1099px+)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "10-column grid for article layouts with sidebar at 1280px+ breakpoint",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Fixed drawer navigation: max-width 277px, slides from left with z-index 100001",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Flexbox-based vertical layouts with gap spacing (gap-1 to gap-24 in custom units)",
+        "value_citation": "https://cora.computer"
+      }
+    ],
+    "typography_systems": {
+      "serif_vs_sans_serif": "Primarily sans-serif across all properties. No serif fonts detected in navigation, headings, or body text.",
+      "serif_vs_sans_serif_citation": "https://every.to",
+      "estimated_sizes": [
+        {
+          "value": "Hero headlines: 52px desktop (text-[52px]), scales down to 26-30px mobile",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "H1 headings: 40-52px (text-4xl, text-5xl, text-[40px])",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "H2 headings: 28-32px (text-2xl, text-3xl, text-[28px], text-[32px])",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Body text: 16px base (text-base)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Small text: 14px (text-sm), 12px (text-xs, text-[12px])",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Medium text: 18px (text-lg), 20px (text-xl)",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "type_roles": [
+        {
+          "value": "Display/Hero: 52px bold, used for main landing headlines",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Headline: 28-40px, used for section titles and page headers",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Body: 16px, used for paragraphs and descriptions",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Label/UI: 12-14px, used for navigation, metadata, captions",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Button text: 14-16px medium weight",
+          "value_citation": "https://every.to"
+        }
+      ]
+    },
+    "color_palettes": [
+      {
+        "value": "#000000 - Pure black, used for dark backgrounds and high-contrast elements",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#FFFFFF - Pure white, used for light backgrounds and text on dark",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#212121 - Very dark gray, alternate dark background",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#2B2B2B - Dark gray, used for elevated surfaces on dark theme",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#3c3c3c - Medium-dark gray, borders and dividers on dark theme",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#494949 - Mid-tone gray, secondary borders",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#0393d6 - Bright blue (everyblue), primary brand accent",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#ff6010 - Orange-red, secondary accent/highlight",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "#0B57D0 - Primary blue for Cora product",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "#065BA3 - Darker blue variant for Cora",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "#488FCB - Light blue for Cora UI elements",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "#F2F6FC - Very light blue background for Cora",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "#FAFAF9 - Off-white background for Cora",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "#CF372D - Red for alerts/errors",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "rgb(193, 193, 193) - Light gray for disabled states",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "rgba(0,0,0,0.25) - Black with 25% opacity for shadows/overlays",
+        "value_citation": "https://every.to"
+      }
+    ],
+    "spacing_density": [
+      {
+        "value": "Base spacing unit: 4px (Tailwind default scale)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Padding: p-4 (16px), p-3 (12px), p-15 (custom 60px)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Gaps: gap-1 (4px), gap-3 (12px), gap-8 (32px), gap-24 (custom 96px)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Margins: mt-6 (24px), mt-8 (32px), mt-12 (48px), mt-20 (80px), dr-mt-140 (custom large)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Component spacing: Cards/sections typically have 20-44px bottom margins",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Max widths: 277px (drawer), 720px (article), 1248px (content), 1280px (max-container)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Border radius: rounded-20 (custom 20px rounding)",
+        "value_citation": "https://cora.computer"
+      }
+    ],
+    "surface_treatment": [
+      {
+        "value": "Elevation: z-index 100000 (drawer backdrop), z-index 100001 (drawer menu)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Shadows: shadow-lg used for elevated components",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Overlays: bg-black/50 (50% black), bg-black/60 (60% black) for modal backdrops",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Gradients: bg-gradient-to-b (top to bottom), bg-gradient-to-r (left to right)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Opacity modifiers: bg-opacity-50, hover:bg-white/5",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Borders: Dashed borders for dividers (divide-dashed, border-dashed)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Border colors: border-homeborder (custom), border-white/40, border-black/30",
+        "value_citation": "https://every.to"
+      }
+    ],
+    "component_patterns": {
+      "navigation": [
+        {
+          "value": "Drawer menu: Fixed left sidebar, max-width 277px, zinc-900 background, slides from left-[-100%] to left-0",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Drawer links: White text, divided by dashed borders, mt-2 + pt-2 spacing between items",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Drawer structure: Logo/close at top, main links in middle, secondary links at bottom",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Backdrop overlay: Fixed inset, bg-black/50, z-index 100000, hidden by default",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "cards": [
+        {
+          "value": "Product cards: Grid layout (studio-products-grid-3), consistent padding, hover states",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Article cards: Grid-based with thumbnail, title, excerpt, metadata",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Testimonial cards: Avatar + name + role + quote, used on product pages",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Pricing cards: Section-based layout with plan details, used on Cora",
+          "value_citation": "https://cora.computer"
+        }
+      ],
+      "overlays": [
+        {
+          "value": "Subscribe popup: active class toggles visibility, gradient background",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Image lightbox: Fixed overlay with backdrop + content container",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Privacy modal: Centered modal with header, copy, toggle controls",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Privacy side popup: Slides in from side with actions",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "footers": [
+        {
+          "value": "Drawer footer: Secondary navigation links (About, Careers, Advertise, Team)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Footer style: Border-top with dashed line, consistent with drawer dividers",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "content_rails": [
+        {
+          "value": "Article sidebar: Appears at 1280px+ breakpoint, part of 10-column grid",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Hero scroll carousel: Horizontal scrolling product screenshots in hero section",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "cta_modules": [
+        {
+          "value": "Primary CTA: 'Get Started', 'Start your free trial', 'Download' - consistent across products",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Subscribe banner: Full-width section with everyblue background, cursor-pointer",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Early adopter CTA: Appears on Studio page to encourage product trials",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Button styles: Likely medium weight text, padding, hover states (inferred from utility classes)",
+          "value_citation": "https://every.to"
+        }
+      ]
+    }
+  },
+  "page_type_analysis": [
+    {
+      "page_type": "Homepage / Marketing Landing",
+      "page_type_citation": "https://every.to",
+      "core_purpose": "Introduce Every brand, products ecosystem, and drive subscriptions; showcase content and products",
+      "core_purpose_citation": "https://every.to",
+      "layout_pattern": "Dark hero section with large typography → scrolling product carousel → article grid → products section → subscribe banner",
+      "layout_pattern_citation": "https://every.to",
+      "cta_patterns": [
+        {
+          "value": "Subscribe banner (full-width, blue background, repeated throughout page)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Product cards linking to individual product pages",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Sign in link in drawer menu",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "interaction_details": [
+        {
+          "value": "Drawer menu slides in from left on hamburger click",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Horizontal scroll carousel for product screenshots in hero",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Backdrop overlay appears with drawer menu (bg-black/50)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Subscribe popup can be triggered (toggle with 'active' class)",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "content_hierarchy": [
+        {
+          "value": "Hero headline (52px, white on black)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Product showcase images (scrolling carousel)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Article grid (5 columns desktop, 1 column mobile)",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Products section with individual product cards",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Subscribe CTA sections interspersed throughout",
+          "value_citation": "https://every.to"
+        }
+      ]
+    },
+    {
+      "page_type": "Product Landing Page",
+      "page_type_citation": "https://cora.computer",
+      "core_purpose": "Convert visitors to product users through feature showcase, demo, social proof, and pricing",
+      "core_purpose_citation": "https://cora.computer",
+      "layout_pattern": "Hero with split headline → demo visualization → feature sections → privacy section → pricing cards",
+      "layout_pattern_citation": "https://cora.computer",
+      "cta_patterns": [
+        {
+          "value": "'Get Started' buttons repeated in multiple sections",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "'Start your free trial' as primary conversion CTA",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Download buttons for desktop apps (Monologue)",
+          "value_citation": "https://www.monologue.to"
+        }
+      ],
+      "interaction_details": [
+        {
+          "value": "Separate desktop-only and mobile-only demo modules",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Video embeds for product demonstrations",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Responsive breakpoints: desktop (dt:), mobile variations",
+          "value_citation": "https://cora.computer"
+        }
+      ],
+      "content_hierarchy": [
+        {
+          "value": "Large hero headline (split across lines for emphasis)",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Demo section showing product in action",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Feature sections with icons/images and descriptions",
+          "value_citation": "https://cora.computer"
+        },
+        {
+          "value": "Social proof (testimonials with avatars)",
+          "value_citation": "https://www.monologue.to"
+        },
+        {
+          "value": "Pricing section near bottom of page",
+          "value_citation": "https://cora.computer"
+        }
+      ]
+    },
+    {
+      "page_type": "Article / Blog Post",
+      "page_type_citation": "https://every.to/on-every/introducing-spiral",
+      "core_purpose": "Deliver long-form editorial content with author attribution, cover image, and readable typography",
+      "core_purpose_citation": "https://every.to/on-every/introducing-spiral",
+      "layout_pattern": "Cover image (16:9) → author byline → article body (centered column, max 720px) → sidebar appears at 1280px+",
+      "layout_pattern_citation": "https://every.to/on-every/introducing-spiral",
+      "cta_patterns": [
+        {
+          "value": "In-article product mentions with links",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Subscribe prompts in sidebar (inferred from pattern)",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ],
+      "interaction_details": [
+        {
+          "value": "Image lightbox for expanding images to full screen",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Responsive article width: 720px mobile/tablet, 1248px desktop with sidebar",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "10-column grid system for precise layout control on desktop",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ],
+      "content_hierarchy": [
+        {
+          "value": "Cover image with caption (DALL-E/Every illustration pattern)",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Author byline with avatar, name, column, and metadata",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "H1 headline (compound words without spaces: 'IntroducingSpiral')",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Body paragraphs in readable column",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Sidebar content (related articles, author info, subscription prompts)",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ]
+    },
+    {
+      "page_type": "Products Hub / Overview",
+      "page_type_citation": "https://every.to/studio",
+      "core_purpose": "Central directory of all Every products with quick access to individual product pages",
+      "core_purpose_citation": "https://every.to/studio",
+      "layout_pattern": "Page header ('Product Studio') → products grid (3 columns) → early adopter CTA section",
+      "layout_pattern_citation": "https://every.to/studio",
+      "cta_patterns": [
+        {
+          "value": "Each product card is clickable, linking to product page",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "'Become an Early Adopter' section at bottom",
+          "value_citation": "https://every.to/studio"
+        }
+      ],
+      "interaction_details": [
+        {
+          "value": "Product cards have hover states (inferred from utility classes)",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Responsive grid: collapses to fewer columns on smaller screens",
+          "value_citation": "https://every.to/studio"
+        }
+      ],
+      "content_hierarchy": [
+        {
+          "value": "Page title: 'Product Studio'",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Product cards grid with equal weight",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Early adopter CTA as final element",
+          "value_citation": "https://every.to/studio"
+        }
+      ]
+    }
+  ],
+  "observations_vs_inferences": {
+    "direct_observations": [
+      {
+        "value": "Tailwind CSS utility classes extensively used throughout (bg-, text-, p-, m-, flex, grid)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Drawer menu has class 'left-[-100%]' in closed state, slides to left-0 when open",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Z-index layering: 100000 for backdrop, 100001 for drawer menu",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Custom color variable: bg-everyblue (#0393d6) for brand blue",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Article layout uses max-w-[720px] for mobile/tablet, max-w-[1248px] for desktop",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Cover images have aspect-[16/9] ratio and max-h-[324px] on mobile",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Responsive breakpoints: 576px, 976px, 1099px, 1280px (visible in class names)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Cora uses custom breakpoint prefixes: 'dr:' and 'dt:' for responsive design",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Drawer menu max-width is exactly 277px",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Dashed borders used for dividers: divide-dashed, border-dashed classes",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Text sizes: text-[52px], text-[40px], text-[32px], text-[30px], text-[28px], text-[26px], text-[12px]",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Monologue uses Framer for hosting images (framerusercontent.com URLs)",
+        "value_citation": "https://www.monologue.to"
+      },
+      {
+        "value": "Privacy modal and privacy side popup components present on article pages",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Image lightbox overlay structure: backdrop + content container with close button",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Body classes indicate page type: 'public-container posts' for articles, 'posts-show' for post detail",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      }
+    ],
+    "inferred_implementation_notes": [
+      {
+        "value": "Likely using Tailwind CSS v3+ with custom configuration for breakpoints and colors",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Drawer menu animation probably uses CSS transitions (transition-all class present)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Subscribe popup toggle managed by JavaScript adding/removing 'active' class",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Font stack likely includes system fonts with sans-serif fallback (no custom font-family in HTML)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Button hover states use hover:bg-white/5, hover:border-white/60 for subtle feedback",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Product cards on Studio page likely have scale transform on hover (common pattern)",
+        "value_citation": "https://every.to/studio"
+      },
+      {
+        "value": "Image lightbox likely triggered by clicking on article images",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Cora demo sections use display:none with 'desktop-only' and 'mobile-only' classes for responsive variants",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Grid layouts use CSS Grid with explicit column definitions (grid-cols-1, grid-cols-4, grid-cols-5, grid-cols-10)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Backdrop overlay hidden by default, shown when drawer opens (likely toggles 'hidden' class)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Horizontal scroll carousel in hero likely uses overflow-x-auto with flex container",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Custom Tailwind theme extends with: everyblue, homeborder, custom spacing (dr-mt-140, dr-w-357)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Article sidebar appears/disappears at 1280px breakpoint using 1280: prefix classes",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Privacy modal uses fixed positioning with centered layout and backdrop blur",
+        "value_citation": "https://every.to"
+      }
+    ],
+    "estimated_values": [
+      {
+        "value": "Line height: Likely 1.5-1.6 for body text, 1.2-1.3 for headings (Tailwind defaults)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Letter spacing: Probably default (0) for body, slight tightening (-0.02em) for large headlines",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Font weight: 400 for body, 600-700 for headings and buttons",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Transition duration: 200-300ms for drawer slide animation and hover states",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Container padding: 16px (p-4) on mobile, scales up on larger screens",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Card border-radius: 8-12px for product cards, 20px (rounded-20) for Cora containers",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Button padding: px-6 py-3 (24px horizontal, 12px vertical) estimated",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Section vertical spacing: 48-80px between major sections (mt-12 to mt-20)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Image aspect ratios: 16:9 for article covers, variable for product screenshots",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Shadow values: shadow-lg likely translates to 0 10px 15px -3px rgba(0,0,0,0.1)",
+        "value_citation": "https://every.to"
+      }
+    ]
+  },
+  "implementation_signals": {
+    "component_inventory": [
+      {
+        "value": "Drawer navigation menu (slide-in from left, overlay backdrop)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Hero section (full-width, dark background, large typography)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Subscribe popup/banner (full-width, branded background)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Product card (image, title, description, link)",
+        "value_citation": "https://every.to/studio"
+      },
+      {
+        "value": "Article card (thumbnail, title, excerpt, metadata)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Testimonial card (avatar, name, role, quote)",
+        "value_citation": "https://www.monologue.to"
+      },
+      {
+        "value": "CTA button (primary: Get Started, Download, Start free trial)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Author byline (avatar, name, column/role, metadata)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Cover image with caption (16:9 aspect ratio)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Image lightbox overlay (backdrop + modal)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "Privacy modal (cookie consent, GDPR compliance)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Privacy side popup (slide-in notification)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Pricing card section (plan comparison)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Demo module (product visualization, desktop/mobile variants)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Video embed (product demonstrations)",
+        "value_citation": "https://www.monologue.to"
+      },
+      {
+        "value": "Feature section (icon/image + headline + description)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "Grid layout (responsive: 1/4/5/10 columns)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Horizontal scroll carousel (product screenshots)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Language list (horizontal scroll, pills)",
+        "value_citation": "https://www.monologue.to"
+      },
+      {
+        "value": "Dashed divider lines (between navigation items)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Backdrop overlay (semi-transparent black)",
+        "value_citation": "https://every.to"
+      }
+    ],
+    "canonical_screens": [
+      {
+        "screen_name": "Content Hub Homepage",
+        "screen_name_citation": "https://every.to",
+        "purpose": "Primary landing page showcasing brand, products, and content with subscription CTAs",
+        "purpose_citation": "https://every.to",
+        "layout_shell": "Full-width hero → horizontal scroll product showcase → article grid → products section → subscribe banner → footer",
+        "layout_shell_citation": "https://every.to",
+        "required_components": [
+          {
+            "value": "Drawer navigation menu with backdrop",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Hero section with large headline (52px)",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Product carousel (horizontal scroll)",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Article grid (responsive, 1-5 columns)",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Product cards section",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Subscribe CTA banner (recurring)",
+            "value_citation": "https://every.to"
+          }
+        ],
+        "ux_notes": [
+          {
+            "value": "Dark theme creates focus and modern aesthetic",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Drawer menu keeps navigation minimal and unobtrusive",
+            "value_citation": "https://every.to"
+          },
+          {
+            "value": "Subscribe prompts appear multiple times to catch users at different scroll depths",
+            "value_citation": "https://every.to"
+          }
+        ]
+      },
+      {
+        "screen_name": "Product Landing Page",
+        "screen_name_citation": "https://cora.computer",
+        "purpose": "Convert visitors to product users through feature showcase, demo, and free trial CTA",
+        "purpose_citation": "https://cora.computer",
+        "layout_shell": "Hero with split headline → demo section → feature sections → privacy/trust section → pricing → footer",
+        "layout_shell_citation": "https://cora.computer",
+        "required_components": [
+          {
+            "value": "Large hero headline (emphasizes value proposition)",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Demo module (shows product in action)",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Feature sections (3-5 key features)",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Privacy/security section (builds trust)",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Pricing cards (clear plan options)",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Multiple 'Get Started' CTAs throughout",
+            "value_citation": "https://cora.computer"
+          }
+        ],
+        "ux_notes": [
+          {
+            "value": "Light theme appropriate for SaaS product landing pages",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Demo section is crucial - shows product value immediately",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Separate desktop/mobile demo variants ensure optimal experience",
+            "value_citation": "https://cora.computer"
+          },
+          {
+            "value": "Privacy section addresses user concerns before pricing",
+            "value_citation": "https://cora.computer"
+          }
+        ]
+      },
+      {
+        "screen_name": "Article Detail Page",
+        "screen_name_citation": "https://every.to/on-every/introducing-spiral",
+        "purpose": "Deliver long-form editorial content with readability and author attribution",
+        "purpose_citation": "https://every.to/on-every/introducing-spiral",
+        "layout_shell": "Cover image → author byline → article body (centered column) → sidebar (desktop)",
+        "layout_shell_citation": "https://every.to/on-every/introducing-spiral",
+        "required_components": [
+          {
+            "value": "Cover image (16:9 aspect ratio)",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Author byline with avatar",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Article body (max 720px width)",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Sidebar (appears at 1280px+)",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Image lightbox for expandable images",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          }
+        ],
+        "ux_notes": [
+          {
+            "value": "Narrow column width (720px) ensures readability",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Sidebar provides related content without cluttering article",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "Cover image establishes visual context and brand",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          },
+          {
+            "value": "10-column grid allows precise layout control on desktop",
+            "value_citation": "https://every.to/on-every/introducing-spiral"
+          }
+        ]
+      },
+      {
+        "screen_name": "Products Hub",
+        "screen_name_citation": "https://every.to/studio",
+        "purpose": "Central directory of all products with quick access to individual pages",
+        "purpose_citation": "https://every.to/studio",
+        "layout_shell": "Page header → products grid (3 columns) → early adopter CTA",
+        "layout_shell_citation": "https://every.to/studio",
+        "required_components": [
+          {
+            "value": "Page title/header",
+            "value_citation": "https://every.to/studio"
+          },
+          {
+            "value": "Product cards grid (3 columns, responsive)",
+            "value_citation": "https://every.to/studio"
+          },
+          {
+            "value": "Early adopter CTA section",
+            "value_citation": "https://every.to/studio"
+          }
+        ],
+        "ux_notes": [
+          {
+            "value": "Simple, scannable layout lets users quickly find products",
+            "value_citation": "https://every.to/studio"
+          },
+          {
+            "value": "Consistent card design creates visual harmony",
+            "value_citation": "https://every.to/studio"
+          },
+          {
+            "value": "Early adopter CTA encourages engagement with new products",
+            "value_citation": "https://every.to/studio"
+          }
+        ]
+      }
+    ],
+    "do_dont_list": [
+      {
+        "value": "DO: Use Tailwind CSS utility classes for rapid prototyping and consistency",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Implement drawer navigation for clean, minimal header on mobile",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Use dark themes for content/brand landing pages, light themes for SaaS products",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Keep article body width narrow (720px) for readability",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "DO: Provide separate desktop/mobile variants for complex interactions",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "DO: Use multiple CTAs throughout page at different scroll depths",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Include demo/visualization of product functionality on landing pages",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "DO: Use 16:9 aspect ratio for article cover images (responsive-friendly)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "DO: Implement image lightbox for article images",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "DO: Use dashed borders for subtle dividers in navigation",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Layer z-indexes properly (backdrop: 100000, menu: 100001)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Use responsive grid systems (1/4/5/10 columns based on breakpoint)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DO: Include privacy/security section on product pages to build trust",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "DO: Use horizontal scroll for carousel content (better mobile UX)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Make article body wider than 720-800px (hurts readability)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "DON'T: Show sidebar on mobile/tablet (appears only at 1280px+)",
+        "value_citation": "https://every.to/on-every/introducing-spiral"
+      },
+      {
+        "value": "DON'T: Use serif fonts for UI elements (sans-serif only observed)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Overload homepage with too much content above fold",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Forget backdrop overlay when drawer menu is open",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Use overly complex navigation (drawer keeps it simple)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Skip the demo section on product landing pages (crucial for conversion)",
+        "value_citation": "https://cora.computer"
+      },
+      {
+        "value": "DON'T: Use solid borders where dashed borders would be lighter/cleaner",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Forget hover states on interactive elements (cards, buttons)",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "DON'T: Use custom fonts if system fonts work (improves performance)",
+        "value_citation": "https://every.to"
+      }
+    ]
+  }
+}

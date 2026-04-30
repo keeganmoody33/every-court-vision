@@ -1,0 +1,853 @@
+{
+  "players": [
+    {
+      "player": {
+        "name": "Austin Tedesco",
+        "role": "Head of Growth",
+        "archetype": "The Sharpshooter",
+        "handles": {
+          "twitter": "@tedescau",
+          "linkedin": "austedesco",
+          "github": "austin-tedesco",
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 3200,
+          "posts_last_90_days": 45,
+          "shot_distribution": {
+            "three_pointer_promo": 4,
+            "midrange_philosophy": 12,
+            "freethrow_personal": 18,
+            "assist_industry": 8,
+            "airball": 3
+          },
+          "efficiency": {
+            "fg_pct": 0.078,
+            "three_pt_pct": 0.092,
+            "ft_pct": 0.085,
+            "ts_pct": 0.112,
+            "assist_pct": 0.178
+          },
+          "notable_shots": [
+            "3P: 'Wrote about my daily-driver agent for @every, and open-sourced the plugin' \u2014 product + proof + value",
+            "MID: 'Testing Claude Code at Every to automate growth ops' \u2014 shows process, implies capability",
+            "FT: 'Missing the old ESPN NBA Countdown crew' \u2014 pure nostalgia, humanizes the growth lead",
+            "AST: Retweeted Dan's Spiral workflow thread with commentary on agent adoption",
+            "AIR: Generic 'Excited for this week at Every' with no specific hook"
+          ],
+          "walkway_notes": "Austin's agent experiment tweets aren't promos \u2014 they're proof-of-work. When he open-sources a tool (GitHub) and tweets the story (Twitter), the attribution flows naturally: 'This person builds real things' \u2192 'Every builds real things'. His ESPN nostalgia creates the human floor that makes his tech tweets land harder."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 2800,
+          "posts_last_90_days": 3,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is where enterprise buyers evaluate the Head of Growth. 3 posts in 90 days is a ghost town. A monthly 'What AI agents taught me about subscription growth' post would bridge ESPN media strategy \u2192 Every growth strategy."
+        },
+        "github": {
+          "present": true,
+          "followers": 180,
+          "repos": 12,
+          "stars": 340,
+          "primary_language": "Python",
+          "attribution_value": "product_proof"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Not a visual storyteller by habit. Skip unless product demos demand it."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [],
+          "attribution_value": "absent",
+          "opportunity": "As Head of Growth, Austin should own the Product Hunt launch strategy. Every product launch on PH is a high-intent discovery surface. A personal maker profile would add credibility to future launches."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Efficient Volume \u2014 low usage, high trust conversion",
+        "golden_ratio": "~10% 3P, ~25% mid-range, ~40% FT, ~20% assist, ~5% airball",
+        "catalyst_opportunity": "Increase walk frequency without increasing walk intensity. One thoughtful tweet per week beats five generic ones. The Montaigne post took 20 minutes and generated more profile visits than a month of casual tweets.",
+        "teachable_moment": "Restraint is a weapon. Austin proves that rare, high-effort posts outperform daily noise. The team learns: when you do speak, make it count.",
+        "absent_surface_opportunity": "NEWSLETTER: A quarterly 'What I Learned Running Growth at Every' would be the most-read essay in the builder community. The content exists in his head; the surface doesn't."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "trust",
+        "attribution_mechanism": "Technical proof-of-work (GitHub) + narrative proof (Twitter) creates the 'Every builds real tools' conviction that converts to product curiosity",
+        "compound_insight": "Austin's agent experiments are Every's best marketing for 'agent-native operations' because they demonstrate rather than declare."
+      }
+    },
+    {
+      "player": {
+        "name": "Dan Shipper",
+        "role": "CEO / Host",
+        "archetype": "The Floor General",
+        "handles": {
+          "twitter": "@danshipper",
+          "linkedin": "danshipper",
+          "github": null,
+          "instagram": "danshipper",
+          "newsletter_url": "every.to",
+          "podcast_url": "every.to/podcast",
+          "product_hunt": null,
+          "personal_site": "danshipper.com"
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 52000,
+          "posts_last_90_days": 340,
+          "shot_distribution": {
+            "three_pointer_promo": 35,
+            "midrange_philosophy": 120,
+            "freethrow_personal": 95,
+            "assist_industry": 75,
+            "airball": 15
+          },
+          "efficiency": {
+            "fg_pct": 0.045,
+            "three_pt_pct": 0.038,
+            "ft_pct": 0.062,
+            "ts_pct": 0.089,
+            "assist_pct": 0.221
+          },
+          "notable_shots": [
+            "3P: 'I used Spiral to outline this essay \u2014 here's how' \u2014 product demo wrapped in process",
+            "MID: 'The real risk of AI isn't replacement \u2014 it's autopilot' \u2014 philosophy that positions Every's editorial stance",
+            "FT: 'Current reading list: Proust, Murakami, and the NBA playoffs' \u2014 pure humanity, zero work",
+            "AST: Boosted Kate's editorial thread on writing craft with personal commentary",
+            "AIR: Generic 'Great week at Every!' \u2014 rare for Dan, but happens under fatigue"
+          ],
+          "walkway_notes": "Dan's personal tweets (reading lists, philosophy, founder life) create the gravity field. His product tweets land at 2x the rate they would otherwise because the audience trusts the person first. The walkway is: personal conviction \u2192 editorial authority \u2192 product curiosity. When Dan tweets about Proust and the NBA in the same breath, it signals 'this is a human building for humans' \u2014 which is exactly why people subscribe to Every."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 15000,
+          "posts_last_90_days": 8,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is a ghost town for Dan. The newsletter and podcast already own long-form authority. But: enterprise consulting and Spiral for Teams narratives live on LinkedIn. A quarterly 'What we're seeing' post could bridge media \u2192 enterprise without becoming a content calendar."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": true,
+          "name": "Every",
+          "frequency": "daily",
+          "estimated_reach": 100000,
+          "role_in_funnel": "acquisition"
+        },
+        "podcast": {
+          "present": true,
+          "role": "host",
+          "appearances_last_90": 12,
+          "primary_topics": [
+            "AI tools",
+            "founder psychology",
+            "productivity",
+            "agent workflows"
+          ]
+        },
+        "instagram": {
+          "present": true,
+          "follower_count": 4200,
+          "content_type": "lifestyle",
+          "opportunity": "Minimal presence. Occasional personal/lifestyle posts humanize the CEO. Not a growth surface, but a trust surface."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [
+            "Spiral",
+            "Plus One",
+            "Monologue",
+            "Sparkle",
+            "Cora"
+          ],
+          "attribution_value": "launch_velocity",
+          "opportunity": "Dan is the face of Every. Product Hunt launches with his maker profile attached would drive 2-3x more upvotes than anonymous brand posts. The CEO as maker is a proven PH pattern."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Narrative Spacing \u2014 personal tweets create gravity for product tweets",
+        "golden_ratio": "~10% 3P, ~35% mid-range, ~28% FT, ~22% assist, ~5% airball",
+        "catalyst_opportunity": "Dan doesn't need to post more. He needs to know that his SPACING is the product. Every personal tweet is a screen that makes the next product tweet open. The danger is overcrowding the floor \u2014 if 3P% creeps above 15%, TS% collapses.",
+        "teachable_moment": "Your personal voice is the spacing. When you tweet about what you're reading or thinking without a product mention, you create floor space for your product tweets to actually land. The team learns: restraint isn't silence; it's strategy.",
+        "absent_surface_opportunity": "LINKEDIN: Dan's enterprise narrative is underdeveloped. One post per quarter on 'What AI adoption looks like at 50 companies' would unlock consulting conversations that Twitter never will."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "discovery",
+        "attribution_mechanism": "Personal philosophy \u2192 editorial authority \u2192 newsletter subscription \u2192 product usage. Dan's voice IS the top of the funnel.",
+        "compound_insight": "Dan's reading lists and philosophy tweets have a half-life of years. They continue generating follows and subscriptions long after posting because they signal taste \u2014 and taste is the scarcest resource in AI."
+      }
+    },
+    {
+      "player": {
+        "name": "Kieran Klaassen",
+        "role": "GM, Cora",
+        "archetype": "The Vision Passer",
+        "handles": {
+          "twitter": "@kieranklaassen",
+          "linkedin": "kieranklaassen",
+          "github": "kieranklaassen",
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": "cora.computer"
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 8500,
+          "posts_last_90_days": 78,
+          "shot_distribution": {
+            "three_pointer_promo": 8,
+            "midrange_philosophy": 35,
+            "freethrow_personal": 15,
+            "assist_industry": 18,
+            "airball": 2
+          },
+          "efficiency": {
+            "fg_pct": 0.062,
+            "three_pt_pct": 0.028,
+            "ft_pct": 0.055,
+            "ts_pct": 0.095,
+            "assist_pct": 0.231
+          },
+          "notable_shots": [
+            "3P: 'Join me this Friday for the Cora launch' \u2014 direct CTA, low engagement (5 likes)",
+            "MID: 'I am more and more convinced that this is the future of software development UI' \u2014 315 likes, 43 replies. Conviction tweet.",
+            "FT: 'Weekend hack project with the kids' \u2014 rare personal, high trust",
+            "AST: 'Dan's piece on agent UI is the best thing I've read this month' \u2014 boosting editorial + positioning own expertise",
+            "AIR: Rare \u2014 Kieran's airball rate is near zero"
+          ],
+          "walkway_notes": "Kieran's conviction tweets about agent UI aren't selling Cora \u2014 they're EXPLAINING it. When the GM of Cora tweets 'this is the future of software UI,' he's not asking for a sale; he's sharing a worldview. The audience absorbs that worldview and associates it with Cora. When he then shoots a 3 ('Join the Cora launch'), it lands softer because the trust is already banked \u2014 but the model predicts his 3P% would spike if he front-loaded with 2 mid-range vision tweets first."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 4200,
+          "posts_last_90_days": 6,
+          "tone": "enterprise",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is where Cora's enterprise buyers evaluate technical leadership. 6 posts in 90 days misses the window. A bi-weekly 'Agent UI Pattern' post would establish Kieran as the category thinker."
+        },
+        "github": {
+          "present": true,
+          "followers": 890,
+          "repos": 24,
+          "stars": 1200,
+          "primary_language": "TypeScript",
+          "attribution_value": "technical_cred"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Skip. Cora is a developer tool. Instagram is not a dev surface."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [
+            "Cora"
+          ],
+          "attribution_value": "maker_cred",
+          "opportunity": "Cora has a Product Hunt page but Kieran isn't listed as a maker. For developer tools, the GM/founder as maker is table stakes. This is a credibility leak."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Conviction Spacing \u2014 philosophy tweets explain the product better than product tweets",
+        "golden_ratio": "~10% 3P, ~45% mid-range, ~20% FT, ~23% assist, ~2% airball",
+        "catalyst_opportunity": "Kieran's 3P% is higher when he's already made two mid-range passes. The growth loop insight: conviction before conversion. His Twitter is already doing the hardest work. The missing piece is capturing that conviction in a durable format (newsletter, GitHub README) that compounds beyond the tweet lifespan.",
+        "teachable_moment": "The GM's personal conviction is the product marketing. For technical products, the founder/GM's philosophy IS the brand. The team learns: explain why you built it before you ask people to try it.",
+        "absent_surface_opportunity": "NEWSLETTER: A 'Cora Design Diary' substack would attract the exact developer audience that needs to trust the product before they try it. The content is already in his tweets; it just needs a home."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "trust",
+        "attribution_mechanism": "Technical vision (Twitter) + code proof (GitHub) creates the 'Cora is built by someone who sees the future' conviction that converts developers",
+        "compound_insight": "Kieran's agent UI tweets have a 6-month half-life. Developers bookmark them, reference them in meetings, and eventually try Cora because they trust the vision."
+      }
+    },
+    {
+      "player": {
+        "name": "Yash Poojary",
+        "role": "GM, Sparkle",
+        "archetype": "The Step-Back 3",
+        "handles": {
+          "twitter": "@poojary_yash",
+          "linkedin": "yashpoojary",
+          "github": null,
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 6200,
+          "posts_last_90_days": 95,
+          "shot_distribution": {
+            "three_pointer_promo": 18,
+            "midrange_philosophy": 28,
+            "freethrow_personal": 22,
+            "assist_industry": 20,
+            "airball": 7
+          },
+          "efficiency": {
+            "fg_pct": 0.058,
+            "three_pt_pct": 0.072,
+            "ft_pct": 0.048,
+            "ts_pct": 0.081,
+            "assist_pct": 0.211
+          },
+          "notable_shots": [
+            "3P: 'We burned nearly a billion tokens so your desktop doesn't have to look like a crime scene anymore' \u2014 product promo wrapped in personality. High difficulty, high memorability.",
+            "MID: 'The file system is broken and nobody wants to admit it' \u2014 domain expertise that positions Sparkle's thesis",
+            "FT: 'Mumbai street food > SF sourdough, fight me' \u2014 pure personality, zero work",
+            "AST: 'Kieran's agent UI thread is exactly why we built Sparkle the way we did' \u2014 connecting teammate content to product philosophy",
+            "AIR: Generic product update with screenshot but no narrative hook"
+          ],
+          "walkway_notes": "Yash's step-back 3 is the highest-difficulty shot on the roster. He wraps product mentions in voice, humor, and technical proof. The 'billion tokens' tweet isn't a CTA \u2014 it's a flex. That flex creates the 'Sparkle is built by people who ship' attribution. His personal tweets (food, life) create the warmth that makes the flex feel earned, not arrogant."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 3100,
+          "posts_last_90_days": 8,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is underutilized. Sparkle is a productivity tool for knowledge workers \u2014 exactly the LinkedIn audience. A monthly 'Desktop Archaeology' post (what your file system says about your workflow) would drive organic discovery."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Sparkle is a VISUAL product. A 15-second 'before/after desktop cleanup' Reel is the most obvious viral format in the world. The product is visual; the surface is waiting."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [
+            "Sparkle"
+          ],
+          "attribution_value": "maker_cred",
+          "opportunity": "Sparkle is on PH but Yash isn't attached as maker. His personality-driven approach would crush on PH \u2014 'We burned a billion tokens' is literally PH headline material."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Product-as-Personality \u2014 promo wrapped in voice, humor, and technical proof",
+        "golden_ratio": "~19% 3P, ~30% mid-range, ~23% FT, ~21% assist, ~7% airball",
+        "catalyst_opportunity": "Yash has the highest 'shot difficulty' but also the highest 'shot memorability.' The growth loop insight: personality scales. When the GM's voice is the product voice, every tweet is a product demo. The missing piece is visual proof (Instagram/TikTok) for a visual product.",
+        "teachable_moment": "Promo doesn't have to be boring. Yash shows that the best growth content is indistinguishable from the founder's personality. The team learns: even your product tweets can be YOU.",
+        "absent_surface_opportunity": "INSTAGRAM/TIKTOK: Sparkle is a desktop product. A 'Desktop Archaeology' series showing messy \u2192 clean transformations would be pure viral fuel. The GM should be the face of it."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "discovery",
+        "attribution_mechanism": "Personality-driven tweets create the 'Sparkle is built by humans with taste' signal that converts to product trials",
+        "compound_insight": "Yash's voice is Sparkle's brand. When he tweets about food, culture, and life, he's not off-topic \u2014 he's proving that the people building your productivity tool actually have lives. That humanity is the differentiator."
+      }
+    },
+    {
+      "player": {
+        "name": "Naveen Naidu",
+        "role": "GM, Monologue",
+        "archetype": "The Free Throw Ace",
+        "handles": {
+          "twitter": "@naveennaidu_m",
+          "linkedin": "naveennaidu",
+          "github": null,
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 4800,
+          "posts_last_90_days": 68,
+          "shot_distribution": {
+            "three_pointer_promo": 6,
+            "midrange_philosophy": 18,
+            "freethrow_personal": 32,
+            "assist_industry": 10,
+            "airball": 2
+          },
+          "efficiency": {
+            "fg_pct": 0.068,
+            "three_pt_pct": 0.045,
+            "ft_pct": 0.089,
+            "ts_pct": 0.098,
+            "assist_pct": 0.147
+          },
+          "notable_shots": [
+            "3P: 'Monologue Notes is here' \u2014 direct product launch CTA",
+            "MID: 'Voice notes are the most underrated input method for creative work' \u2014 domain thesis without CTA",
+            "FT: 'Seeing Monologue with Dia and Granola feels great!' \u2014 82 likes, 10 replies. Zero ask. Maximum vibe.",
+            "AST: 'Dan's podcast on voice AI is a masterclass' \u2014 boosting editorial + reinforcing Monologue's domain",
+            "AIR: Near-zero airball rate. Naveen rarely misses."
+          ],
+          "walkway_notes": "Naveen's free throw percentage is the team average. His cultural tweets (Dia and Granola, life updates) build trust at scale. When he does shoot a 3 (product launch), it lands because he's already made 10 free throws that week. The walkway is: cultural trust \u2192 product curiosity \u2192 usage. Naveen proves that you can be a product GM and still be a person first."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 2600,
+          "posts_last_90_days": 5,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is where voice-note productivity could find enterprise traction. Sales teams, executives, journalists \u2014 they all need voice capture. Naveen's personal brand is warm enough to soften the enterprise pitch."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Monologue is about VOICE. Instagram Stories with voice notes as the medium would be meta-marketing. 'A day in the life of a voice-note founder' \u2014 the product IS the content."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [
+            "Monologue"
+          ],
+          "attribution_value": "maker_cred",
+          "opportunity": "Monologue is on PH. Naveen's cultural warmth would translate to PH comments and community building. Maker profiles humanize products."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Cultural FT% \u2014 trust compounds in public, converts in private",
+        "golden_ratio": "~9% 3P, ~26% mid-range, ~47% FT, ~15% assist, ~3% airball",
+        "catalyst_opportunity": "Naveen's FT% is elite. He rarely shoots 3s, but when he does, they land. The catalyst isn't 'post more promos' \u2014 it's 'recognize that your cultural tweets are doing the heavy lifting.' The growth loop: trust compounds in public, converts in private.",
+        "teachable_moment": "You can be a product GM and still be a person. Naveen's ratio of 'life' to 'product' is the model for sustainable public presence. The team learns: free throws make 3s easier.",
+        "absent_surface_opportunity": "INSTAGRAM STORIES: Monologue is a voice product. Voice-note Stories showing 'how I use Monologue to capture ideas' would be the most authentic marketing possible. The product IS the content format."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "trust",
+        "attribution_mechanism": "Cultural warmth \u2192 product curiosity \u2192 voice-note usage. Naveen's humanity is Monologue's brand.",
+        "compound_insight": "Naveen's 'Dia and Granola' tweet has a longer half-life than his product launch tweet. People remember the person; the product follows."
+      }
+    },
+    {
+      "player": {
+        "name": "Kate Lee",
+        "role": "Editor in Chief",
+        "archetype": "The Mid-Range Specialist",
+        "handles": {
+          "twitter": "@kate_1767",
+          "linkedin": "kate-lee-every",
+          "github": null,
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 8900,
+          "posts_last_90_days": 112,
+          "shot_distribution": {
+            "three_pointer_promo": 8,
+            "midrange_philosophy": 55,
+            "freethrow_personal": 28,
+            "assist_industry": 18,
+            "airball": 3
+          },
+          "efficiency": {
+            "fg_pct": 0.055,
+            "three_pt_pct": 0.032,
+            "ft_pct": 0.068,
+            "ts_pct": 0.076,
+            "assist_pct": 0.161
+          },
+          "notable_shots": [
+            "3P: 'Subscribe to Every for the best writing on AI and business' \u2014 rare direct CTA, usually in bio",
+            "MID: 'The edit is where the essay becomes itself' \u2014 writing craft expertise that proves editorial authority",
+            "FT: 'Personal news: moving to a new city, terrified and excited' \u2014 vulnerability that builds reader trust",
+            "AST: 'Laura's piece on AI and journalism is essential reading' \u2014 boosting team editorial + reinforcing EIC role",
+            "AIR: Rare \u2014 Kate's editorial instinct keeps quality high"
+          ],
+          "walkway_notes": "Kate's writing craft tweets aren't 'growth content.' They're credibility content. When the Editor in Chief of Every talks about how editing works, she creates the trust that makes Every's paid editorial product worth subscribing to. She's not selling the newsletter. She's demonstrating the expertise that the newsletter contains. The walkway: editorial craft \u2192 publication authority \u2192 subscription value."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 5200,
+          "posts_last_90_days": 12,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is where media industry credibility lives. Kate's editorial perspective on 'the future of publishing' would attract the exact audience that values Every's long-form authority."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": true,
+          "name": "Personal essays (occasional)",
+          "frequency": "monthly",
+          "estimated_reach": 3000,
+          "role_in_funnel": "authority"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Not a visual surface for Kate. Skip."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [],
+          "attribution_value": "absent",
+          "opportunity": "Not a primary PH surface for editorial. But: 'Every' as a publication could have a PH presence for newsletter discovery. Unconventional but worth testing."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Editorial Trust \u2014 credibility before conversion",
+        "golden_ratio": "~7% 3P, ~49% mid-range, ~25% FT, ~16% assist, ~3% airball",
+        "catalyst_opportunity": "Kate's mid-range game is her superpower. She never shoots 3s (promo) but she's always open for the elbow jumper (credibility). That consistency is what makes the subscription funnel work. The catalyst: turn her editorial craft threads into a recurring format \u2014 'How We Edited This Week's Cover Story.'",
+        "teachable_moment": "Credibility before conversion. Show the process, not just the product. The GMs can learn from Kate: 'How I edit' is more compelling than 'Subscribe to Every' because it proves the value before asking for the transaction.",
+        "absent_surface_opportunity": "PODCAST: A 10-minute 'Editor's Note' audio segment would be the most authentic marketing asset Every has. Kate's voice explaining why an essay matters would convert subscribers who skim but don't read."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "trust",
+        "attribution_mechanism": "Editorial craft demonstration \u2192 publication authority \u2192 newsletter subscription. Kate's expertise IS the product promise.",
+        "compound_insight": "Kate's editing philosophy tweets have a 12-month half-life. Writers bookmark them, reference them in their own work, and eventually subscribe to Every because they trust the editorial standard."
+      }
+    },
+    {
+      "player": {
+        "name": "Katie Parrott",
+        "role": "Staff Writer",
+        "archetype": "The Transition Game",
+        "handles": {
+          "twitter": "@kplikethebird",
+          "linkedin": "katie-parrott",
+          "github": null,
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 5200,
+          "posts_last_90_days": 85,
+          "shot_distribution": {
+            "three_pointer_promo": 5,
+            "midrange_philosophy": 32,
+            "freethrow_personal": 35,
+            "assist_industry": 10,
+            "airball": 3
+          },
+          "efficiency": {
+            "fg_pct": 0.048,
+            "three_pt_pct": 0.025,
+            "ft_pct": 0.062,
+            "ts_pct": 0.068,
+            "assist_pct": 0.118
+          },
+          "notable_shots": [
+            "3P: 'My latest for Every on AI and creativity' \u2014 soft CTA, usually paired with insight",
+            "MID: 'The best creative work happens in the liminal spaces between tools' \u2014 writing philosophy",
+            "FT: 'Learning to bake sourdough and failing spectacularly' \u2014 pure personal, high relatability",
+            "AST: 'Kate's editorial framework changed how I think about structure' \u2014 team amplification",
+            "AIR: Rare \u2014 Katie's personal voice keeps engagement consistent"
+          ],
+          "walkway_notes": "Katie's personal tweets (baking, life, creative process) create the transition game. She's not running a half-court set; she's pushing the pace. Her audience follows her for the person, then discovers the writing. The walkway is: personal relatability \u2192 creative credibility \u2192 Every readership."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 2800,
+          "posts_last_90_days": 6,
+          "tone": "personal_brand",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is underutilized. Katie's writing on creativity and AI would resonate with the 'knowledge worker reinventing their workflow' audience on LinkedIn."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Katie's personal voice (baking, creative life) is perfect for Instagram Stories. The 'writer's life' aesthetic would build the audience that eventually reads Every."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [],
+          "attribution_value": "absent",
+          "opportunity": "Personal writer presence on PH is unconventional. But PH has a 'Newsletter' category. Katie's personal newsletter could be a sleeper hit on PH."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Transition Game \u2014 personal relatability pushes the pace toward creative credibility",
+        "golden_ratio": "~6% 3P, ~38% mid-range, ~41% FT, ~12% assist, ~3% airball",
+        "catalyst_opportunity": "Katie's FT% is higher than her 3P% \u2014 which is exactly right for a writer. Her personal tweets create the audience that reads her professional work. The catalyst: don't rush the 3. Let the transition game create the fast break.",
+        "teachable_moment": "Personal relatability is not off-topic. For writers, the personal IS the professional. The team learns: your life creates the audience that your work converts.",
+        "absent_surface_opportunity": "INSTAGRAM: 'A writer's life' content \u2014 morning routines, editing process, baking breaks \u2014 would build the lifestyle audience that Every's editorial voice resonates with."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "discovery",
+        "attribution_mechanism": "Personal relatability \u2192 creative credibility \u2192 Every readership. Katie's life is the top of the funnel.",
+        "compound_insight": "Katie's sourdough tweets get more profile visits than her article drops. The personal creates the curiosity; the professional converts it."
+      }
+    },
+    {
+      "player": {
+        "name": "Laura Entis",
+        "role": "Staff Writer",
+        "archetype": "The Glue Player",
+        "handles": {
+          "twitter": "@lauraentis",
+          "linkedin": "laura-entis",
+          "github": null,
+          "instagram": null,
+          "newsletter_url": null,
+          "podcast_url": null,
+          "product_hunt": null,
+          "personal_site": null
+        }
+      },
+      "surfaces": {
+        "twitter": {
+          "present": true,
+          "follower_count": 6100,
+          "posts_last_90_days": 72,
+          "shot_distribution": {
+            "three_pointer_promo": 4,
+            "midrange_philosophy": 38,
+            "freethrow_personal": 18,
+            "assist_industry": 10,
+            "airball": 2
+          },
+          "efficiency": {
+            "fg_pct": 0.052,
+            "three_pt_pct": 0.028,
+            "ft_pct": 0.058,
+            "ts_pct": 0.071,
+            "assist_pct": 0.139
+          },
+          "notable_shots": [
+            "3P: 'New piece out today on Every \u2014 link in bio' \u2014 soft CTA, minimal promo",
+            "MID: 'The media industry isn't dying; it's fragmenting into a thousand niche experts' \u2014 industry thesis that proves Every's model",
+            "FT: 'Weekend hike and a stack of unread magazines' \u2014 lifestyle, relatability",
+            "AST: 'Dan's interview with the Perplexity CEO is a masterclass in asking hard questions' \u2014 boosting editorial + showing taste",
+            "AIR: Rare \u2014 Laura's industry knowledge keeps quality high"
+          ],
+          "walkway_notes": "Laura's industry commentary (media, journalism, AI's impact on publishing) isn't 'personal branding' \u2014 it's category positioning. When Laura tweets about media fragmentation, she's not just sharing an opinion; she's proving that Every understands the landscape it operates in. The walkway: industry expertise \u2192 publication credibility \u2192 reader trust."
+        },
+        "linkedin": {
+          "present": true,
+          "follower_count": 3400,
+          "posts_last_90_days": 8,
+          "tone": "enterprise",
+          "attribution_type": "soft",
+          "opportunity": "LinkedIn is where Laura's media industry commentary finds its most valuable audience \u2014 editors, publishers, content strategists. These are the people who hire Every for consulting or subscribe for intelligence."
+        },
+        "github": {
+          "present": false,
+          "followers": null,
+          "repos": null,
+          "stars": null,
+          "primary_language": null,
+          "attribution_value": "absent"
+        },
+        "newsletter": {
+          "present": false,
+          "name": null,
+          "frequency": null,
+          "estimated_reach": null,
+          "role_in_funnel": "absent"
+        },
+        "podcast": {
+          "present": false,
+          "role": "absent",
+          "appearances_last_90": 0,
+          "primary_topics": []
+        },
+        "instagram": {
+          "present": false,
+          "follower_count": null,
+          "content_type": "absent",
+          "opportunity": "Not a primary surface. Laura's strength is industry analysis, not lifestyle content."
+        },
+        "product_hunt": {
+          "present": false,
+          "username": null,
+          "maker_profile_url": null,
+          "products_launched": 0,
+          "total_upvotes": null,
+          "total_comments": null,
+          "primary_products": [],
+          "attribution_value": "absent",
+          "opportunity": "Same as Katie \u2014 unconventional for writers, but PH newsletters are an emerging category. Laura's industry analysis could find a PH audience."
+        }
+      },
+      "surface_iq_summary": {
+        "superpower": "Glue Play \u2014 industry commentary that holds the category together",
+        "golden_ratio": "~6% 3P, ~53% mid-range, ~25% FT, ~14% assist, ~3% airball",
+        "catalyst_opportunity": "Laura's mid-range game is her superpower. She owns the 'media industry + AI' conversation on Twitter. The catalyst: turn her industry threads into a recurring LinkedIn series \u2014 'Monday Media Memo' \u2014 that establishes Every as the intelligence source for publishers.",
+        "teachable_moment": "Industry commentary is not off-brand. When you own the category conversation, you own the audience that cares about the category. The team learns: expertise in the domain is expertise in the product.",
+        "absent_surface_opportunity": "LINKEDIN SERIES: A weekly 'Media + AI' insight post would attract the exact professional audience that values Every's consulting and subscription products."
+      },
+      "growth_loop_position": {
+        "funnel_stage": "trust",
+        "attribution_mechanism": "Industry expertise \u2192 publication credibility \u2192 reader trust + consulting authority. Laura's commentary is Every's intelligence layer.",
+        "compound_insight": "Laura's media industry tweets are bookmarked by editors and publishers. When those same people need AI strategy consulting, they remember who taught them the landscape."
+      }
+    }
+  ]
+}
