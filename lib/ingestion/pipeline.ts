@@ -132,7 +132,7 @@ export async function ingestYouTube(
             ${id}, 'youtube', ${video.id}, 'company', ${EVERY_COMPANY_ID},
             ${content}, 'video', ${url}, ${mediaUrl},
             ${postedAt}, ${collectedAt},
-            ${reach}, ${likes}, ${comments}, ${JSON.stringify(video.statistics)}::jsonb,
+            ${reach}, ${likes}, ${comments}, ${JSON.stringify(video.statistics ?? {})}::jsonb,
             ${rawHash}
           )
           ON CONFLICT ("rawHash") DO UPDATE SET
@@ -252,7 +252,7 @@ export async function ingestXPublic(
             ${tweet.text}, ${contentType}, ${xUrl},
             ${postedAt}, ${collectedAt},
             ${reach}, ${likes}, ${reposts}, ${replies}, ${clicks},
-            ${JSON.stringify(tweet.public_metrics)}::jsonb,
+            ${JSON.stringify(tweet.public_metrics ?? {})}::jsonb,
             ${urls},
             ${rawHash}
           )
