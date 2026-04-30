@@ -1,0 +1,536 @@
+{
+  "brand_ecosystem_overview": "Every is a comprehensive brand ecosystem positioned as 'The only subscription you need to stay at the edge of AI.' The brand voice is authoritative, intellectual, and forward-thinking, using tech-native language balanced with accessible execution. Visual identity is clean, minimalist, and content-centric with a cohesive 'Every Universe' of sub-brands (Spiral, Cora, Sparkle, Monologue, Proof, Plus One). The core strategy is a hybrid value proposition: elite editorial content combined with functional AI productivity tools, created by makers for builders. The design philosophy emphasizes experimental innovation while maintaining ecosystem cohesion through consistent iconography and minimal aesthetic.",
+  "brand_ecosystem_overview_citation": "https://every.to",
+  "business_avenues": [
+    {
+      "name": "Newsletter & Media Platform",
+      "name_citation": "https://every.to",
+      "style_and_tone": "Authoritative, intellectual, and forward-thinking voice using tech-native jargon (vibe check, terminal-pilled, vibe-coded). Professional yet accessible formality with experimental spirit. First-person narratives build trust, using phrases like 'we built' and 'I'm proud to introduce.' Conversational, relatable analogies paired with sophisticated strategic insight. Language is modern, productivity-focused, and visionary.",
+      "style_and_tone_citation": "https://every.to",
+      "visual_identity": {
+        "descriptive_language": "Clean, minimalist, content-centric editorial aesthetic. Bold typography for headlines paired with high-quality illustrative cover art (DALL-E/Midjourney/Every illustrations). Modular, section-based layout with clear category headers. White logo variants against contrasting backgrounds. Custom iconography for navigation and AI tools. Professional photography for author avatars.",
+        "descriptive_language_citation": "https://every.to",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White (logo variant: every-logo-white)",
+              "value_citation": "https://every.to"
+            },
+            {
+              "value": "High-contrast black-on-white and white-on-black themes",
+              "value_citation": "https://every.to"
+            }
+          ],
+          "typography": [
+            {
+              "value": "Bold typography for headlines",
+              "value_citation": "https://every.to"
+            },
+            {
+              "value": "Clean, readable body text (specific font families not disclosed in public pages)",
+              "value_citation": "https://every.to"
+            }
+          ],
+          "spacing_density": "Generous whitespace with modular sections, horizontal rules for separation",
+          "spacing_density_citation": "https://every.to"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Horizontal product carousels for showcasing sub-brands",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Author-attributed article cards with publication dates and cover images",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "TLDR (Too Long; Didn't Read) summary boxes at article start",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Four-tier feedback rating system: Amazing, Good, Meh, Bad",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "'Read with AI' and 'Open with Plus One' interactive AI collaboration buttons",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Persistent onboarding checklist: 'Explore THE EVERY UNIVERSE' for guest users",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Audio player integration with 'Listen' button for article narration",
+          "value_citation": "https://every.to"
+        },
+        {
+          "value": "Social sharing toolbars (Copy Link, Share) below headlines",
+          "value_citation": "https://every.to"
+        }
+      ],
+      "brand_divergence_notes": "The newsletter/media platform serves as the core brand identity from which all products derive. It establishes the authoritative, editorial voice and minimalist aesthetic that all sub-products reference. The platform acts as the 'north star' for brand consistency while allowing individual products to develop specialized identities.",
+      "brand_divergence_notes_citation": "https://every.to"
+    },
+    {
+      "name": "Spiral",
+      "name_citation": "https://every.to/on-every/introducing-spiral",
+      "style_and_tone": "Professional, personal, and conversational using first-person plural (we, I). Direct, utility-focused language balancing authoritative expertise with accessible human tone. Uses phrases like 'repetitive drudgery' and humorous asides. Frames product as a productivity 'multiplier' and 'natural companion.'",
+      "style_and_tone_citation": "https://every.to/on-every/introducing-spiral",
+      "visual_identity": {
+        "descriptive_language": "Editorial, minimalist, and tech-forward aesthetic. White logo with DALL-E/Every illustrations. High-quality content presentation with clean, functional design highlighting tools and workflows. Interface features spiral iconography and custom AI model icons (Claude, ChatGPT).",
+        "descriptive_language_citation": "https://every.to/on-every/introducing-spiral",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White logo variant",
+              "value_citation": "https://every.to/on-every/introducing-spiral"
+            }
+          ],
+          "typography": [
+            {
+              "value": "Quilljs (referenced in asset paths)",
+              "value_citation": "https://every.to/on-every/introducing-spiral"
+            }
+          ],
+          "spacing_density": "Clean, functional spacing emphasizing content and tool interfaces",
+          "spacing_density_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "'Generate multiple' function for batch content creation",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Interactive rating system for user feedback at article end",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "'Read with AI' collaborator integration with custom tools",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Custom icon sets for different AI models",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        },
+        {
+          "value": "Subscription paywall overlay with icon-driven benefit lists",
+          "value_citation": "https://every.to/on-every/introducing-spiral"
+        }
+      ],
+      "brand_divergence_notes": "Spiral maintains Every's minimalist editorial aesthetic but adds tool-focused, productivity-centric elements. The interface is more functional and task-oriented than the content platform, introducing workflow automation visualizations. Retains the conversational tone but leans more heavily into utility and efficiency language.",
+      "brand_divergence_notes_citation": "https://every.to/on-every/introducing-spiral"
+    },
+    {
+      "name": "Cora",
+      "name_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai",
+      "style_and_tone": "Professional yet personal, visionary, and empathetic. Uses first-person storytelling to build trust. Sophisticated but accessible language like 'untethers you,' 'inbox overwhelm,' and 'sleek, scannable story.' Frames product as a 'human' solution to technical problems, emphasizing humanity in AI interaction.",
+      "style_and_tone_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai",
+      "visual_identity": {
+        "descriptive_language": "Sleek and beautiful design focused on clarity and noise reduction. Transforms dense email data into 'beautiful briefs' and scannable stories. Custom DALL-E/Every illustrations with minimalist iconography for integrated platforms (ChatGPT, Claude). Feed-based layout replacing traditional list views.",
+        "descriptive_language_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai",
+        "technical_specs": {
+          "spacing_density": "Scrollable feed with asynchronous summary cards, generous spacing for scannable content",
+          "spacing_density_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Briefing Pattern: Asynchronous twice-daily summaries instead of real-time notifications",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        },
+        {
+          "value": "Scrollable Feed: Email as a 'scannable story' rather than thread list",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        },
+        {
+          "value": "Natural Language Controls: Plain-language prompts for inbox organization instead of rigid filters",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        },
+        {
+          "value": "Smart Action Buttons: Deep-linking to specific actions (DocuSign, Add to-do) within summaries",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        },
+        {
+          "value": "Progressive Disclosure: Summarized content first, with ability to drill into details or AI tools",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        },
+        {
+          "value": "Voice Mimicry: System analyzes historical emails to detect punctuation and greeting styles for drafted replies",
+          "value_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+        }
+      ],
+      "brand_divergence_notes": "Cora diverges significantly from the editorial platform by introducing an AI-native email interface. It moves from long-form content consumption to asynchronous, feed-based email management. Retains the 'sleek' and 'beautiful' minimalism but applies it to functional productivity tools rather than media. Emphasizes humanity and personalization more than other products through voice mimicry and adaptive behavior.",
+      "brand_divergence_notes_citation": "https://every.to/p/introducing-cora-manage-your-inbox-with-ai"
+    },
+    {
+      "name": "Sparkle",
+      "name_citation": "https://every.to/on-every/introducing-sparkle",
+      "style_and_tone": "Personal, conversational, and relatable using first-person narratives (I groan, my Desktop). Informal analogies like 'sedimentary rock' and references to pop culture (Hoarders) build rapport. Optimistic and professional-casual, positioning authors as peers. Modern, tech-centric language referencing an 'Every cinematic universe.'",
+      "style_and_tone_citation": "https://every.to/on-every/introducing-sparkle",
+      "visual_identity": {
+        "descriptive_language": "Clean, minimalist aesthetic with Every illustrations and white logo variant. Visual metaphors of transformation: from digital clutter (layered screenshots) to squeaky clean interfaces. Cohesive iconography across suite of sub-brands, each with distinct but stylistically similar custom app icons.",
+        "descriptive_language_citation": "https://every.to/on-every/introducing-sparkle",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White logo variant",
+              "value_citation": "https://every.to/on-every/introducing-sparkle"
+            }
+          ],
+          "spacing_density": "Generous whitespace transitioning from cluttered to organized visual states",
+          "spacing_density_citation": "https://every.to/on-every/introducing-sparkle"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Before/After visualization: Cluttered desktop transforms to organized state",
+          "value_citation": "https://every.to/on-every/introducing-sparkle"
+        },
+        {
+          "value": "Background automation: Files organized automatically without user interaction",
+          "value_citation": "https://every.to/on-every/introducing-sparkle"
+        },
+        {
+          "value": "Security Transparency section: Details filename transmission and 30-day data retention for AI privacy concerns",
+          "value_citation": "https://every.to/on-every/introducing-sparkle"
+        },
+        {
+          "value": "Sub-brand icon grid: Visual showcase of app bundle with custom icons",
+          "value_citation": "https://every.to/on-every/introducing-sparkle"
+        }
+      ],
+      "brand_divergence_notes": "Sparkle adopts the most casual, relatable tone of all Every products, using pop culture references and personal anecdotes. Visual identity emphasizes transformation and automation, showing clear before/after states. More Mac-native aesthetic compared to web-first products. Maintains minimalism but focuses on utility over editorial polish.",
+      "brand_divergence_notes_citation": "https://every.to/on-every/introducing-sparkle"
+    },
+    {
+      "name": "Monologue",
+      "name_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation",
+      "style_and_tone": "Visionary, personal, and authoritative using first-person narrative ('I'm proud to introduce'). Optimistic, productivity-focused language like 'live in the future,' 'high-taste AI early adopter,' and 'work 3x faster without breaking flow.' Professional yet accessible, positioning itself as expert guide to the 'edge of AI.' Emphasizes speed and creative flow preservation.",
+      "style_and_tone_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation",
+      "visual_identity": {
+        "descriptive_language": "Minimalist and modern with white logo and custom Every illustrations. Clean, icon-heavy aesthetic with specific iconography for social platforms and AI models (Claude, ChatGPT). Circular user avatars with high-quality photography. Distinct product icon as part of cohesive ecosystem.",
+        "descriptive_language_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White logo variant (every-logo-white.svg)",
+              "value_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+            }
+          ],
+          "spacing_density": "Clean header navigation with generous spacing, icon-heavy layout",
+          "spacing_density_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Personal dictionary and deep context: Screen recording permission for adaptive learning",
+          "value_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+        },
+        {
+          "value": "Multi-language support: 100+ languages with seamless switching",
+          "value_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+        },
+        {
+          "value": "'Read with AI' component as pre-loaded collaborator with custom tools",
+          "value_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+        },
+        {
+          "value": "Four-tier feedback rating system (Amazing, Good, Meh, Bad) for articles",
+          "value_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+        }
+      ],
+      "brand_divergence_notes": "Monologue emphasizes 'high-taste' and craftsmanship more than other products, positioning against venture-backed alternatives. Focuses on flow state and speed (3x faster) as key differentiators. More technical in features (screen recording, multilingual) while maintaining accessible messaging. Voice-first interaction represents significant UX departure from text-based products.",
+      "brand_divergence_notes_citation": "https://every.to/on-every/introducing-monologue-effortless-voice-dictation"
+    },
+    {
+      "name": "Proof",
+      "name_citation": "https://every.to/on-every/introducing-proof",
+      "style_and_tone": "Authoritative, forward-thinking, and community-oriented using modern tech-industry language (agent-native, provenance, open-source, workflows). Professional yet personal, often using first-person accounts from editorial team. Moderate formality: structured like business announcement but accessible and conversational. Emphasizes transition from human-led to AI-agent-led work.",
+      "style_and_tone_citation": "https://every.to/on-every/introducing-proof",
+      "visual_identity": {
+        "descriptive_language": "Clean, modern aesthetic using custom Midjourney/Every illustrations for covers. Color-coded provenance rails: green for human-written text, purple for AI-generated text. High-contrast white-on-black or black-on-white theme with minimalist Every logo. Visual system explicitly designed to track authorship and collaboration.",
+        "descriptive_language_citation": "https://every.to/on-every/introducing-proof",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "Green: Human-written text indicator",
+              "value_citation": "https://every.to/on-every/introducing-proof"
+            },
+            {
+              "value": "Purple: AI-generated text indicator",
+              "value_citation": "https://every.to/on-every/introducing-proof"
+            }
+          ],
+          "spacing_density": "Long-form editorial layout with provenance rails on left side",
+          "spacing_density_citation": "https://every.to/on-every/introducing-proof"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Provenance Rail: Left-side UI component using color (green/purple) to track text origin",
+          "value_citation": "https://every.to/on-every/introducing-proof"
+        },
+        {
+          "value": "Agent-Native Interaction: Send URL directly to AI agent for autonomous document generation and editing",
+          "value_citation": "https://every.to/on-every/introducing-proof"
+        },
+        {
+          "value": "Login-free Utility: Full tool usage without account, persistent library only for signed-in users",
+          "value_citation": "https://every.to/on-every/introducing-proof"
+        },
+        {
+          "value": "Collaborative editing: Assumes AI agent is primary writer, human is collaborator (flipped traditional model)",
+          "value_citation": "https://every.to/on-every/introducing-proof"
+        }
+      ],
+      "brand_divergence_notes": "Proof represents the most radical design departure: first 'agent-native' product explicitly designed for AI-first workflows. Introduces color-coded provenance system unique to this product. Flips traditional document editor paradigm by assuming AI authorship. Maintains minimalist aesthetic but adds specialized UI for tracking human/AI collaboration. More technical and developer-focused than other products.",
+      "brand_divergence_notes_citation": "https://every.to/on-every/introducing-proof"
+    },
+    {
+      "name": "Plus One",
+      "name_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every",
+      "style_and_tone": "Authoritative, visionary, and professional yet accessible. Collaborative 'we' perspective as team of builders sharing breakthroughs. Transparent and instructional, balancing technical competence with human utility. Modern, productivity-focused language using metaphors like 'AI coworkers' and 'parallel organizational charts.' High-level professional tone typical of thought leadership.",
+      "style_and_tone_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every",
+      "visual_identity": {
+        "descriptive_language": "Clean, editorial aesthetic with Midjourney/Every illustrations for feature imagery. White logo variation. High-quality professional photography for author avatars and software interface screenshots (Slack, Notion, GitHub). Custom SVG icon set for navigation, social platforms, and AI tools. Humanized agent personas with names and managers.",
+        "descriptive_language_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White logo variant (every-logo-white.svg)",
+              "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+            }
+          ],
+          "spacing_density": "Long-form editorial layout with TL;DR blocks, horizontal rules for section separation",
+          "spacing_density_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "One-click setup behavior for AI agents (infrastructure-free utility)",
+          "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        },
+        {
+          "value": "Humanization pattern: Named AI agents (R2-C2, Iris, Montaigne, Margot, Alfredo, Milo, Nettle) with assigned managers",
+          "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        },
+        {
+          "value": "Tiered rollout pattern: 3-phase progression (Waitlist, Beta, Wider Rollout)",
+          "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        },
+        {
+          "value": "Sentiment feedback component: 'What did you think?' with four states (Amazing, Good, Meh, Bad)",
+          "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        },
+        {
+          "value": "'Listen' to article interaction pattern for audio consumption",
+          "value_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+        }
+      ],
+      "brand_divergence_notes": "Plus One introduces organizational metaphors (coworkers, managers) unique to this product, humanizing AI agents beyond other products. Emphasizes infrastructure simplicity (one-click vs. Mac Minis) more than other tools. Positions as meta-product enabling other products. More enterprise-focused language (CTOs, product marketing leads) compared to individual creator focus of other tools. Integration patterns (Slack, Notion, GitHub) show broader ecosystem thinking.",
+      "brand_divergence_notes_citation": "https://every.to/on-every/introducing-plus-one-one-click-openclaw-agents-by-every"
+    },
+    {
+      "name": "Every Studio",
+      "name_citation": "https://every.to/studio",
+      "style_and_tone": "Intellectual, experimental, and transparent. Combines visionary language (future of AI-native products, expand your perspective) with pragmatic, high-efficiency tone (work 3x faster, publish with confidence). Professional yet accessible, leaning into identity of creative laboratory valuing 'taste' and 'insight.' Emphasizes experimentation and iteration.",
+      "style_and_tone_citation": "https://every.to/studio",
+      "visual_identity": {
+        "descriptive_language": "Minimalist, focused on clarity with white logo against contrasting backgrounds. Each product has unique illustrative icon (spiral, sparkle, letterforms). Philosophy centers on 'positive feedback loop' influencing clean, cyclical design aesthetic. Card-based grid layout for product showcasing with distinct visual hierarchy between Studio products and Experiments.",
+        "descriptive_language_citation": "https://every.to/studio",
+        "technical_specs": {
+          "colors": [
+            {
+              "value": "White logo (every-logo-white)",
+              "value_citation": "https://every.to/studio"
+            }
+          ],
+          "spacing_density": "Card-based grid with clear separation between product categories, generous spacing",
+          "spacing_density_citation": "https://every.to/studio"
+        }
+      },
+      "ux_ui_patterns": [
+        {
+          "value": "Card-based product grid: Thumbnail, app icon, bold title, description, CTA button",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Experiment Numbering: Sequential #000 format (#001, #002, #003, #004, #005, #006) denoting historical place",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Status Indicators: 'Join Waitlist' vs 'Try it' showing product maturity",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Coming Soon placeholder graphic for future releases",
+          "value_citation": "https://every.to/studio"
+        },
+        {
+          "value": "Positive Feedback Loop: Core design philosophy where writing, podcasts, products inform each other",
+          "value_citation": "https://every.to/studio"
+        }
+      ],
+      "brand_divergence_notes": "Every Studio represents the meta-brand: the incubator and process behind products rather than consumer-facing tool. More transparent about experimental nature and product lifecycle. Distinct visual hierarchy between validated products and experiments. Pricing transparency ($15/month for Cora) shows business model. Portfolio view emphasizes ecosystem thinking over individual product identity. Laboratory aesthetic contrasts with polished product presentations.",
+      "brand_divergence_notes_citation": "https://every.to/studio"
+    }
+  ],
+  "lead_designer_blueprint": {
+    "design_principles": [
+      {
+        "value": "Minimalism with Purpose: Strip away unnecessary elements to foreground content and functionality. Every element must serve user goals.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Editorial Quality: Apply magazine-level craft to digital interfaces. High-quality imagery, thoughtful typography, and content-first layouts.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Human-AI Collaboration: Design for workflows where humans and AI work together. Make AI capabilities visible and intuitive without overwhelming users.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Ecosystem Cohesion: Maintain visual consistency across sub-brands through shared iconography, white logo variants, and minimalist aesthetic while allowing product-specific expressions.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Transparency and Trust: Make system behaviors visible (provenance tracking, data retention policies, AI processing). Build user confidence through clear communication.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Progressive Disclosure: Present information in digestible layers. Start with summaries (TLDR), allow drilling into details. Respect attention.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Speed and Flow: Prioritize fast interactions and uninterrupted workflows. Reduce friction, automate repetitive tasks, preserve creative flow.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Taste and Craft: Favor 'high-taste' solutions over generic templates. Emphasize craftsmanship and attention to detail as brand differentiators.",
+        "value_citation": "https://every.to"
+      },
+      {
+        "value": "Experimental Innovation: Embrace building in public, numbered experiments, and iterative launches. Design systems should accommodate rapid product evolution.",
+        "value_citation": "https://every.to/studio"
+      }
+    ],
+    "implementation_rules": [
+      {
+        "element": "Logo System",
+        "element_citation": "https://every.to",
+        "rule": "Use 'every-logo-white' variant for dark or colorful backgrounds, standard colored variant for light backgrounds",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Asset naming: every-logo-white-[hash].svg, every-colored-[hash].svg",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Typography Hierarchy",
+        "element_citation": "https://every.to",
+        "rule": "Use bold typography for headlines, clean readable fonts for body. Maintain generous line heights for readability",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Reference: Quilljs for editor interfaces, specific font families not publicly disclosed",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Color Coding for Functionality",
+        "element_citation": "https://every.to/on-every/introducing-proof",
+        "rule": "Use green to indicate human-authored content, purple for AI-generated content in collaborative editing contexts",
+        "rule_citation": "https://every.to/on-every/introducing-proof",
+        "technical_constraint": "Apply to provenance rails and content attribution systems",
+        "technical_constraint_citation": "https://every.to/on-every/introducing-proof"
+      },
+      {
+        "element": "Layout Patterns",
+        "element_citation": "https://every.to",
+        "rule": "Use modular, section-based layouts with clear headers. Employ horizontal rules for visual separation. Maintain generous whitespace",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Editorial layouts: long-form with right-rail utilities. Product grids: card-based with consistent spacing",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Icon System",
+        "element_citation": "https://every.to",
+        "rule": "Create custom SVG icons for each product with distinct but cohesive visual language. Use arrow-right for navigation, check marks for completion states",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Asset format: SVG with content hashing (e.g., arrow-right-[hash].svg, check-[hash].svg)",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Call-to-Action Buttons",
+        "element_citation": "https://every.to",
+        "rule": "Use consistent CTA placement and language. Primary actions: 'Try it', 'Join Waitlist'. Maintain high contrast and clear clickable areas",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Button copy should be action-oriented and contextual to product maturity",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Feedback Mechanisms",
+        "element_citation": "https://every.to",
+        "rule": "Include four-tier sentiment rating (Amazing, Good, Meh, Bad) at end of editorial content. Visible engagement metrics (likes, comments)",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Feedback component should be non-intrusive, placed after content consumption",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "AI Integration Points",
+        "element_citation": "https://every.to",
+        "rule": "Provide 'Read with AI' and 'Open with Plus One' entry points for AI-enhanced interactions. Make AI capabilities discoverable without being mandatory",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "AI tools should load pre-configured with relevant context and custom tools",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Content Summaries",
+        "element_citation": "https://every.to",
+        "rule": "Include TLDR (Too Long; Didn't Read) sections at start of long-form content. Use consistent formatting and positioning",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "TLDR should be visually distinct, scannable, and comprehensive enough to convey core value",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Privacy and Transparency",
+        "element_citation": "https://every.to",
+        "rule": "Include visible privacy controls, data retention policies, and AI processing transparency. Use Privacy Preferences modal with Global Privacy Control",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Security transparency sections required for AI-powered tools (e.g., filename transmission, 30-day retention)",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Product Status Communication",
+        "element_citation": "https://every.to/studio",
+        "rule": "Use clear status indicators: 'Try it' for launched products, 'Join Waitlist' for beta/upcoming. Number experiments sequentially (#001, #002, etc.)",
+        "rule_citation": "https://every.to/studio",
+        "technical_constraint": "Experiments should be visually separated from validated Studio products",
+        "technical_constraint_citation": "https://every.to/studio"
+      },
+      {
+        "element": "Onboarding Patterns",
+        "element_citation": "https://every.to",
+        "rule": "Create persistent onboarding checklist for guest users ('Explore THE EVERY UNIVERSE'). Guide discovery of ecosystem products",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Checklist should use check mark icons and progressive disclosure",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Content Consumption Options",
+        "element_citation": "https://every.to",
+        "rule": "Provide multiple consumption formats: Read (default), Listen (audio), AI-assisted reading. Include social sharing tools (Copy Link, Share)",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "Audio player integration for 'Listen' functionality, toolbar placement below headlines",
+        "technical_constraint_citation": "https://every.to"
+      },
+      {
+        "element": "Responsive Imagery",
+        "element_citation": "https://every.to",
+        "rule": "Use high-quality cover art for editorial content (DALL-E/Midjourney/Every illustrations). Circular avatars for author profiles",
+        "rule_citation": "https://every.to",
+        "technical_constraint": "All images must have src tags (not just srcset), maintain high resolution for retina displays",
+        "technical_constraint_citation": "https://every.to"
+      }
+    ],
+    "new_product_delineation_guide": "When designing a new Every product, follow this framework to maintain ecosystem cohesion while allowing product-specific expression:\n\n1. CORE BRAND ANCHORS (Non-negotiable):\n   - Minimalist, clean aesthetic with generous whitespace\n   - White logo variant for product branding\n   - Custom SVG icon with distinct but cohesive visual language\n   - High-quality imagery (DALL-E/Midjourney/Every illustrations)\n   - Professional yet accessible tone in all copy\n\n2. PRODUCT IDENTITY EXPRESSION (Customizable):\n   - Tone spectrum: From casual/relatable (Sparkle) to authoritative/technical (Proof)\n   - Unique color coding for functionality (e.g., green/purple provenance in Proof)\n   - Product-specific UX patterns aligned to use case (feed-based for Cora, rail-based for Proof)\n   - Specialized terminology reflecting product domain (agents, briefing, dictation, etc.)\n\n3. NAMING CONVENTIONS:\n   - Studio products: Single evocative words (Spiral, Cora, Sparkle, Monologue, Proof)\n   - Experiments: Numbered sequentially (#001, #002, etc.)\n   - Use 'Plus One' for meta-products enabling other tools\n\n4. LAUNCH COMMUNICATION:\n   - Introduce via editorial content on every.to platform\n   - Use first-person narrative from team members\n   - Include TLDR summary, use cases, target audience\n   - Explain AI capabilities and transparency measures\n   - Show before/after or transformation states where applicable\n\n5. INTEGRATION POINTS:\n   - Add to ecosystem showcase (product grid on homepage and Studio page)\n   - Include 'Read with AI' and 'Open with Plus One' integrations\n   - Provide feedback mechanisms (Amazing/Good/Meh/Bad rating)\n   - Implement Privacy Preferences and data transparency\n\n6. STATUS COMMUNICATION:\n   - Experiments: Unsupported, numbered, clearly marked as experimental\n   - Beta: 'Join Waitlist' CTA with tiered rollout plan\n   - Launched: 'Try it' CTA with pricing if applicable ($15/month standard)\n\n7. DIVERGENCE DECISION TREE:\n   - Ask: Does this product need a radically different UX paradigm? (e.g., Proof's agent-native editor)\n   - If YES: Document divergence clearly, maintain core aesthetic anchors\n   - If NO: Use established patterns (modular sections, card grids, editorial layouts)\n   - Always: Ensure divergence serves product utility, not aesthetic novelty\n\n8. CROSS-PRODUCT CONSIDERATIONS:\n   - How does this product create a 'positive feedback loop' with writing, podcasts, consulting?\n   - Does it enable or complement existing products?\n   - Can it share infrastructure or insights with Studio portfolio?\n   - Target audience: Does it serve 'leaders, builders, innovators' at the edge of AI?\n\n9. MEASUREMENT AND ITERATION:\n   - Include engagement metrics visible to users (likes, comments)\n   - Build sentiment feedback into product experience\n   - Plan for rapid iteration (experimental mindset)\n   - Communicate updates and improvements through editorial platform",
+    "new_product_delineation_guide_citation": "https://every.to/studio"
+  }
+}
