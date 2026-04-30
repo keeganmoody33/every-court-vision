@@ -22,6 +22,7 @@
 		"sync:sheets": "tsx scripts/sync-from-sheets.ts"
 	},
 	"dependencies": {
+		"@neondatabase/serverless": "^1.1.0",
 		"@prisma/adapter-pg": "^7.8.0",
 		"@prisma/client": "^7.8.0",
 		"@radix-ui/react-dialog": "^1.1.15",
