@@ -6,18 +6,19 @@ coverage
 .env
 .env.*
 !.env.example
+.neon
 *.tsbuildinfo
 .DS_Store
 .playwright-mcp
 desktop-overview.png
-<<<<<<< claude/editorial-publication-wrap
+
+# macOS / iCloud sync conflict files
 *\ 2.*
+
+# Claude Code session/config — but allow skills under .claude/skills/
 .claude/*
 !.claude/skills/
 !.claude/skills/**
-=======
-.claude/
 
 # Editor state
 .cursor/
->>>>>>> main
