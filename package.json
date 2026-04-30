@@ -74,6 +74,10 @@
 		"typescript": "^5.9.3"
 	},
 	"pnpm": {
+		"overrides": {
+			"postcss": ">=8.5.10",
+			"@hono/node-server": ">=1.19.13"
+		},
 		"onlyBuiltDependencies": [
 			"@prisma/engines",
 			"esbuild",

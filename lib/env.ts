@@ -3,12 +3,17 @@ import "server-only";
 import { config } from "dotenv";
 import { z } from "zod";
 
+import { normalizeDatabaseUrl } from "@/lib/normalize-database-url";
+
 config({ path: ".env", quiet: true });
 config({ path: ".env.local", override: true, quiet: true });
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required for Phase 1+"),
+  DATABASE_URL: z.preprocess(
+    (val) => (typeof val === "string" ? normalizeDatabaseUrl(val) : val),
+    z.string().min(1, "DATABASE_URL is required for Phase 1+"),
+  ),
   SURFACE_IQ_PASSWORD: z.string().optional(),
   OPENAI_API_KEY: z.string().optional(),
   SPIDER_API_KEY: z.string().optional(),
