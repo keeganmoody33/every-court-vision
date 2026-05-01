@@ -24,9 +24,9 @@ Default to the cheapest model that can do the job. Escalate only when a specific
 
 | Tier | Use for | CE personas |
 |---|---|---|
-| **Haiku 4.5** | Mechanical checks, file-existence audits, lint-style reviews, schema drift detection | `ce-coherence-reviewer` (already), `ce-schema-drift-detector`, `ce-pattern-recognition-specialist`, `ce-project-standards-reviewer`, `ce-previous-comments-reviewer` |
-| **Sonnet 4.6** | Most code review, security review, performance review, doc review, research | `ce-correctness-reviewer`, `ce-maintainability-reviewer`, `ce-testing-reviewer`, `ce-security-reviewer`, `ce-performance-reviewer`, `ce-reliability-reviewer`, `ce-cli-readiness-reviewer`, `ce-api-contract-reviewer`, `ce-data-migrations-reviewer`, `ce-kieran-typescript-reviewer`, `ce-architecture-strategist`, `ce-feasibility-reviewer`, `ce-best-practices-researcher`, `ce-framework-docs-researcher`, `ce-repo-research-analyst`, `ce-issue-intelligence-analyst`, `ce-git-history-analyzer`, `ce-pr-comment-resolver` |
-| **Opus 4.7** | Adversarial review on high-risk diffs, architectural decisions, planning for cross-cutting changes | `ce-adversarial-reviewer`, `ce-adversarial-document-reviewer`, `ce-product-lens-reviewer`, `ce-data-integrity-guardian`, `ce-data-migration-expert` |
+| **Haiku** | Mechanical checks, file-existence audits, lint-style reviews, schema drift detection | `ce-coherence-reviewer` (already), `ce-schema-drift-detector`, `ce-pattern-recognition-specialist`, `ce-project-standards-reviewer`, `ce-previous-comments-reviewer` |
+| **Sonnet** | Most code review, security review, performance review, doc review, research | `ce-correctness-reviewer`, `ce-maintainability-reviewer`, `ce-testing-reviewer`, `ce-security-reviewer`, `ce-performance-reviewer`, `ce-reliability-reviewer`, `ce-cli-readiness-reviewer`, `ce-api-contract-reviewer`, `ce-data-migrations-reviewer`, `ce-kieran-typescript-reviewer`, `ce-architecture-strategist`, `ce-feasibility-reviewer`, `ce-best-practices-researcher`, `ce-framework-docs-researcher`, `ce-repo-research-analyst`, `ce-issue-intelligence-analyst`, `ce-git-history-analyzer`, `ce-pr-comment-resolver` |
+| **Opus** | Adversarial review on high-risk diffs, architectural decisions, planning for cross-cutting changes | `ce-adversarial-reviewer`, `ce-adversarial-document-reviewer`, `ce-product-lens-reviewer`, `ce-data-integrity-guardian`, `ce-data-migration-expert` |
 
 **Cost-shaping rules of thumb:**
 
